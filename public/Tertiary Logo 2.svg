@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 293.08 296.8">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #000;
+      }
+
+      .cls-1, .cls-2 {
+        stroke-width: 0px;
+      }
+
+      .cls-3 {
+        font-family: PPNeueMontreal-Medium, 'PP Neue Montreal';
+        font-size: 118.63px;
+        font-weight: 500;
+        letter-spacing: -.05em;
+        stroke: #fff;
+        stroke-miterlimit: 10;
+        stroke-width: 2.49px;
+      }
+
+      .cls-3, .cls-2 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <polygon class="cls-1" points="0 146.54 0 292.23 155.01 292.23 293.08 89.79 293.08 0 201.6 0 0 146.54"/>
+    <text class="cls-3" transform="translate(15.87 266.6) scale(1.04 1)"><tspan x="0" y="0">M</tspan></text>
+    <polygon class="cls-2" points="250.45 49.32 263.32 62.19 265.07 21.82 224.7 23.58 237.58 36.45 215.93 70.97 250.45 49.32"/>
+  </g>
+</svg>

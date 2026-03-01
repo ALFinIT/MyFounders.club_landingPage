@@ -1,0 +1,1253 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --x: 50vw;
+  --y: 50vh;
+}
+
+html {
+  scroll-behavior: smooth;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+html[lang="ar"] {
+  direction: rtl;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+  background-color: #0f0f0f; /* Matte black */
+  color: #ffffff;
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  cursor: none;
+  min-height: 100vh;
+
+  /* Static dim orange grid */
+  background-image:
+    linear-gradient(rgba(255, 106, 0, 0.12) 2px, transparent 2px),
+    linear-gradient(90deg, rgba(255, 106, 0, 0.12) 2px, transparent 2px);
+
+  background-size: 100px 100px;
+  background-position: -2px -2px;
+  position: relative;
+}
+
+/* ================= VERTICAL COMETS ================= */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+
+  background-image:
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(255, 106, 0, 0.08) 40%,
+      rgba(255, 106, 0, 0.35) 70%,
+      #ff6a00 90%,
+      #ffae00 96%,
+      #ffffff 100%
+    ),
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(255, 106, 0, 0.08) 40%,
+      rgba(255, 106, 0, 0.35) 70%,
+      #ff6a00 90%,
+      #ffae00 96%,
+      #ffffff 100%
+    ),
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(255, 106, 0, 0.08) 40%,
+      rgba(255, 106, 0, 0.35) 70%,
+      #ff6a00 90%,
+      #ffae00 96%,
+      #ffffff 100%
+    ),
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(255, 106, 0, 0.08) 40%,
+      rgba(255, 106, 0, 0.35) 70%,
+      #ff6a00 90%,
+      #ffae00 96%,
+      #ffffff 100%
+    ),
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(255, 106, 0, 0.08) 40%,
+      rgba(255, 106, 0, 0.35) 70%,
+      #ff6a00 90%,
+      #ffae00 96%,
+      #ffffff 100%
+    ),
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(255, 106, 0, 0.08) 40%,
+      rgba(255, 106, 0, 0.35) 70%,
+      #ff6a00 90%,
+      #ffae00 96%,
+      #ffffff 100%
+    );
+
+  background-size: 2px 160px;
+  background-repeat: no-repeat;
+
+  background-position:
+    100px -150px,
+    300px -420px,
+    500px -260px,
+    700px -780px,
+    900px -510px,
+    1100px -900px;
+
+  animation: fall 7.5s linear infinite;
+}
+
+/* ================= HORIZONTAL COMETS ================= */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+
+  background-image:
+    linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(255, 106, 0, 0.08) 40%,
+      rgba(255, 106, 0, 0.35) 70%,
+      #ff6a00 90%,
+      #ffae00 96%,
+      #ffffff 100%
+    ),
+    linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(255, 106, 0, 0.08) 40%,
+      rgba(255, 106, 0, 0.35) 70%,
+      #ff6a00 90%,
+      #ffae00 96%,
+      #ffffff 100%
+    ),
+    linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(255, 106, 0, 0.08) 40%,
+      rgba(255, 106, 0, 0.35) 70%,
+      #ff6a00 90%,
+      #ffae00 96%,
+      #ffffff 100%
+    ),
+    linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(255, 106, 0, 0.08) 40%,
+      rgba(255, 106, 0, 0.35) 70%,
+      #ff6a00 90%,
+      #ffae00 96%,
+      #ffffff 100%
+    ),
+    linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(255, 106, 0, 0.08) 40%,
+      rgba(255, 106, 0, 0.35) 70%,
+      #ff6a00 90%,
+      #ffae00 96%,
+      #ffffff 100%
+    ),
+    linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(255, 106, 0, 0.08) 40%,
+      rgba(255, 106, 0, 0.35) 70%,
+      #ff6a00 90%,
+      #ffae00 96%,
+      #ffffff 100%
+    );
+
+  background-size: 160px 2px;
+  background-repeat: no-repeat;
+
+  background-position:
+    -250px 200px,
+    -600px 400px,
+    -150px 600px,
+    -800px 800px,
+    -450px 1000px,
+    -900px 1200px;
+
+  animation: slide 9.2s linear infinite;
+}
+
+html[lang="ar"] body {
+  font-family: var(--font-cairo, "Cairo"), system-ui, sans-serif;
+  letter-spacing: 0;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+/* Comet Animations */
+@keyframes fall {
+  to {
+    background-position:
+      100px 120vh,
+      300px 120vh,
+      500px 120vh,
+      700px 120vh,
+      900px 120vh,
+      1100px 120vh;
+  }
+}
+
+@keyframes slide {
+  to {
+    background-position:
+      120vw 200px,
+      120vw 400px,
+      120vw 600px,
+      120vw 800px,
+      120vw 1000px,
+      120vw 1200px;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-black/60 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg relative overflow-hidden;
+  }
+
+  .glass::before {
+    content: "";
+    @apply absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent pointer-events-none;
+  }
+
+  .glass-hover {
+    @apply glass transition-all duration-300 hover:bg-black/80 hover:border-white/30;
+  }
+  /* ========================================
+     TYPOGRAPHY SYSTEM
+     ======================================== */
+
+  /* Font Family Utilities */
+  .font-syne {
+    font-family: var(--font-syne, sans-serif);
+  }
+
+  .font-dm-sans {
+    font-family: var(--font-dm-sans, sans-serif);
+  }
+
+  /* ========================================
+     SYNE TYPOGRAPHY - Headings, UI, Buttons
+     ======================================== */
+
+  /* Hero Headings - 800 weight, tight line-height, negative letter spacing */
+  .hero-heading {
+    font-family: var(--font-syne, sans-serif);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+  }
+
+  /* Section Titles - 700 weight */
+  .section-title {
+    font-family: var(--font-syne, sans-serif);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    color: #ffffff;
+  }
+
+  /* Buttons and UI Labels - 600 weight */
+  .button-text {
+    font-family: var(--font-syne, sans-serif);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+  }
+
+  .ui-label {
+    font-family: var(--font-syne, sans-serif);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+  }
+
+  /* ========================================
+     DM SANS TYPOGRAPHY - Body, Inputs, Tabs
+     ======================================== */
+
+  /* Body Text - 400 weight, normal line-height */
+  .body-text {
+    font-family: var(--font-dm-sans, sans-serif);
+    font-weight: 400;
+    line-height: 1.6;
+    letter-spacing: 0;
+    color: #d1d5db;
+  }
+
+  /* Secondary/Light Text - 300-400 weight */
+  .body-light {
+    font-family: var(--font-dm-sans, sans-serif);
+    font-weight: 300;
+    line-height: 1.5;
+    letter-spacing: 0;
+    color: #9ca3af;
+  }
+
+  .body-secondary {
+    font-family: var(--font-dm-sans, sans-serif);
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0;
+    color: #6b7280;
+  }
+
+  /* Form Inputs and Tab Labels - 400-500 weight */
+  .form-input {
+    font-family: var(--font-dm-sans, sans-serif);
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0;
+  }
+
+  .tab-label {
+    font-family: var(--font-dm-sans, sans-serif);
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: 0;
+  }
+
+  /* ========================================
+     SEMANTIC HEADING ALIASES
+     ======================================== */
+
+  .heading-display {
+    @apply hero-heading;
+  }
+
+  .heading-lg {
+    @apply section-title;
+  }
+
+  .heading-md {
+    font-family: var(--font-syne, sans-serif);
+    font-weight: 700;
+    line-height: 1.1;
+    color: #ffffff;
+  }
+
+  .heading-sm {
+    font-family: var(--font-syne, sans-serif);
+    font-weight: 600;
+    line-height: 1.2;
+    color: #ffffff;
+  }
+
+  /* ========================================
+     NEON / SHINING UTILITIES
+     ======================================== */
+
+  @keyframes neonGlow {
+    0%,
+    100% {
+      /* softer, low-intensity glow */
+      text-shadow:
+        0 0 4px rgba(255, 165, 0, 0.35),
+        0 0 10px rgba(255, 140, 0, 0.18),
+        0 0 20px rgba(255, 120, 0, 0.12);
+      opacity: 0.95;
+    }
+    50% {
+      /* gentle peak glow */
+      text-shadow:
+        0 0 8px rgba(255, 200, 100, 0.6),
+        0 0 20px rgba(255, 140, 0, 0.35),
+        0 0 36px rgba(255, 100, 0, 0.18);
+      opacity: 1;
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -150% 0;
+    }
+    100% {
+      background-position: 250% 0;
+    }
+  }
+
+  /* Slow, minimal blink used only for small UI hints (e.g., 'Scroll to explore') */
+  @keyframes slowBlink {
+    0%,
+    20% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.25;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  .slow-blink {
+    animation: slowBlink 4s ease-in-out infinite;
+    animation-delay: 0.6s;
+    will-change: opacity;
+  }
+
+  /* Neon border running animation */
+  @keyframes neonBorderRun {
+    0% {
+      background-position: 0% center;
+    }
+    100% {
+      background-position: 200% center;
+    }
+  }
+
+  .neon-heading {
+    color: #ffffff;
+    /* plain bold heading without glow */
+    text-shadow: none;
+    font-weight: 800;
+    animation: none;
+  }
+
+  .neon-highlight {
+    /* simple highlight color without shining/glow effects */
+    color: #ff5b23;
+    text-shadow: none;
+    background: none;
+    -webkit-background-clip: unset;
+    background-clip: unset;
+    -webkit-text-fill-color: initial;
+    animation: none;
+  }
+
+  .neon-subheading {
+    color: #f2f2f2;
+    text-shadow: none;
+    font-weight: 600 !important;
+  }
+
+  /* Hero subheading - using DM Sans */
+  .hero-subheading {
+    font-family: var(--font-dm-sans, sans-serif);
+    font-weight: 400;
+    color: #cccccc;
+    font-size: 1.125rem; /* 18px */
+    line-height: 1.6;
+    line-height: 1.5; /* ensure wrap into two lines */
+  }
+
+  .glow-orange {
+    @apply shadow-lg shadow-orange-500/20;
+  }
+
+  .glow-teal {
+    @apply shadow-lg shadow-teal-500/20;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-orange-400 to-orange-500 bg-clip-text text-transparent;
+  }
+
+  /* Typography utilities - Footer style */
+  .title-uppercase {
+    @apply uppercase text-white font-semibold tracking-tight;
+  }
+
+  .section-title {
+    @apply font-semibold text-white tracking-tight;
+  }
+
+  .label-uppercase {
+    @apply uppercase text-xs tracking-widest font-semibold text-white/80;
+  }
+
+  /* Typography overrides: keep body light but make headings/subheadings bold & brighter */
+  /* Headings (primary) */
+  h1,
+  h2,
+  h3 {
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: 0.01em;
+  }
+
+  /* Subheadings */
+  h4,
+  h5,
+  h6 {
+    font-weight: 600 !important;
+    color: #ffffff;
+    letter-spacing: 0.01em;
+  }
+
+  /* Body text and inline elements: optimized for accessibility and contrast */
+  p,
+  li,
+  span,
+  button {
+    font-weight: 400 !important;
+    color: #f7f7f7 !important;
+    letter-spacing: 0.01em;
+  }
+
+  /* Default links: white; hover to hot orange to match theme */
+  a {
+    color: #ffffff;
+    font-weight: 500;
+    transition: color 200ms ease;
+  }
+
+  a:hover,
+  a:focus {
+    color: #ff5b23 !important;
+    outline: none;
+  }
+
+  /* Theme native selects to match project inputs */
+  select {
+    @apply w-full rounded-md border border-white/10 bg-white/5 text-white px-3 py-2 text-sm focus:outline-none;
+  }
+  select:focus {
+    @apply ring-1 ring-orange-500/30;
+  }
+
+  /* Native option dropdown styling where supported */
+  select option {
+    background-color: rgba(0, 0, 0, 0.9);
+    color: #ffffff;
+  }
+
+  /* For WebKit-based browsers, attempt to theme the dropdown */
+  select::-webkit-dropdown-button {
+    background-color: transparent;
+  }
+  /* Keep Tailwind `text-white` utility unchanged (do not force color) */
+  /* Enhanced animations */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes pulse-glow {
+    0%,
+    100% {
+      box-shadow: 0 0 20px rgba(255, 91, 35, 0.2);
+    }
+    50% {
+      box-shadow: 0 0 40px rgba(255, 91, 35, 0.4);
+    }
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-6px);
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-float-slow {
+    animation: float 9s ease-in-out infinite;
+  }
+
+  /* Smooth transitions */
+  .transition-smooth {
+    @apply transition-all duration-500 ease-out;
+  }
+
+  /* Text utilities */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Premium royal touch animations */
+  @keyframes shimmer {
+    0%,
+    100% {
+      background-position: 200% center;
+    }
+    50% {
+      background-position: 0% center;
+    }
+  }
+
+  @keyframes soft-glow {
+    0%,
+    100% {
+      box-shadow:
+        0 0 20px rgba(255, 91, 35, 0.15),
+        inset 0 0 20px rgba(255, 91, 35, 0.05);
+    }
+    50% {
+      box-shadow:
+        0 0 40px rgba(255, 91, 35, 0.25),
+        inset 0 0 20px rgba(255, 91, 35, 0.1);
+    }
+  }
+
+  .animate-shimmer {
+    animation: shimmer 3s ease-in-out infinite;
+    background-size: 200% 100%;
+  }
+
+  .animate-soft-glow {
+    animation: soft-glow 3s ease-in-out infinite;
+  }
+
+  /* Luxe button styles */
+  .btn-luxury {
+    @apply relative overflow-hidden rounded-full font-semibold transition-all duration-300;
+  }
+
+  .btn-luxury::before {
+    content: "";
+    @apply absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-20 transition-opacity duration-300;
+    transform: translateX(-100%);
+  }
+
+  /* Hide all scrollbars for clean appearance */
+  *::-webkit-scrollbar {
+    display: none;
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Background styling matching landing page */
+  .bg-page {
+    position: relative;
+    background: url("/MFC%20theme.png");
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  /* Dim overlay only affects the background, not content */
+  .bg-page::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* dim background while keeping content bright */
+    background: linear-gradient(var(--bg-overlay), var(--bg-overlay));
+    pointer-events: none;
+    z-index: 0;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer base {
+  :root {
+    /* Global background overlay color - light overlay to show background image */
+    --bg-overlay: rgba(0, 0, 0, 0.8);
+    --background: 0 0% 1.5%;
+    --foreground: 0 0% 80%;
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 80%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 80%;
+    --primary: 11 100% 50%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 168 89% 24%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 20%;
+    --muted-foreground: 0 0% 70%;
+    --accent: 11 100% 50%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 15%;
+    --input: 0 0% 12%;
+    --ring: 11 100% 50%;
+    --chart-1: 11 100% 50%;
+    --chart-2: 168 89% 24%;
+    --chart-3: 0 0% 50%;
+    --chart-4: 0 0% 35%;
+    --chart-5: 0 0% 25%;
+    --radius: 0.75rem;
+    --sidebar-background: 0 0% 5%;
+    --sidebar-foreground: 0 0% 80%;
+    --sidebar-primary: 11 100% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 168 89% 24%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 0 0% 15%;
+    --sidebar-ring: 11 100% 50%;
+  }
+  .dark {
+    --background: 0 0% 1.5%;
+    --foreground: 0 0% 80%;
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 80%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 80%;
+    --primary: 11 100% 50%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 168 89% 24%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 20%;
+    --muted-foreground: 0 0% 70%;
+    --accent: 11 100% 50%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 15%;
+    --input: 0 0% 12%;
+    --ring: 11 100% 50%;
+    --chart-1: 11 100% 50%;
+    --chart-2: 168 89% 24%;
+    --chart-3: 0 0% 50%;
+    --chart-4: 0 0% 35%;
+    --chart-5: 0 0% 25%;
+    --sidebar-background: 0 0% 5%;
+    --sidebar-foreground: 0 0% 80%;
+    --sidebar-primary: 11 100% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 168 89% 24%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 0 0% 15%;
+    --sidebar-ring: 11 100% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* prefers-reduced-motion fallback */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ========================================
+   RESPONSIVE UTILITIES & BREAKPOINTS
+   ======================================== */
+
+/* Mobile First - Base styles for mobile devices (< 640px) */
+@media (max-width: 639px) {
+  :root {
+    --x: 50vw;
+    --y: 50vh;
+  }
+
+  /* Disable cursor on touch devices */
+  body {
+    cursor: auto !important;
+  }
+
+  /* Hide custom cursor on mobile */
+  .custom-cursor {
+    display: none !important;
+  }
+
+  /* Mobile grid - smaller, tighter grid for performance */
+  .grid-bg-mobile {
+    backgroundsize: 30px 30px;
+  }
+
+  /* Reduce hero padding on mobile */
+  .hero-section-mobile {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 2rem;
+    padding-bottom: 1rem;
+  }
+
+  /* Mobile typography scales */
+  h1 {
+    font-size: 1.5rem;
+    line-height: 1.2;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+    line-height: 1.3;
+  }
+
+  h3 {
+    font-size: 1.125rem;
+    line-height: 1.4;
+  }
+
+  p {
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  /* Reduce gaps on mobile */
+  .gap-responsive {
+    gap: 1rem;
+  }
+
+  /* Stack grid items on mobile */
+  .grid-responsive {
+    grid-template-columns: 1fr;
+  }
+
+  /* Reduce card padding on mobile */
+  .card-responsive {
+    padding: 1rem;
+  }
+
+  /* Mobile button sizing */
+  button {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+
+  /* Reduce space between sections on mobile */
+  section {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+}
+
+/* Tablet view (640px - 1023px) */
+@media (min-width: 640px) and (max-width: 1023px) {
+  :root {
+    --x: 50vw;
+    --y: 50vh;
+  }
+
+  /* Disable cursor on tablet touch devices */
+  @media (hover: none) {
+    body {
+      cursor: auto !important;
+    }
+
+    .custom-cursor {
+      display: none !important;
+    }
+  }
+
+  /* Tablet grid - medium size */
+  .grid-bg-tablet {
+    backgroundsize: 40px 40px;
+  }
+
+  /* Tablet typography scales */
+  h1 {
+    font-size: 2rem;
+    line-height: 1.2;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    line-height: 1.3;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+  }
+
+  /* Tablet grid layout */
+  .grid-responsive {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Reduce gaps slightly on tablet */
+  .gap-responsive {
+    gap: 1.5rem;
+  }
+
+  /* Tablet card padding */
+  .card-responsive {
+    padding: 1.25rem;
+  }
+
+  /* Tablet section spacing */
+  section {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+}
+
+/* Desktop view (1024px and up) */
+@media (min-width: 1024px) {
+  :root {
+    --x: 50vw;
+    --y: 50vh;
+  }
+
+  /* Enable cursor on desktop with hover capability */
+  body {
+    cursor: none;
+  }
+
+  .custom-cursor {
+    display: block;
+  }
+
+  /* Desktop grid - full size 50px + 100px layers */
+  .grid-bg-desktop {
+    backgroundsize:
+      50px 50px,
+      100px 100px;
+  }
+
+  /* Desktop typography - full size */
+  h1 {
+    font-size: 2.5rem;
+    line-height: 1.1;
+  }
+
+  h2 {
+    font-size: 1.875rem;
+    line-height: 1.2;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+  }
+
+  /* Full grid on desktop */
+  .grid-responsive {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+
+  /* Wider gaps on desktop */
+  .gap-responsive {
+    gap: 2rem;
+  }
+
+  /* Full card padding on desktop */
+  .card-responsive {
+    padding: 1.5rem;
+  }
+
+  /* Full section spacing on desktop */
+  section {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+}
+
+/* ========================================
+   RESPONSIVE TYPOGRAPHY CLASSES
+   ======================================== */
+
+.text-responsive-xl {
+  font-size: clamp(1.5rem, 5vw, 3rem);
+  line-height: 1.2;
+}
+
+.text-responsive-lg {
+  font-size: clamp(1.25rem, 4vw, 2rem);
+  line-height: 1.3;
+}
+
+.text-responsive-md {
+  font-size: clamp(1rem, 3vw, 1.5rem);
+  line-height: 1.4;
+}
+
+.text-responsive-sm {
+  font-size: clamp(0.875rem, 2.5vw, 1.125rem);
+  line-height: 1.5;
+}
+
+.text-responsive-xs {
+  font-size: clamp(0.75rem, 2vw, 1rem);
+  line-height: 1.6;
+}
+
+/* ========================================
+   RESPONSIVE SPACING UTILITIES
+   ======================================== */
+
+.px-responsive {
+  padding-left: clamp(1rem, 4vw, 4rem);
+  padding-right: clamp(1rem, 4vw, 4rem);
+}
+
+.py-responsive {
+  padding-top: clamp(1.5rem, 8vw, 4rem);
+  padding-bottom: clamp(1.5rem, 8vw, 4rem);
+}
+
+.gap-responsive-sm {
+  gap: clamp(0.5rem, 2vw, 1rem);
+}
+
+.gap-responsive-md {
+  gap: clamp(1rem, 3vw, 2rem);
+}
+
+.gap-responsive-lg {
+  gap: clamp(1.5rem, 4vw, 3rem);
+}
+
+/* ========================================
+   RESPONSIVE GRID BACKGROUND
+   ======================================== */
+
+.grid-background-responsive {
+  /* Mobile: 30px grid */
+  background-image:
+    linear-gradient(rgba(255, 90, 0, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 90, 0, 0.06) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+@media (min-width: 640px) {
+  .grid-background-responsive {
+    /* Tablet: 40px grid */
+    background-size: 40px 40px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid-background-responsive {
+    /* Desktop: 50px grid with dual layers */
+    background-image:
+      linear-gradient(rgba(255, 90, 0, 0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 90, 0, 0.08) 1px, transparent 1px),
+      linear-gradient(rgba(255, 90, 0, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 90, 0, 0.03) 1px, transparent 1px);
+    background-size:
+      50px 50px,
+      50px 50px,
+      100px 100px,
+      100px 100px;
+  }
+}
+
+/* ========================================
+   RESPONSIVE GLOW EFFECT
+   ======================================== */
+
+.glow-responsive {
+  /* Mobile: smaller glow radius */
+  background: radial-gradient(
+    200px at var(--x) var(--y),
+    rgba(255, 90, 0, 0.25),
+    transparent 60%
+  );
+}
+
+@media (min-width: 768px) {
+  .glow-responsive {
+    /* Tablet: medium glow */
+    background: radial-gradient(
+      250px at var(--x) var(--y),
+      rgba(255, 90, 0, 0.3),
+      transparent 65%
+    );
+  }
+}
+
+@media (min-width: 1024px) {
+  .glow-responsive {
+    /* Desktop: full glow */
+    background: radial-gradient(
+      320px at var(--x) var(--y),
+      rgba(255, 90, 0, 0.35),
+      transparent 65%
+    );
+  }
+}
+
+/* ========================================
+   RESPONSIVE CONTAINER QUERIES
+   ======================================== */
+
+/* Flex direction responsive */
+.flex-responsive {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .flex-responsive {
+    flex-direction: row;
+  }
+}
+
+/* ========================================
+   MOBILE-FIRST ANIMATIONS
+   ======================================== */
+
+/* Reduce animations on mobile for better performance */
+@media (max-width: 639px) {
+  .animate-float,
+  .animate-float-slow,
+  .animate-pulse-glow {
+    animation: none;
+  }
+
+  .transition-smooth {
+    transition: none;
+  }
+}
+
+/* ========================================
+   RESPONSIVE FORM INPUTS
+   ======================================== */
+
+input,
+textarea,
+select {
+  font-size: 16px; /* Prevents zoom on mobile focus */
+  padding: clamp(0.5rem, 2vw, 0.75rem);
+}
+
+@media (max-width: 639px) {
+  input,
+  textarea,
+  select,
+  button {
+    min-height: 44px; /* Apple recommended touch target size */
+  }
+}
+
+/* ========================================
+   RESPONSIVE NAVIGATION
+   ======================================== */
+
+@media (max-width: 639px) {
+  nav {
+    padding: 0.75rem;
+  }
+
+  nav button,
+  nav a {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  nav {
+    padding: 1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  nav {
+    padding: 1.5rem;
+  }
+}
+
+/* ========================================
+   TOUCH-FRIENDLY ADJUSTMENTS
+   ======================================== */
+
+@media (hover: none) and (pointer: coarse) {
+  /* Touch device specific adjustments */
+  body {
+    cursor: auto;
+  }
+
+  /* Larger tap targets */
+  button,
+  a {
+    min-height: 48px;
+    min-width: 48px;
+  }
+
+  /* Remove hover states that don't apply on touch */
+  button:hover,
+  a:hover {
+    /* Let Tailwind's hover classes handle styling */
+  }
+}
+
+/* ========================================
+   LANDSCAPE MODE ADJUSTMENTS
+   ======================================== */
+
+@media (orientation: landscape) and (max-height: 500px) {
+  section {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+  }
+
+  .animate-float,
+  .animate-float-slow {
+    animation: none;
+  }
+}

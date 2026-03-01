@@ -1,0 +1,266 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  overflow: hidden;
+  background-color: #0f0f0f; /* Matte black */
+  position: relative;
+}
+
+/* PERFORMANCE SAFETY */
+@media (prefers-reduced-motion: reduce) {
+  .background-comets::before,
+  .background-comets::after {
+    animation: none;
+  }
+}
+
+/* ===== RTL SUPPORT ===== */
+html[dir="rtl"],
+html.rtl,
+html.arabic {
+  direction: rtl;
+}
+
+body[dir="rtl"],
+body.rtl,
+body.arabic {
+  direction: rtl;
+}
+
+/* RTL-specific utilities */
+.rtl .ltr-text {
+  direction: ltr;
+  unicode-bidi: bidi-override;
+}
+
+.rtl .flex-rtl {
+  flex-direction: row-reverse;
+}
+
+.rtl .mr-safe {
+  margin-right: auto;
+  margin-left: 0;
+}
+
+.rtl .ml-safe {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.rtl .pr-safe {
+  padding-right: auto;
+  padding-left: 0;
+}
+
+.rtl .pl-safe {
+  padding-left: auto;
+  padding-right: 0;
+}
+
+/* Fix scrollbar position in RTL */
+.rtl ::-webkit-scrollbar {
+  position: absolute;
+  right: 0;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  /* Dropdown select styling */
+  select {
+    color-scheme: dark;
+  }
+
+  select option {
+    background-color: #000000;
+    color: #ffffff;
+  }
+
+  select option:hover {
+    background-color: #1a1a1a;
+  }
+
+  select option:checked {
+    background: linear-gradient(to right, #ff9a56, #000000);
+    background-color: #ff9a56;
+    color: #000000;
+  }
+}
+
+/* --- Matte black dim background with orange grid/comets -- */
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #0f0f0f !important; /* Matte black */
+  /* Static dim orange grid */
+  background-image: !important
+    linear-gradient(rgba(255,106,0,0.12) 2px, transparent 2px),
+    linear-gradient(90deg, rgba(255,106,0,0.12) 2px, transparent 2px);
+  background-size: 100px 100px !important;
+  background-position: -2px -2px !important;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to bottom, transparent 0%, rgba(255,106,0,0.08) 40%, rgba(255,106,0,0.35) 70%, #ff6a00 90%, #ffae00 96%, #ffffff 100%),
+    linear-gradient(to bottom, transparent 0%, rgba(255,106,0,0.08) 40%, rgba(255,106,0,0.35) 70%, #ff6a00 90%, #ffae00 96%, #ffffff 100%),
+    linear-gradient(to bottom, transparent 0%, rgba(255,106,0,0.08) 40%, rgba(255,106,0,0.35) 70%, #ff6a00 90%, #ffae00 96%, #ffffff 100%),
+    linear-gradient(to bottom, transparent 0%, rgba(255,106,0,0.08) 40%, rgba(255,106,0,0.35) 70%, #ff6a00 90%, #ffae00 96%, #ffffff 100%),
+    linear-gradient(to bottom, transparent 0%, rgba(255,106,0,0.08) 40%, rgba(255,106,0,0.35) 70%, #ff6a00 90%, #ffae00 96%, #ffffff 100%),
+    linear-gradient(to bottom, transparent 0%, rgba(255,106,0,0.08) 40%, rgba(255,106,0,0.35) 70%, #ff6a00 90%, #ffae00 96%, #ffffff 100%);
+  background-size: 2px 160px;
+  background-repeat: no-repeat;
+  background-position:
+    100px -150px,
+    300px -420px,
+    500px -260px,
+    700px -780px,
+    900px -510px,
+    1100px -900px;
+  animation: fall 7.5s linear infinite;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, transparent 0%, rgba(255,106,0,0.08) 40%, rgba(255,106,0,0.35) 70%, #ff6a00 90%, #ffae00 96%, #ffffff 100%),
+    linear-gradient(to right, transparent 0%, rgba(255,106,0,0.08) 40%, rgba(255,106,0,0.35) 70%, #ff6a00 90%, #ffae00 96%, #ffffff 100%),
+    linear-gradient(to right, transparent 0%, rgba(255,106,0,0.08) 40%, rgba(255,106,0,0.35) 70%, #ff6a00 90%, #ffae00 96%, #ffffff 100%),
+    linear-gradient(to right, transparent 0%, rgba(255,106,0,0.08) 40%, rgba(255,106,0,0.35) 70%, #ff6a00 90%, #ffae00 96%, #ffffff 100%),
+    linear-gradient(to right, transparent 0%, rgba(255,106,0,0.08) 40%, rgba(255,106,0,0.35) 70%, #ff6a00 90%, #ffae00 96%, #ffffff 100%),
+    linear-gradient(to right, transparent 0%, rgba(255,106,0,0.08) 40%, rgba(255,106,0,0.35) 70%, #ff6a00 90%, #ffae00 96%, #ffffff 100%);
+  background-size: 160px 2px;
+  background-repeat: no-repeat;
+  background-position:
+    -250px 200px,
+    -600px 400px,
+    -150px 600px,
+    -800px 800px,
+    -450px 1000px,
+    -900px 1200px;
+  animation: slide 9.2s linear infinite;
+}
+
+@keyframes fall {
+  to {
+    background-position:
+      100px 120vh,
+      300px 120vh,
+      500px 120vh,
+      700px 120vh,
+      900px 120vh,
+      1100px 120vh;
+  }
+}
+
+@keyframes slide {
+  to {
+    background-position:
+      120vw 200px,
+      120vw 400px,
+      120vw 600px,
+      120vw 800px,
+      120vw 1000px,
+      120vw 1200px;
+  }
+}
+
+/* Hide cursor when hovering links/buttons */
+a:hover, button:hover {
+  cursor: none;
+}
