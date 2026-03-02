@@ -1,8 +1,12 @@
 {
   "css.lint.unknownAtRules": "ignore",
-  "css.lint.compatibleVendorPrefixes": "ignore",
-  "[css]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true
-  }
+  "scss.lint.unknownAtRules": "ignore",
+  "less.lint.unknownAtRules": "ignore",
+  "tailwindCSS.includeLanguages": {
+    "typescript": "javascript",
+    "typescriptreact": "javascript",
+    "javascriptreact": "javascript"
+  },
+  "tailwindCSS.emmetCompletions": true,
+  "editor.formatOnSave": false
 }
