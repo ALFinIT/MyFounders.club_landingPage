@@ -15,16 +15,19 @@ export function Navbar() {
         </Link>
 
         <div className="nav-links ml-auto mr-8 flex items-center gap-10">
-          <Link href="#story" className="text-[0.82rem] font-normal tracking-[.05em] text-[var(--silver)] transition-colors duration-200 hover:text-white">
+          <Link href="#story" className="nav-link-item text-[0.82rem] font-normal tracking-[.05em]">
             Our Story
           </Link>
-          <Link href="#gulf" className="text-[0.82rem] font-normal tracking-[.05em] text-[var(--silver)] transition-colors duration-200 hover:text-white">
+          <Link href="#gulf" className="nav-link-item text-[0.82rem] font-normal tracking-[.05em]">
             The Gulf
           </Link>
-          <Link href="#for" className="text-[0.82rem] font-normal tracking-[.05em] text-[var(--silver)] transition-colors duration-200 hover:text-white">
+          <Link href="#for" className="nav-link-item text-[0.82rem] font-normal tracking-[.05em]">
             Who It&apos;s For
           </Link>
-          <Link href="/events" className="text-[0.82rem] font-normal tracking-[.05em] text-[var(--silver)] transition-colors duration-200 hover:text-white">
+          <Link href="/survey" className="nav-link-item text-[0.82rem] font-normal tracking-[.05em]">
+            Survey
+          </Link>
+          <Link href="/events" className="nav-link-item text-[0.82rem] font-normal tracking-[.05em]">
             Events
           </Link>
         </div>

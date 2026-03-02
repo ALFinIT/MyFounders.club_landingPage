@@ -25,7 +25,7 @@ export function OriginStorySection() {
   }, []);
 
   return (
-    <section id="story" ref={ref} className="section-block px-[5%] py-[110px]">
+    <section id="story" ref={ref} className="section-block border-y border-[rgba(255,77,0,.12)] bg-[rgba(255,255,255,.015)] px-[5%] py-[110px]">
       <div className="site-shell story-grid grid grid-cols-1 gap-14 xl:grid-cols-[1fr_1fr] xl:gap-20">
         <div>
           <p className="section-lead reveal">The Origin Story</p>

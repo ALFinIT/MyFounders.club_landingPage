@@ -3,17 +3,6 @@ export function HeroSection() {
     <section id="top" className="section-block relative min-h-screen overflow-hidden px-[5%] pt-32.5">
       <div className="pointer-events-none absolute -right-20 -top-37.5 h-175 w-175 bg-[radial-gradient(circle,rgba(255,91,35,.11),transparent_65%)] animate-[breathe_9s_infinite]" />
       <div className="pointer-events-none absolute -bottom-20 -left-15 h-125 w-125 bg-[radial-gradient(circle,rgba(62,92,94,.13),transparent_68%)] animate-[breathe_12s_reverse_infinite]" />
-      <div
-        className="pointer-events-none absolute inset-0 opacity-70"
-        style={{
-          backgroundImage:
-            'linear-gradient(rgba(255,91,35,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,91,35,.03) 1px, transparent 1px)',
-          backgroundSize: '80px 80px',
-          WebkitMaskImage: 'radial-gradient(ellipse at 60% 25%, black 20%, transparent 65%)',
-          maskImage: 'radial-gradient(ellipse at 60% 25%, black 20%, transparent 65%)',
-        }}
-      />
-
       <div className="site-shell relative z-2">
         <p className="section-lead animate-[fadeUp_.8s_ease_.15s_both]">
           <span className="blink mr-2 inline-block">&bull;</span>

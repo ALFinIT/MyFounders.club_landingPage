@@ -45,15 +45,7 @@ export function GulfEcosystemSection() {
   }, []);
 
   return (
-    <section id="gulf" ref={ref} className="section-block relative overflow-hidden bg-[rgba(255,255,255,.012)] px-[5%] py-[110px]">
-      <div
-        className="pointer-events-none absolute inset-0 opacity-45"
-        style={{
-          backgroundImage:
-            'linear-gradient(rgba(255,91,35,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,91,35,.04) 1px, transparent 1px)',
-          backgroundSize: '74px 74px',
-        }}
-      />
+    <section id="gulf" ref={ref} className="section-block relative overflow-hidden border-y border-[rgba(255,77,0,.14)] bg-[rgba(255,255,255,.02)] px-[5%] py-[110px]">
       <div className="pointer-events-none absolute right-[-150px] top-[120px] h-[420px] w-[420px] bg-[radial-gradient(circle,rgba(62,92,94,.22),transparent_70%)]" />
       <div className="site-shell relative z-[2]">
         <div className="six-head grid grid-cols-1 gap-8 xl:grid-cols-[1fr_1fr] xl:items-end">
