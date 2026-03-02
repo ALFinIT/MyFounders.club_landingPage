@@ -45,14 +45,14 @@ export function WhoItsForSection() {
   const data = useMemo(() => tabs[active], [active]);
 
   return (
-    <section id="for" className="section-block px-[5%] py-[110px]">
+    <section id="for" className="section-block px-[5%] py-27.5">
       <div className="site-shell">
         <div className="grid grid-cols-1 gap-8 xl:grid-cols-[1fr_1fr] xl:items-end">
           <div>
             <p className="section-lead">Who It&apos;s For</p>
             <h2 className="section-title mt-5">Built for every founder at every stage.</h2>
           </div>
-          <p className="copy max-w-[500px] justify-self-end text-[.9rem]">{data.intro}</p>
+          <p className="copy max-w-125 justify-self-end text-[.9rem]">{data.intro}</p>
         </div>
 
         <div className="mt-10 inline-flex border border-[rgba(255,255,255,.09)] bg-[rgba(255,255,255,.035)] p-1">
@@ -62,7 +62,7 @@ export function WhoItsForSection() {
               type="button"
               onClick={() => setActive(tab)}
               className={`px-5 py-2 text-[.79rem] font-medium tracking-[.05em] transition-all duration-200 ${
-                active === tab ? 'bg-[var(--orange)] text-white' : 'text-[var(--silver)] hover:text-white'
+                active === tab ? 'bg-(--orange) text-white' : 'text-(--silver) hover:text-white'
               }`}
             >
               {tabs[tab].label}
@@ -81,7 +81,7 @@ export function WhoItsForSection() {
               }}
             >
               <span className="teal-badge">{card.tag}</span>
-              <h3 className="mt-4 font-(--font-display) text-[1.05rem] font-bold leading-[1.3] text-white">
+              <h3 style={{ fontFamily: 'var(--font-display)' }} className="mt-4 text-[1.05rem] font-bold leading-[1.3] text-white">
                 {card.title}
               </h3>
               <p className="copy mt-3 text-[.85rem]">{card.body}</p>
