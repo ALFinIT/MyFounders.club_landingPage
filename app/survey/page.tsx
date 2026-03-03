@@ -2,8 +2,8 @@ import Link from 'next/link';
 
 export default function SurveyPage() {
   return (
-    <main className="graph-grid-dim relative min-h-screen bg-background px-[5%] py-24 text-foreground">
-      <section className="site-shell border border-[rgba(255,255,255,.08)] bg-[rgba(255,255,255,.02)] p-8 md:p-12">
+    <main className="graph-grid-dim relative min-h-screen bg-background px-[5%] py-16 text-foreground">
+      <section className="site-shell glass-card p-8 md:p-12">
         <p className="section-lead">Gulf Survey 2028</p>
         <h1 className="hero-title mt-4 max-w-[16ch] text-white">
           15 minutes.

@@ -1,0 +1,40 @@
+[
+  {
+    "id": "m-1",
+    "firstName": "Katerina",
+    "lastName": "Hayes",
+    "email": "katerina@foundrylabs.ai",
+    "role": "Startup Founder / Co-Founder",
+    "location": "Dubai, UAE",
+    "nationality": "Greek",
+    "status": "active",
+    "profileCompleted": true,
+    "joinedAt": "2026-02-11T10:40:00.000Z",
+    "whatsapp": "+971501112233",
+    "linkedin": "https://linkedin.com/in/katerina-hayes"
+  },
+  {
+    "id": "m-2",
+    "firstName": "Faisal",
+    "lastName": "Al-Nuaimi",
+    "email": "faisal@nabdh.vc",
+    "role": "Investor (VC, Angel, Syndicate)",
+    "location": "Doha, Qatar",
+    "nationality": "Qatari",
+    "status": "pending",
+    "profileCompleted": true,
+    "joinedAt": "2026-02-19T08:10:00.000Z"
+  },
+  {
+    "id": "m-3",
+    "firstName": "Sarah",
+    "lastName": "Rahman",
+    "email": "sarah@scalebridge.co",
+    "role": "Service Provider",
+    "location": "Riyadh, Saudi Arabia",
+    "nationality": "British",
+    "status": "under_review",
+    "profileCompleted": false,
+    "joinedAt": "2026-02-23T14:20:00.000Z"
+  }
+]

@@ -3,9 +3,9 @@
 import { useEffect, useRef } from 'react';
 
 const countries = [
-  { flag: '\uD83C\uDDF8\uD83C\uDDE6', name: 'Saudi Arabia', sub: 'Capital of Gulf Capital', a: '$1.34B', a2: 'Raised H1 2025', b: '1,699+', b2: 'Active Startups', c: '#23', c2: 'Global Digital Rank', tag: 'Vision 2030 - SIDF Tech Fund - Monshaat' },
+  { code: 'sa', name: 'Saudi Arabia', sub: 'Capital of Gulf Capital', a: '$1.34B', a2: 'Raised H1 2025', b: '1,699+', b2: 'Active Startups', c: '#23', c2: 'Global Digital Rank', tag: 'Vision 2030 - SIDF Tech Fund - Monshaat' },
   {
-    flag: '\uD83C\uDDE6\uD83C\uDDEA',
+    code: 'ae',
     name: 'United Arab Emirates',
     sub: 'Global Tech Launchpad',
     a: '$541M',
@@ -16,10 +16,10 @@ const countries = [
     c2: 'Startups by 2031',
     tag: 'D33 Agenda - Hub71 - DIFC - ADGM',
   },
-  { flag: '\uD83C\uDDF6\uD83C\uDDE6', name: 'Qatar', sub: 'Knowledge Economy Pioneer', a: 'QDB', a2: 'Founder Support', b: 'QNV', b2: '2030 Diversification', c: 'AI+', c2: 'R&D Expansion', tag: 'Qatar Foundation - QDB - QSTP' },
-  { flag: '\uD83C\uDDE7\uD83C\uDDED', name: 'Bahrain', sub: 'Fintech and Financial Hub', a: 'EDB', a2: 'Scale-up Support', b: '0%', b2: 'Corporate Tax Entry', c: '#1', c2: 'Fintech Sandbox', tag: 'Bahrain EDB - Fintech Bay - CBB Sandbox' },
-  { flag: '\uD83C\uDDF0\uD83C\uDDFC', name: 'Kuwait', sub: 'Family Office Capital Hub', a: 'KFAS', a2: 'Startup Programs', b: 'KV', b2: 'Vision 2035', c: 'HNW+', c2: 'Investor Density', tag: 'KFAS - NBK Capital - Kuwait Vision 2035' },
-  { flag: '\uD83C\uDDF4\uD83C\uDDF2', name: 'Oman', sub: 'Rising Tech Destination', a: 'OTF', a2: 'Active Deployment', b: 'OV 2040', b2: 'Growth Roadmap', c: 'ITHRAA', c2: 'Market Access', tag: 'Oman Tech Fund - ITHRAA - Oman Vision 2040' },
+  { code: 'qa', name: 'Qatar', sub: 'Knowledge Economy Pioneer', a: 'QDB', a2: 'Founder Support', b: 'QNV', b2: '2030 Diversification', c: 'AI+', c2: 'R&D Expansion', tag: 'Qatar Foundation - QDB - QSTP' },
+  { code: 'bh', name: 'Bahrain', sub: 'Fintech and Financial Hub', a: 'EDB', a2: 'Scale-up Support', b: '0%', b2: 'Corporate Tax Entry', c: '#1', c2: 'Fintech Sandbox', tag: 'Bahrain EDB - Fintech Bay - CBB Sandbox' },
+  { code: 'kw', name: 'Kuwait', sub: 'Family Office Capital Hub', a: 'KFAS', a2: 'Startup Programs', b: 'KV', b2: 'Vision 2035', c: 'HNW+', c2: 'Investor Density', tag: 'KFAS - NBK Capital - Kuwait Vision 2035' },
+  { code: 'om', name: 'Oman', sub: 'Rising Tech Destination', a: 'OTF', a2: 'Active Deployment', b: 'OV 2040', b2: 'Growth Roadmap', c: 'ITHRAA', c2: 'Market Access', tag: 'Oman Tech Fund - ITHRAA - Oman Vision 2040' },
 ];
 
 export function GulfEcosystemSection() {
@@ -70,7 +70,7 @@ export function GulfEcosystemSection() {
             ['400+', 'PROGRAMS, GRANTS AND', 'ACCELERATORS MAPPED'],
           ].map(([v, l1, l2]) => (
             <div key={v} className="border border-[rgba(255,91,35,.15)] bg-[rgba(255,91,35,.055)] p-6 text-center">
-              <p style={{ fontFamily: 'var(--font-display)' }} className="text-[2.3rem] font-extrabold leading-none text-(--orange)">
+              <p style={{ fontFamily: 'var(--font-display)' }} className="text-[2.3rem] font-extrabold leading-none text-white">
                 {v}
               </p>
               <p className="mt-2 text-[.7rem] uppercase tracking-[.13em] text-[var(--silver)]">{l1}</p>
@@ -82,8 +82,11 @@ export function GulfEcosystemSection() {
         <div className="country-grid card-grid reveal d3 mt-9 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
           {countries.map((country, i) => (
             <article key={country.name} className={`card-base country-card reveal d${Math.min(i + 1, 5)}`}>
-              <p className="text-[1rem] leading-none">{country.flag}</p>
-              <h3 style={{ fontFamily: 'var(--font-display)' }} className="mt-2 text-[1.5rem] font-extrabold leading-tight text-white">
+              <span className={`fi fi-${country.code} inline-block h-4 w-6`} aria-hidden="true" />
+              <h3
+                style={{ fontFamily: 'var(--font-display)' }}
+                className="mt-2 whitespace-nowrap text-[1.12rem] font-extrabold leading-tight text-white md:text-[1.2rem]"
+              >
                 {country.name}
               </h3>
               <p className="mt-1 text-[.68rem] uppercase tracking-[.14em] text-(--orange)">{country.sub}</p>

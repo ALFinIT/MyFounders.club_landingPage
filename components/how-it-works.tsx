@@ -33,7 +33,7 @@ export function HowItWorksSection() {
 
         <div className="steps-grid relative mt-11 grid grid-cols-1 gap-[2px] md:grid-cols-2 xl:grid-cols-4">
           {steps.map((step) => (
-            <article key={step.n} className="relative border border-[rgba(255,255,255,.055)] bg-[rgba(255,255,255,.02)] p-7 text-center">
+            <article key={step.n} className="panel-urgency-hover glass-card relative p-7 text-center">
               <div className="relative z-[2] mx-auto flex h-[44px] w-[44px] items-center justify-center border border-[var(--orange)] bg-[rgba(255,91,35,.07)] font-(--font-display) text-[.92rem] font-extrabold text-(--orange)">
                 {step.n}
               </div>

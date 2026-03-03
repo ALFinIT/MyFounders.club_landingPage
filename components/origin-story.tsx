@@ -48,7 +48,7 @@ export function OriginStorySection() {
           </div>
         </div>
 
-        <aside className="reveal d4 relative self-center border border-[rgba(255,255,255,.07)] bg-[rgba(255,255,255,.025)] p-9">
+        <aside className="reveal d4 glass-card relative self-center p-9">
           <div className="absolute right-0 top-0 h-[2px] w-[55%] bg-[var(--orange)]" />
           <p className="font-(--font-display) text-[1.55rem] font-semibold italic leading-[1.5] text-white">
             &ldquo;I didn&apos;t just build MFC for founders. I built it for the version of me that arrived here not knowing where to start, what to trust, or who to ask.&rdquo;

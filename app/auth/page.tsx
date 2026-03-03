@@ -1,6 +1,7 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import Image from 'next/image'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 type Tab = 'signup' | 'signin'
@@ -19,17 +20,6 @@ export default function AuthPage() {
   })
 
   const isSignup = tab === 'signup'
-  const heading = useMemo(
-    () => (
-      <>
-        <span className="block">Build in the Gulf.</span>
-        <span className="block text-(--orange)">Wired to the World.</span>
-        <span className="block pl-[3vw] text-[rgba(255,255,255,.72)]">Six Countries. One Platform.</span>
-      </>
-    ),
-    []
-  )
-
   const setField = (name: keyof typeof form, value: string) => {
     setForm((prev) => ({ ...prev, [name]: value }))
     if (error) setError('')
@@ -78,18 +68,23 @@ export default function AuthPage() {
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,91,35,.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,91,35,.05)_1px,transparent_1px)] bg-[size:48px_48px] opacity-55" />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_80%_14%,rgba(12,22,26,.7),transparent_48%)]" />
 
-      <section className="site-shell relative z-[2] grid min-h-screen grid-cols-1 items-center gap-2 py-8 lg:grid-cols-[1.12fr_.88fr]">
-        <div className="hidden border border-[rgba(255,255,255,.065)] bg-[rgba(255,255,255,.015)] p-8 lg:block">
+      <section className="site-shell relative z-[2] grid min-h-screen grid-cols-1 items-center gap-2 py-5 lg:grid-cols-[1.12fr_.88fr]">
+        <div className="glass-card-soft hidden p-8 lg:block">
           <span className="orange-badge">
             <span className="beta-dot" />
             Beta Access - Spots Limited
           </span>
 
-          <h1 className="mt-7 font-(--font-display) text-[clamp(2.1rem,3.8vw,3.9rem)] leading-[.94] tracking-[-.03em] text-white">{heading}</h1>
-          <p className="copy mt-6 max-w-[420px]">
-            The Gulf&apos;s AI-powered startup intelligence platform for grants, investors, free zones, and verified founder communities across all six GCC markets.
-            Built for founders who are done guessing.
-          </p>
+          <div className="mt-7">
+            <Image src="/Full_logo_mfc.png" alt="MyFounders.Club" width={244} height={58} priority />
+          </div>
+          <h1 className="mt-7 font-(--font-display) text-[clamp(2.1rem,3.8vw,3.9rem)] leading-[.94] tracking-[-.03em] text-white">
+            <span className="text-(--orange)">Hello</span>!
+            <br />
+            It&apos;s <span className="text-(--orange)">good</span> to
+            <br />
+            see you <span className="text-(--orange)">again</span>
+          </h1>
 
           <div className="card-grid mt-8 grid grid-cols-1">
             {[
@@ -123,8 +118,8 @@ export default function AuthPage() {
           </div>
         </div>
 
-        <div className="mx-auto w-full max-w-[470px] border border-[rgba(255,255,255,.08)] bg-[rgba(7,7,7,.94)] p-6 sm:p-9">
-          <div className="grid grid-cols-2 gap-1 border border-[rgba(255,255,255,.08)] bg-[rgba(255,255,255,.02)] p-1">
+        <div className="glass-card-strong mx-auto w-full max-w-[470px] p-6 sm:p-9">
+          <div className="glass-card-soft grid grid-cols-2 gap-1 p-1">
             <button
               className={`px-4 py-2 text-[.78rem] uppercase tracking-[.12em] transition ${isSignup ? 'bg-(--orange) font-(--font-display) font-bold text-white' : 'text-(--silver)'}`}
               onClick={() => setTab('signup')}
@@ -144,13 +139,13 @@ export default function AuthPage() {
           <h2 className="mt-6 font-(--font-display) text-[clamp(1.7rem,3vw,2.2rem)] font-extrabold tracking-[-.02em] text-white">Join MyFounders.Club</h2>
           <p className="copy mt-2 text-[.8rem]">Free access. No credit card. The Gulf&apos;s founder community awaits.</p>
 
-          <div className="mt-5 border border-[rgba(62,92,94,.35)] bg-[rgba(62,92,94,.1)] p-4">
+          <div className="mt-5 border border-[rgba(62,92,94,.45)] bg-[rgba(62,92,94,.2)] p-4">
             <p className="text-[.65rem] uppercase tracking-[.14em] text-[#90c4c6]">Quick Test Credentials</p>
             <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
-              <button type="button" onClick={() => fillDemo('member')} className="border border-[rgba(255,255,255,.09)] bg-[rgba(255,255,255,.02)] p-2 text-left text-[.78rem] hover:border-[rgba(255,91,35,.4)]">
+              <button type="button" onClick={() => fillDemo('member')} className="glass-card-soft p-2 text-left text-[.78rem] hover:border-[rgba(255,91,35,.4)]">
                 Founder Demo
               </button>
-              <button type="button" onClick={() => fillDemo('admin')} className="border border-[rgba(255,255,255,.09)] bg-[rgba(255,255,255,.02)] p-2 text-left text-[.78rem] hover:border-[rgba(255,91,35,.4)]">
+              <button type="button" onClick={() => fillDemo('admin')} className="glass-card-soft p-2 text-left text-[.78rem] hover:border-[rgba(255,91,35,.4)]">
                 Admin Demo
               </button>
             </div>

@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
+@import 'flag-icons/css/flag-icons.min.css';
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
@@ -31,6 +32,13 @@
   --input: #101010;
   --ring: var(--orange);
   --radius: 0;
+  --glass-bg: rgba(14, 14, 14, 0.78);
+  --glass-bg-soft: rgba(18, 18, 18, 0.66);
+  --glass-bg-strong: rgba(10, 10, 10, 0.9);
+  --glass-border: rgba(255, 255, 255, 0.14);
+  --glass-border-soft: rgba(255, 255, 255, 0.1);
+  --glass-shadow: 0 10px 28px rgba(0, 0, 0, 0.32);
+  --glass-shadow-hover: 0 14px 40px rgba(0, 0, 0, 0.42);
   --font-sans: 'DM Sans', sans-serif;
   --font-display: 'Syne', sans-serif;
   --font-mono: 'Syne', sans-serif;
@@ -103,12 +111,12 @@
       auto,
       68px 68px,
       68px 68px;
-    background-position:
+  background-position:
       0 0,
       0 0,
       0 0,
-      center center,
-      center center;
+      center -28px,
+      center -28px;
   }
 
   body::after {
@@ -187,14 +195,15 @@
   z-index: 0;
   background-image:
     linear-gradient(rgba(255, 91, 35, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 91, 35, 0.08) 1px, transparent 1px),
-    radial-gradient(circle, rgba(255, 91, 35, 0.13) 1.4px, transparent 2.1px);
+    linear-gradient(90deg, rgba(255, 91, 35, 0.08) 1px, transparent 1px);
   background-size:
     56px 56px,
-    56px 56px,
-    36px 36px;
+    56px 56px;
+  background-position:
+    center -22px,
+    center -22px;
   mask-image: radial-gradient(circle at 50% 20%, #000 18%, transparent 76%);
-  opacity: 0.58;
+  opacity: 0.66;
 }
 
 .graph-grid-dim::after {
@@ -216,6 +225,18 @@
   color: var(--orange);
 }
 
+.hero-eyebrow {
+  font-size: clamp(0.82rem, 0.94vw, 0.96rem);
+  letter-spacing: 0.12em;
+}
+
+.hero-eyebrow-square {
+  width: 8px;
+  height: 8px;
+  background: var(--orange);
+  box-shadow: 0 0 12px rgba(255, 91, 35, 0.4);
+}
+
 .section-title {
   font-family: var(--font-display);
   font-weight: 800;
@@ -233,12 +254,20 @@
   letter-spacing: -0.03em;
 }
 
+.hero-title-premium {
+  text-wrap: balance;
+  will-change: transform, opacity;
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.06),
+    0 12px 28px rgba(0, 0, 0, 0.35);
+}
+
 .copy {
   font-family: var(--font-sans);
   font-weight: 300;
   font-size: clamp(0.85rem, 0.9vw, 0.93rem);
   line-height: 1.78;
-  color: var(--silver);
+  color: #d6d6d6;
 }
 
 .hero-sub {
@@ -349,8 +378,86 @@
 .card-base {
   position: relative;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.055);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  box-shadow: var(--glass-shadow);
+}
+
+.card-base h3,
+.card-base h4,
+.card-base h5 {
+  color: #ffffff;
+}
+
+.card-base .copy,
+.glass-card .copy,
+.glass-card-soft .copy,
+.glass-card-strong .copy {
+  color: #d8d8d8;
+}
+
+.glass-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  box-shadow: var(--glass-shadow);
+}
+
+.glass-card-soft {
+  background: var(--glass-bg-soft);
+  border: 1px solid var(--glass-border-soft);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+}
+
+.glass-card-strong {
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  box-shadow: var(--glass-shadow);
+}
+
+.glass-card:hover {
+  box-shadow: var(--glass-shadow-hover);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.card-heading {
+  color: #fff;
+  font-weight: 800;
+}
+
+.card-body {
+  color: #d6d6d6;
+  line-height: 1.7;
+}
+
+.panel-urgency-hover {
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.panel-urgency-hover:hover {
+  border-color: rgba(255, 77, 0, 0.3);
+  box-shadow:
+    0 0 0 1px rgba(255, 77, 0, 0.08) inset,
+    0 10px 32px rgba(255, 77, 0, 0.12);
+  background: rgba(255, 255, 255, 0.028);
+}
+
+.hero-stat-card {
+  transition: border-color 0.22s ease, background 0.22s ease, transform 0.22s ease;
+}
+
+.hero-stat-card:hover {
+  border-color: rgba(255, 91, 35, 0.34);
+  background: rgba(20, 20, 20, 0.78);
+  box-shadow: none;
+  transform: translateY(-1px);
 }
 
 .value-card {

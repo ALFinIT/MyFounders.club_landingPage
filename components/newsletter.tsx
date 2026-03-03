@@ -40,16 +40,16 @@ export function NewsletterSection() {
             Weekly ecosystem intelligence - funding rounds, regulatory shifts, programs opening. Every Tuesday morning.
           </p>
         </div>
-        <form onSubmit={handleSubmit} className="flex w-full max-w-[520px] items-center gap-2">
+        <form onSubmit={handleSubmit} className="flex w-full max-w-[760px] items-center gap-2">
           <input
             ref={inputRef}
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="your@email.com"
-            className="form-input min-w-0 flex-1"
+            className="form-input min-w-0 flex-1 md:min-w-[430px]"
           />
-          <button type="submit" disabled={loading} className="nl-btn min-w-[160px] disabled:opacity-70">
+          <button type="submit" disabled={loading} className="btn btn-primary min-w-[190px] disabled:opacity-70">
             {loading ? 'Sending...' : 'Subscribe Free'}
           </button>
         </form>

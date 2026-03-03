@@ -44,8 +44,8 @@ export function ProblemWeSolveSection() {
 
         <div className="iso-grid card-grid mt-9 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4">
           {stats.map(([value, text], i) => (
-            <article key={value} className={`reveal d${Math.min(i + 1, 5)} border border-[rgba(255,255,255,.06)] bg-[rgba(5,5,5,.4)] p-7 text-center`}>
-              <p style={{ fontFamily: 'var(--font-display)' }} className="text-[2.8rem] font-extrabold leading-none text-(--orange)">
+            <article key={value} className={`reveal d${Math.min(i + 1, 5)} glass-card p-7 text-center`}>
+              <p style={{ fontFamily: 'var(--font-display)' }} className="text-[2.8rem] font-extrabold leading-none text-white">
                 {value}
               </p>
               <p className="copy mt-3 text-[.85rem]">{text}</p>

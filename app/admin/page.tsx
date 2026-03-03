@@ -128,7 +128,7 @@ export default function AdminPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#050505] px-[5%] py-10 text-(--cloud)">
+    <main className="min-h-screen bg-[#050505] px-[5%] py-7 text-(--cloud)">
       <section className="site-shell">
         <header className="mb-6 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
@@ -156,7 +156,7 @@ export default function AdminPage() {
           ))}
         </div>
 
-        <div className="mt-6 border border-[rgba(255,255,255,.08)] bg-[rgba(255,255,255,.02)] p-4">
+        <div className="glass-card mt-6 p-4">
           <div className="grid grid-cols-1 gap-2 md:grid-cols-4">
             <input className="form-input" placeholder="Search name, email, city" value={filters.q} onChange={(e) => setFilters((s) => ({ ...s, q: e.target.value }))} />
             <select className="form-input" value={filters.role} onChange={(e) => setFilters((s) => ({ ...s, role: e.target.value }))}>
@@ -174,7 +174,7 @@ export default function AdminPage() {
           <p className="mt-2 text-[.74rem] text-[rgba(255,255,255,.62)]">{filtered.length} results of {members.length}</p>
         </div>
 
-        <div className="mt-6 overflow-x-auto border border-[rgba(255,255,255,.08)] bg-[rgba(255,255,255,.02)]">
+        <div className="glass-card mt-6 overflow-x-auto">
           <table className="min-w-full border-collapse">
             <thead className="bg-[rgba(255,91,35,.08)]">
               <tr className="text-left text-[.66rem] uppercase tracking-[.14em] text-(--orange)">

@@ -100,7 +100,7 @@ export function WaitlistFormSection() {
           Just your ambition and an honest profile.
         </p>
 
-        <div className="mt-8 border border-[rgba(255,255,255,.09)] bg-[rgba(255,255,255,.025)] p-[34px] text-left">
+        <div className="glass-card mt-8 p-[34px] text-left">
           {success ? (
             <div className="py-8 text-center animate-[fadeUp_.45s_ease_both]">
               <div className="mx-auto flex h-[54px] w-[54px] items-center justify-center rounded-full border border-[var(--orange)] text-[1.35rem] font-bold text-(--orange)">

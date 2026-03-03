@@ -105,8 +105,8 @@ export default function ProfilePage() {
   if (!ready) return null
 
   return (
-    <main className="min-h-screen bg-[#050505] px-[5%] py-12 text-(--cloud)">
-      <section className="site-shell border border-[rgba(255,255,255,.06)] bg-[rgba(255,255,255,.02)] p-6 sm:p-8">
+    <main className="min-h-screen bg-[#050505] px-[5%] py-7 text-(--cloud)">
+      <section className="site-shell glass-card p-6 sm:p-8">
         <div className="flex flex-col gap-6 border-b border-[rgba(255,255,255,.08)] pb-6 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="section-lead">Member Onboarding</p>
@@ -126,11 +126,11 @@ export default function ProfilePage() {
         {!done ? (
           <>
             <div className="mt-6 grid grid-cols-1 gap-2 md:grid-cols-2">
-              <div className={`border p-4 ${step === 1 ? 'border-[rgba(255,91,35,.42)] bg-[rgba(255,91,35,.07)]' : 'border-[rgba(255,255,255,.08)] bg-[rgba(255,255,255,.02)]'}`}>
+              <div className={`p-4 ${step === 1 ? 'border border-[rgba(255,91,35,.42)] bg-[rgba(255,91,35,.11)]' : 'glass-card-soft'}`}>
                 <p className="font-(--font-display) text-[.74rem] uppercase tracking-[.14em] text-(--orange)">01 Basic Info</p>
                 <p className="copy mt-2 text-[.82rem]">Identity and context for personalized GCC recommendations.</p>
               </div>
-              <div className={`border p-4 ${step === 2 ? 'border-[rgba(255,91,35,.42)] bg-[rgba(255,91,35,.07)]' : 'border-[rgba(255,255,255,.08)] bg-[rgba(255,255,255,.02)]'}`}>
+              <div className={`p-4 ${step === 2 ? 'border border-[rgba(255,91,35,.42)] bg-[rgba(255,91,35,.11)]' : 'glass-card-soft'}`}>
                 <p className="font-(--font-display) text-[.74rem] uppercase tracking-[.14em] text-(--orange)">02 Your Role</p>
                 <p className="copy mt-2 text-[.82rem]">Select one primary role to personalize your member dashboard.</p>
               </div>
@@ -171,7 +171,7 @@ export default function ProfilePage() {
                       type="button"
                       key={r.key}
                       onClick={() => setForm((prev) => ({ ...prev, role: r.key }))}
-                      className={`text-left p-4 border transition ${form.role === r.key ? 'border-(--orange) bg-[rgba(255,91,35,.1)]' : 'border-[rgba(255,255,255,.08)] bg-[rgba(255,255,255,.02)] hover:border-[rgba(255,91,35,.35)]'}`}
+                      className={`text-left p-4 transition ${form.role === r.key ? 'border border-(--orange) bg-[rgba(255,91,35,.14)]' : 'glass-card-soft hover:border-[rgba(255,91,35,.35)]'}`}
                     >
                       <p className="font-(--font-display) text-[.92rem] text-white">{r.icon} {r.key}</p>
                       <p className="copy mt-1 text-[.8rem]">{r.desc}</p>
