@@ -68,8 +68,14 @@ export function Navbar() {
       setUser(null);
       setOpen(false);
       setMobileOpen(false);
-      window.location.replace('/auth?tab=signin');
+      window.location.replace('/');
     }
+  };
+
+  const goTo = (path: string) => {
+    setOpen(false);
+    setMobileOpen(false);
+    window.location.assign(path);
   };
 
   return (
@@ -125,13 +131,21 @@ export function Navbar() {
             {open ? (
               <div className="absolute right-0 top-[calc(100%+8px)] min-w-44 border border-[rgba(255,255,255,.12)] bg-[rgba(8,8,8,.98)] p-1.5 shadow-[0_12px_36px_rgba(0,0,0,.45)]">
                 {user?.role === 'admin' ? (
-                  <Link href="/admin" className="block px-3 py-2 text-[.76rem] uppercase tracking-[.12em] text-[rgba(255,255,255,.9)] hover:bg-[rgba(255,91,35,.08)] hover:text-(--orange)">
+                  <button
+                    type="button"
+                    onClick={() => goTo('/admin')}
+                    className="block w-full px-3 py-2 text-left text-[.76rem] uppercase tracking-[.12em] text-[rgba(255,255,255,.9)] hover:bg-[rgba(255,91,35,.08)] hover:text-(--orange)"
+                  >
                     Dashboard
-                  </Link>
+                  </button>
                 ) : null}
-                <Link href="/profile" className="block px-3 py-2 text-[.76rem] uppercase tracking-[.12em] text-[rgba(255,255,255,.9)] hover:bg-[rgba(255,91,35,.08)] hover:text-(--orange)">
+                <button
+                  type="button"
+                  onClick={() => goTo('/profile')}
+                  className="block w-full px-3 py-2 text-left text-[.76rem] uppercase tracking-[.12em] text-[rgba(255,255,255,.9)] hover:bg-[rgba(255,91,35,.08)] hover:text-(--orange)"
+                >
                   Profile Settings
-                </Link>
+                </button>
                 <button
                   type="button"
                   onClick={logout}
@@ -192,13 +206,13 @@ export function Navbar() {
             ) : (
               <div className="grid gap-2">
                 {user?.role === 'admin' ? (
-                  <Link href="/admin" className="nav-link-item py-2" onClick={() => setMobileOpen(false)}>
+                  <button type="button" className="nav-link-item py-2 text-left" onClick={() => goTo('/admin')}>
                     Dashboard
-                  </Link>
+                  </button>
                 ) : null}
-                <Link href="/profile" className="nav-link-item py-2" onClick={() => setMobileOpen(false)}>
+                <button type="button" className="nav-link-item py-2 text-left" onClick={() => goTo('/profile')}>
                   Profile Settings
-                </Link>
+                </button>
                 <button
                   type="button"
                   onClick={logout}
