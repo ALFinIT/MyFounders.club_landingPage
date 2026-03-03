@@ -106,7 +106,7 @@ export function WaitlistFormSection() {
               <div className="mx-auto flex h-[54px] w-[54px] items-center justify-center rounded-full border border-[var(--orange)] text-[1.35rem] font-bold text-(--orange)">
                 {'\u2713'}
               </div>
-              <h3 className="mt-5 font-(--font-display) text-[1.55rem] font-extrabold text-white">You&apos;re on the list.</h3>
+              <h3 className="mt-5 font-(--font-display) text-[1.55rem] font-extrabold text-white">Submitted successfully.</h3>
               <p className="mx-auto mt-3 max-w-[430px] text-[.9rem] leading-[1.7] text-(--silver)">
                 Thanks for joining. We&apos;ll email next steps and event invites soon. Follow us on LinkedIn for launch updates.
               </p>
@@ -209,8 +209,12 @@ export function WaitlistFormSection() {
                 </select>
               </div>
 
-              <button type="submit" disabled={loading} className="btn btn-submit mt-2 disabled:opacity-70">
-                {loading ? 'Submitting...' : "Join the Beta Waitlist - It's Free ->"}
+              <button
+                type="submit"
+                disabled={loading}
+                className="btn btn-submit mt-2 bg-[#00C896] shadow-[0_10px_32px_rgba(0,200,150,.32)] hover:bg-[#00b786] hover:shadow-[0_14px_40px_rgba(0,200,150,.42)] disabled:opacity-70"
+              >
+                {loading ? 'Submitting...' : 'Submitted Successfully'}
               </button>
 
               <p className="text-center text-[0.72rem] text-[rgba(204,204,204,.6)]">

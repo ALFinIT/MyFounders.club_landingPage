@@ -33,23 +33,23 @@ export function NewsletterSection() {
     <section className="section-block border-t border-[rgba(255,255,255,.055)] px-[5%] py-[68px]">
       <div className="site-shell nl-inner grid grid-cols-1 gap-6 md:grid-cols-[1fr_auto] md:items-center">
         <div>
-          <p className="font-(--font-display) text-[1.6rem] font-bold text-white">
+          <p className="font-(--font-display) text-[clamp(1.35rem,5vw,1.6rem)] font-bold text-white">
             The Gulf <span className="text-(--orange)">Pulse</span>
           </p>
-          <p className="copy mt-2 text-[.85rem]">
-            Weekly ecosystem intelligence - funding rounds, regulatory shifts, programs opening. Every Tuesday morning.
+          <p className="copy mt-2 text-[.85rem] sm:text-[.9rem]">
+            Weekly ecosystem intelligence: funding rounds, regulatory shifts, and new programs across GCC. Every Tuesday. No noise.
           </p>
         </div>
-        <form onSubmit={handleSubmit} className="flex w-full max-w-[760px] items-center gap-2">
+        <form onSubmit={handleSubmit} className="flex w-full max-w-[760px] flex-col items-stretch gap-2 sm:flex-row sm:items-center">
           <input
             ref={inputRef}
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="your@email.com"
-            className="form-input min-w-0 flex-1 md:min-w-[430px]"
+            className="form-input min-w-0 w-full flex-1 sm:min-w-[280px] md:min-w-[430px]"
           />
-          <button type="submit" disabled={loading} className="btn btn-primary min-w-[190px] disabled:opacity-70">
+          <button type="submit" disabled={loading} className="btn btn-primary w-full whitespace-nowrap sm:w-auto sm:min-w-[190px] disabled:opacity-70">
             {loading ? 'Sending...' : 'Subscribe Free'}
           </button>
         </form>

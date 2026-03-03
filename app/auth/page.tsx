@@ -1,13 +1,14 @@
 'use client'
 
 import Image from 'next/image'
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useEffect, useMemo, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 
 type Tab = 'signup' | 'signin'
 
 export default function AuthPage() {
-  const router = useRouter()
+  const searchParams = useSearchParams()
+  const initialTab = useMemo<Tab>(() => (searchParams.get('tab') === 'signin' ? 'signin' : 'signup'), [searchParams])
   const [tab, setTab] = useState<Tab>('signup')
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -20,6 +21,11 @@ export default function AuthPage() {
   })
 
   const isSignup = tab === 'signup'
+
+  useEffect(() => {
+    setTab(initialTab)
+  }, [initialTab])
+
   const setField = (name: keyof typeof form, value: string) => {
     setForm((prev) => ({ ...prev, [name]: value }))
     if (error) setError('')
@@ -54,7 +60,7 @@ export default function AuthPage() {
       if (!response.ok) throw new Error(data?.error || 'Request failed')
 
       localStorage.setItem('mfc_user', JSON.stringify(data.user))
-      router.push(data.redirectTo ?? '/profile')
+      window.location.replace(data.redirectTo ?? '/profile')
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Unable to continue.')
     } finally {
@@ -138,6 +144,27 @@ export default function AuthPage() {
 
           <h2 className="mt-6 font-(--font-display) text-[clamp(1.7rem,3vw,2.2rem)] font-extrabold tracking-[-.02em] text-white">Join MyFounders.Club</h2>
           <p className="copy mt-2 text-[.8rem]">Free access. No credit card. The Gulf&apos;s founder community awaits.</p>
+          <p className="mt-2 text-[.72rem] tracking-[.07em] text-[rgba(255,255,255,.66)]">
+            {isSignup ? (
+              <>
+                Already have an account?{' '}
+                <button type="button" onClick={() => setTab('signin')} className="font-semibold uppercase text-(--orange) hover:text-[#ff7a4a]">
+                  Sign In
+                </button>
+              </>
+            ) : (
+              <>
+                No account?{' '}
+                <button type="button" onClick={() => setTab('signup')} className="font-semibold uppercase text-(--orange) hover:text-[#ff7a4a]">
+                  Create Account
+                </button>{' '}
+                {' · '}
+                <button type="button" onClick={() => setTab('signup')} className="font-semibold uppercase text-(--orange) hover:text-[#ff7a4a]">
+                  Sign Up
+                </button>
+              </>
+            )}
+          </p>
 
           <div className="mt-5 border border-[rgba(62,92,94,.45)] bg-[rgba(62,92,94,.2)] p-4">
             <p className="text-[.65rem] uppercase tracking-[.14em] text-[#90c4c6]">Quick Test Credentials</p>

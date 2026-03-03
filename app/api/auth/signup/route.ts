@@ -13,6 +13,42 @@ type LocalUser = {
   createdAt: string
 }
 
+const SESSION_MAX_AGE = 60 * 60 * 24 * 7
+
+function attachSessionCookies(response: NextResponse, user: { id: string; firstName: string; lastName: string; email: string; role: 'member' | 'admin' }) {
+  const safeUser = encodeURIComponent(
+    JSON.stringify({
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      role: user.role,
+    })
+  )
+
+  response.cookies.set('mfc_session', 'active', {
+    httpOnly: true,
+    sameSite: 'lax',
+    secure: process.env.NODE_ENV === 'production',
+    path: '/',
+    maxAge: SESSION_MAX_AGE,
+  })
+  response.cookies.set('mfc_role', user.role, {
+    httpOnly: true,
+    sameSite: 'lax',
+    secure: process.env.NODE_ENV === 'production',
+    path: '/',
+    maxAge: SESSION_MAX_AGE,
+  })
+  response.cookies.set('mfc_user', safeUser, {
+    httpOnly: true,
+    sameSite: 'lax',
+    secure: process.env.NODE_ENV === 'production',
+    path: '/',
+    maxAge: SESSION_MAX_AGE,
+  })
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
@@ -46,26 +82,31 @@ export async function POST(request: NextRequest) {
 
     const supabase = createAdminClient()
     if (supabase) {
-      try {
-        await supabase.from('profiles').insert({
-          user_id: user.id,
-          name: `${firstName} ${lastName}`.trim(),
-          email,
-          created_at: new Date().toISOString(),
-        })
-      } catch (err) {
-        console.error('Supabase signup sync failed:', err)
-      }
+      void (async () => {
+        try {
+          await supabase.from('profiles').insert({
+            user_id: user.id,
+            name: `${firstName} ${lastName}`.trim(),
+            email,
+            created_at: new Date().toISOString(),
+          })
+        } catch (err) {
+          console.error('Supabase signup sync failed:', err)
+        }
+      })()
     }
 
-    return NextResponse.json(
+    const sessionUser = { id: user.id, firstName, lastName, email, role: user.role as const }
+    const response = NextResponse.json(
       {
         success: true,
-        user: { id: user.id, firstName, lastName, email, role: user.role },
+        user: sessionUser,
         redirectTo: '/profile',
       },
       { status: 201 }
     )
+    attachSessionCookies(response, sessionUser)
+    return response
   } catch (error) {
     console.error('Auth signup error:', error)
     return NextResponse.json({ error: 'Failed to create account.' }, { status: 500 })

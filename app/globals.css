@@ -794,6 +794,11 @@
     width: min(1240px, calc(100% - 32px));
   }
 
+  .section-block {
+    padding-top: 72px !important;
+    padding-bottom: 72px !important;
+  }
+
   .country-grid,
   .value-grid,
   .for-grid,
@@ -820,5 +825,9 @@
   .nl-btn {
     width: 100%;
     justify-content: center;
+  }
+
+  .value-grid > article {
+    padding: 22px 18px !important;
   }
 }

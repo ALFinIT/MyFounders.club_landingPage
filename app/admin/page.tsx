@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
-import { useRouter } from 'next/navigation'
 
 type Member = {
   id: string
@@ -25,28 +24,36 @@ const statusColor: Record<Member['status'], string> = {
 }
 
 export default function AdminPage() {
-  const router = useRouter()
   const [members, setMembers] = useState<Member[]>([])
   const [selected, setSelected] = useState<Member | null>(null)
   const [filters, setFilters] = useState({ q: '', role: '', status: '', country: '' })
 
   useEffect(() => {
-    const raw = localStorage.getItem('mfc_user')
-    if (!raw) {
-      router.replace('/auth')
-      return
-    }
-    const user = JSON.parse(raw) as { role?: string; email?: string }
-    if (user.role !== 'admin' && user.email !== 'admin@mfc.demo') {
-      router.replace('/auth')
-      return
+    const bootstrap = async () => {
+      try {
+        const sessionRes = await fetch('/api/auth/session', { cache: 'no-store' })
+        if (!sessionRes.ok) {
+          window.location.replace('/auth?tab=signin')
+          return
+        }
+        const sessionData = await sessionRes.json()
+        const user = sessionData?.user as { role?: string; email?: string } | undefined
+        if (!user || (user.role !== 'admin' && user.email !== 'admin@mfc.demo')) {
+          window.location.replace('/auth?tab=signin')
+          return
+        }
+        localStorage.setItem('mfc_user', JSON.stringify(user))
+
+        const membersRes = await fetch('/api/admin/members')
+        const membersData = await membersRes.json()
+        setMembers(Array.isArray(membersData.members) ? membersData.members : [])
+      } catch {
+        setMembers([])
+      }
     }
 
-    fetch('/api/admin/members')
-      .then((r) => r.json())
-      .then((d) => setMembers(Array.isArray(d.members) ? d.members : []))
-      .catch(() => setMembers([]))
-  }, [router])
+    void bootstrap()
+  }, [])
 
   const filtered = useMemo(() => {
     const q = filters.q.trim().toLowerCase()

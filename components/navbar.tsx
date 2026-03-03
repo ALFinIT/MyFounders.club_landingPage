@@ -3,7 +3,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useRouter } from 'next/navigation';
 
 type SessionUser = {
   firstName?: string;
@@ -13,10 +12,10 @@ type SessionUser = {
 };
 
 export function Navbar() {
-  const router = useRouter();
   const menuRef = useRef<HTMLDivElement | null>(null);
   const [user, setUser] = useState<SessionUser | null>(null);
   const [open, setOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
     const readSession = () => {
@@ -59,15 +58,22 @@ export function Navbar() {
     return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
   }, [fullName]);
 
-  const logout = () => {
-    localStorage.removeItem('mfc_user');
-    setUser(null);
-    setOpen(false);
-    router.push('/');
+  const logout = async () => {
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+    } catch {
+      // Always clear local cache even if network request fails.
+    } finally {
+      localStorage.removeItem('mfc_user');
+      setUser(null);
+      setOpen(false);
+      setMobileOpen(false);
+      window.location.replace('/auth?tab=signin');
+    }
   };
 
   return (
-    <nav className="nav-shell fixed left-0 right-0 top-0 z-[100] border-b border-[rgba(255,91,35,.1)] bg-[rgba(5,5,5,.92)] px-[5%] py-[18px] backdrop-blur-[20px]">
+    <nav className="nav-shell sticky left-0 right-0 top-0 z-[100] border-b border-[rgba(255,91,35,.1)] bg-[rgba(5,5,5,.92)] px-[5%] py-[18px] backdrop-blur-[20px]">
       <div className="site-shell flex items-center justify-between">
         <Link href="/#top" className="flex items-center gap-3">
           <Image src="/App Icon Orange.svg" alt="MyFounders.Club" width={30} height={30} priority />
@@ -76,7 +82,7 @@ export function Navbar() {
           </span>
         </Link>
 
-        <div className="nav-links ml-auto mr-8 flex items-center gap-10">
+        <div className="nav-links ml-auto mr-8 hidden items-center gap-10 md:flex">
           <Link href="/#story" className="nav-link-item">
             Our Story
           </Link>
@@ -95,16 +101,16 @@ export function Navbar() {
         </div>
 
         {!user ? (
-          <div className="flex items-center gap-4">
+          <div className="hidden items-center gap-4 md:flex">
             <a href="/auth" className="btn btn-primary">
               Get Early Access
             </a>
-            <Link href="/auth" className="nav-link-item">
+            <Link href="/auth?tab=signin" className="nav-link-item">
               Sign In
             </Link>
           </div>
         ) : (
-          <div ref={menuRef} className="relative">
+          <div ref={menuRef} className="relative hidden md:block">
             <button
               type="button"
               className="flex items-center gap-2.5 border border-[rgba(255,255,255,.12)] bg-[rgba(255,255,255,.03)] px-2.5 py-1.5 transition hover:border-[rgba(255,91,35,.4)]"
@@ -132,7 +138,69 @@ export function Navbar() {
             ) : null}
           </div>
         )}
+
+        <button
+          type="button"
+          onClick={() => setMobileOpen((v) => !v)}
+          className="inline-flex h-10 w-10 items-center justify-center border border-[rgba(255,255,255,.14)] bg-[rgba(255,255,255,.03)] md:hidden"
+          aria-label="Open menu"
+          aria-expanded={mobileOpen}
+        >
+          <span className="relative block h-3.5 w-4">
+            <span className={`absolute left-0 right-0 h-[1.5px] bg-white transition ${mobileOpen ? 'top-[6px] rotate-45' : 'top-0'}`} />
+            <span className={`absolute left-0 right-0 top-[6px] h-[1.5px] bg-white transition ${mobileOpen ? 'opacity-0' : 'opacity-100'}`} />
+            <span className={`absolute left-0 right-0 h-[1.5px] bg-white transition ${mobileOpen ? 'top-[6px] -rotate-45' : 'top-[12px]'}`} />
+          </span>
+        </button>
       </div>
+
+      {mobileOpen ? (
+        <div className="site-shell mt-3 border border-[rgba(255,255,255,.1)] bg-[rgba(8,8,8,.98)] p-3 md:hidden">
+          <div className="grid gap-2">
+            <Link href="/#story" className="nav-link-item py-2" onClick={() => setMobileOpen(false)}>
+              Our Story
+            </Link>
+            <Link href="/#gulf" className="nav-link-item py-2" onClick={() => setMobileOpen(false)}>
+              The Gulf
+            </Link>
+            <Link href="/#for" className="nav-link-item py-2" onClick={() => setMobileOpen(false)}>
+              Who It&apos;s For
+            </Link>
+            <Link href="/survey" className="nav-link-item py-2" onClick={() => setMobileOpen(false)}>
+              Survey
+            </Link>
+            <Link href="/events" className="nav-link-item py-2" onClick={() => setMobileOpen(false)}>
+              Events
+            </Link>
+          </div>
+
+          <div className="mt-3 border-t border-[rgba(255,255,255,.08)] pt-3">
+            {!user ? (
+              <div className="grid gap-2">
+                <Link href="/auth" className="btn btn-primary text-center" onClick={() => setMobileOpen(false)}>
+                  Get Early Access
+                </Link>
+                <Link href="/auth?tab=signin" className="nav-link-item py-2 text-center" onClick={() => setMobileOpen(false)}>
+                  Sign In
+                </Link>
+              </div>
+            ) : (
+              <div className="grid gap-2">
+                <Link href="/profile" className="nav-link-item py-2" onClick={() => setMobileOpen(false)}>
+                  Profile Settings
+                </Link>
+                <button
+                  type="button"
+                  onClick={logout}
+                  className="nav-link-item py-2 text-left"
+                >
+                  Logout
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      ) : null}
     </nav>
   );
 }

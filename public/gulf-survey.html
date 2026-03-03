@@ -44,7 +44,11 @@ body{background:var(--black);color:var(--text);font-family:'DM Sans',sans-serif;
 body::before{content:'';position:fixed;top:0;left:0;width:100%;height:4px;background:linear-gradient(transparent,rgba(255,77,0,0.18),transparent);z-index:9999;pointer-events:none;animation:scanline 1.1s ease-out 0.1s 1 forwards}
 
 /* ── TOP BAR ── */
-.topbar{background:var(--orange);color:#fff;font-family:'Space Mono',monospace;font-size:11px;padding:9px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;position:relative;z-index:10;animation:fadeIn 0.4s ease both;box-shadow:0 2px 28px rgba(255,77,0,0.55)}
+.topbar{background:var(--orange);color:#fff;font-family:'Space Mono',monospace;font-size:11px;padding:9px 20px;position:relative;z-index:10;animation:fadeIn 0.4s ease both;box-shadow:0 2px 28px rgba(255,77,0,0.55)}
+.topbar.hidden{display:none}
+.topbar-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.topbar-msg{flex:1;min-width:0}
+.topbar-meta{display:flex;align-items:center;gap:10px}
 .close-btn{background:rgba(0,0,0,0.22);border:none;color:#fff;font-family:'Space Mono',monospace;font-size:10px;padding:5px 12px;cursor:pointer;letter-spacing:0.05em;transition:background 0.2s,transform 0.15s}
 .close-btn:hover{background:rgba(0,0,0,0.5);transform:scale(1.06)}
 .badge-spot{background:#fff;color:var(--orange);font-weight:700;padding:3px 9px;font-size:13px;display:inline-block}
@@ -65,7 +69,7 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:4px;backgr
 .hero p.sub{margin-top:20px;color:#999;max-width:640px;font-size:14px;line-height:1.75;animation:fadeUp 0.7s ease 0.55s both}
 
 /* ── REWARD CARDS ── */
-.rewards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:2px;background:var(--border);border:1px solid var(--border);max-width:900px;margin:0 24px 26px;animation:fadeUp 0.7s ease 0.65s both}
+.rewards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:2px;background:var(--border);border:1px solid var(--border);width:min(900px,calc(100% - 48px));margin:0 auto 26px;animation:fadeUp 0.7s ease 0.65s both}
 .reward-card{background:var(--card);padding:24px 20px;position:relative;overflow:hidden;transition:transform 0.25s,box-shadow 0.25s;cursor:default}
 .reward-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,77,0,0.05) 0%,transparent 55%);opacity:0;transition:opacity 0.3s}
 .reward-card:hover{transform:translateY(-5px);box-shadow:0 14px 44px rgba(255,77,0,0.22),0 0 0 1px rgba(255,77,0,0.35);z-index:2}
@@ -83,7 +87,7 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:4px;backgr
 .reward-card .value-tag{margin-top:14px;font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:var(--gold);text-shadow:0 0 14px var(--gold-glow)}
 
 /* ── COUNTDOWN ── */
-.countdown-outer{max-width:900px;margin:0 24px 20px;animation:fadeUp 0.7s ease 0.75s both}
+.countdown-outer{width:min(900px,calc(100% - 48px));margin:0 auto 20px;animation:fadeUp 0.7s ease 0.75s both}
 .countdown-inner{background:var(--card);border:1px solid var(--border);padding:16px 22px;display:flex;align-items:center;gap:20px;transition:border-color 0.3s,box-shadow 0.3s}
 .countdown-inner:hover{border-color:rgba(255,77,0,0.3);box-shadow:0 0 32px rgba(255,77,0,0.09)}
 .timer-label{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:0.12em;font-family:'Space Mono',monospace;margin-bottom:4px}
@@ -91,7 +95,7 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:4px;backgr
 .spots-left{margin-left:auto;font-size:11px;color:var(--gold);font-family:'Space Mono',monospace;text-align:right}
 
 /* ── STATS ── */
-.stats-bar{max-width:900px;margin:0 24px 32px;display:grid;grid-template-columns:repeat(5,1fr);gap:2px;background:var(--border);animation:fadeUp 0.7s ease 0.85s both}
+.stats-bar{width:min(900px,calc(100% - 48px));margin:0 auto 32px;display:grid;grid-template-columns:repeat(5,1fr);gap:2px;background:var(--border);animation:fadeUp 0.7s ease 0.85s both}
 .stat-cell{background:var(--card);padding:16px 12px;text-align:center;transition:background 0.2s,transform 0.2s;cursor:default;position:relative;overflow:hidden}
 .stat-cell::after{content:'';position:absolute;top:0;left:0;right:0;height:0;background:var(--orange);transition:height 0.2s}
 .stat-cell:hover{background:var(--card2);transform:translateY(-2px)}
@@ -100,10 +104,10 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:4px;backgr
 .stat-cell .desc{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;margin-top:3px}
 
 /* ── GLOW DIVIDER ── */
-.glow-divider{max-width:900px;margin:0 24px 22px;height:1px;background:linear-gradient(90deg,transparent,rgba(255,77,0,0.35),transparent)}
+.glow-divider{width:min(900px,calc(100% - 48px));margin:0 auto 22px;height:1px;background:linear-gradient(90deg,transparent,rgba(255,77,0,0.35),transparent)}
 
 /* ── PROGRESS ── */
-.progress-wrap{max-width:900px;margin:0 24px 26px;animation:fadeUp 0.6s ease 0.95s both}
+.progress-wrap{width:min(900px,calc(100% - 48px));margin:0 auto 26px;animation:fadeUp 0.6s ease 0.95s both}
 .progress-label{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);display:flex;justify-content:space-between;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.1em}
 .progress-bar-bg{height:3px;background:var(--border)}
 .progress-bar-fill{height:3px;background:var(--orange);width:0%;transition:width 0.5s cubic-bezier(0.4,0,0.2,1);animation:progressGlow 2.2s ease-in-out infinite;position:relative}
@@ -158,19 +162,21 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:4px;backgr
 .cta-note{font-size:11px;color:var(--muted);text-align:center;margin-top:14px;font-family:'Space Mono',monospace}
 .disclaimer{font-size:11px;color:#303030;margin-top:10px;text-align:center}
 
-@media(max-width:640px){.stats-bar{grid-template-columns:repeat(3,1fr)}.rewards-grid{grid-template-columns:1fr}.hero h1{font-size:52px}}
+@media(max-width:640px){.topbar-inner{flex-direction:column;align-items:flex-start}.topbar-meta{width:100%;justify-content:flex-start;flex-wrap:wrap}.stats-bar{grid-template-columns:repeat(3,1fr)}.rewards-grid{grid-template-columns:1fr}.hero h1{font-size:52px}}
 </style>
 </head>
 <body>
 
 <!-- TOP BAR -->
-<div class="topbar">
-  <span>⚡ Limited to 500 founders. Awards nominations &amp; forum tickets are first-come, first-served. Do not close this page.</span>
-  <div style="display:flex;align-items:center;gap:10px">
-    <span class="badge-spot" id="spot-count">312</span>
+<div class="topbar" id="spots-banner">
+  <div class="topbar-inner">
+  <span class="topbar-msg">⚡ Limited to 500 founders. Awards nominations &amp; forum tickets are first-come, first-served. Do not close this page.</span>
+  <div class="topbar-meta">
+    <span class="badge-spot" id="spot-count">500</span>
     <span style="font-size:10px;opacity:0.82">SPOTS LEFT</span>
     <button class="close-btn">✕ CLOSE</button>
   </div>
+</div>
 </div>
 
 <!-- LOGO -->
@@ -554,14 +560,35 @@ function tick(){
 setInterval(tick,1000);
 
 /* ── SPOT COUNT SIMULATE ── */
-let spots = 312;
-setInterval(()=>{
-  if(spots>302 && Math.random()<0.25){
-    spots--;
-    document.getElementById('spot-count').textContent = spots;
-    document.getElementById('spot-claimed').textContent = 500-spots;
+const TOTAL_CAPACITY = 500;
+const spotsBanner = document.getElementById('spots-banner');
+const closeBannerBtn = document.querySelector('.topbar .close-btn');
+
+if (closeBannerBtn && spotsBanner) {
+  closeBannerBtn.addEventListener('click', () => {
+    spotsBanner.classList.add('hidden');
+  });
+}
+
+function renderSpots(remainingSpots) {
+  const safeRemaining = Math.max(0, Math.min(TOTAL_CAPACITY, Number(remainingSpots) || TOTAL_CAPACITY));
+  document.getElementById('spot-count').textContent = String(safeRemaining);
+  document.getElementById('spot-claimed').textContent = String(TOTAL_CAPACITY - safeRemaining);
+}
+
+async function refreshSpots() {
+  try {
+    const response = await fetch('/api/survey/spots', { cache: 'no-store' });
+    if (!response.ok) return;
+    const data = await response.json();
+    renderSpots(data?.remainingSpots);
+  } catch {
+    // Keep current value if endpoint is temporarily unavailable.
   }
-},9000);
+}
+
+void refreshSpots();
+setInterval(refreshSpots, 15000);
 
 /* ── SCROLL REVEAL ── */
 const observer = new IntersectionObserver((entries)=>{
@@ -595,15 +622,48 @@ document.querySelectorAll('input,textarea,select').forEach(el=>{
 });
 
 /* ── SUBMIT ── */
-function handleSubmit(){
+let submitting = false;
+async function handleSubmit(){
+  if (submitting) return;
+  submitting = true;
   const btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  btn.style.cursor = 'wait';
+
+  const payload = {
+    user: null,
+    answers: {
+      fullName: document.querySelectorAll('.survey-field')[0]?.value ?? '',
+      companyName: document.querySelectorAll('.survey-field')[1]?.value ?? '',
+    }
+  };
+
+  let submitOk = false;
+  try {
+    const response = await fetch('/api/survey/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    submitOk = response.ok;
+  } catch {
+    submitOk = false;
+  }
+
+  if (!submitOk) {
+    btn.disabled = false;
+    btn.style.cursor = 'pointer';
+    submitting = false;
+    return;
+  }
   btn.style.background='var(--green)';
   btn.style.boxShadow='0 10px 55px var(--green-glow),0 0 80px rgba(0,200,150,0.12)';
-  btn.innerHTML='<span>✓ SUBMITTED — REWARDS UNLOCKED</span><span>★</span>';
+  btn.innerHTML='<span>&#10003; SUBMITTED - REWARDS UNLOCKED</span><span>&#9733;</span>';
   btn.style.cursor='default';
   btn.onclick=null;
   document.getElementById('progress-fill').style.width='100%';
   document.getElementById('pct-label').textContent='100%';
+  void refreshSpots();
 }
 </script>
 </body>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import Image from 'next/image';
 
 export function OriginStorySection() {
   const ref = useRef<HTMLElement>(null);
@@ -54,15 +55,15 @@ export function OriginStorySection() {
             &ldquo;I didn&apos;t just build MFC for founders. I built it for the version of me that arrived here not knowing where to start, what to trust, or who to ask.&rdquo;
           </p>
 
-          <div className="mt-8 flex items-center gap-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--orange)] font-(--font-display) text-lg font-bold text-white">
-              KH
+          <div className="mt-8">
+            <div className="group relative w-fit">
+              <div className="pointer-events-none absolute inset-0 -z-10 rounded-full bg-[rgba(255,91,35,.4)] opacity-0 blur-[24px] transition duration-300 group-hover:scale-110 group-hover:opacity-100" />
+              <Image src="/founders/kh-avatar.svg" alt="KH - Katerina Hayes" width={96} height={96} className="h-[96px] w-[96px] object-cover" />
             </div>
-            <div>
-              <p className="font-(--font-display) text-[1rem] font-semibold text-white">Katerina Hayes</p>
-              <p className="mt-0.5 text-[.83rem] text-[var(--silver)]">Founder &amp; CEO, MyFounders.Club</p>
-              <span className="orange-badge mt-2">Founded 2022 Riyadh</span>
-            </div>
+            <p className="mt-3 font-(--font-display) text-[.82rem] uppercase tracking-[.12em] text-(--orange)">KH</p>
+            <p className="mt-1 font-(--font-display) text-[1rem] font-semibold text-white">Katerina Hayes</p>
+            <p className="mt-0.5 text-[.83rem] text-[var(--silver)]">Founder &amp; CEO, MyFounders.Club</p>
+            <span className="orange-badge mt-2">Founded 2022 Riyadh</span>
           </div>
         </aside>
       </div>

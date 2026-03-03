@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
-import { useRouter } from 'next/navigation'
 
 const ROLES = [
   { key: 'Startup Founder / Co-Founder', icon: 'F', desc: 'Building and scaling a startup venture.' },
@@ -14,7 +13,6 @@ const ROLES = [
 ]
 
 export default function ProfilePage() {
-  const router = useRouter()
   const [ready, setReady] = useState(false)
   const [step, setStep] = useState(1)
   const [loading, setLoading] = useState(false)
@@ -35,25 +33,44 @@ export default function ProfilePage() {
   })
 
   useEffect(() => {
-    const raw = localStorage.getItem('mfc_user')
-    if (!raw) {
-      router.replace('/auth')
-      return
+    let mounted = true
+
+    const bootstrap = async () => {
+      try {
+        const response = await fetch('/api/auth/session', { cache: 'no-store' })
+        if (!response.ok) {
+          window.location.replace('/auth?tab=signin')
+          return
+        }
+        const data = await response.json()
+        const user = data?.user as { firstName?: string; lastName?: string; email?: string; role?: string } | undefined
+        if (!user?.email) {
+          window.location.replace('/auth?tab=signin')
+          return
+        }
+        if (user.role === 'admin') {
+          window.location.replace('/admin')
+          return
+        }
+        if (!mounted) return
+        localStorage.setItem('mfc_user', JSON.stringify(user))
+        setForm((prev) => ({
+          ...prev,
+          firstName: user.firstName ?? '',
+          lastName: user.lastName ?? '',
+          email: user.email ?? '',
+        }))
+        setReady(true)
+      } catch {
+        window.location.replace('/auth?tab=signin')
+      }
     }
-    try {
-      const user = JSON.parse(raw) as { firstName?: string; lastName?: string; email?: string; role?: string }
-      setForm((prev) => ({
-        ...prev,
-        firstName: user.firstName ?? '',
-        lastName: user.lastName ?? '',
-        email: user.email ?? '',
-      }))
-      if (user.role === 'admin') router.replace('/admin')
-      setReady(true)
-    } catch {
-      router.replace('/auth')
+
+    void bootstrap()
+    return () => {
+      mounted = false
     }
-  }, [router])
+  }, [])
 
   const progress = useMemo(() => {
     if (done) return 100
@@ -205,7 +222,7 @@ export default function ProfilePage() {
             <div className="mx-auto flex h-16 w-16 items-center justify-center border-2 border-(--orange) text-2xl text-(--orange)">OK</div>
             <h2 className="mt-5 font-(--font-display) text-[2rem] font-bold text-white">You&apos;re in, {form.firstName}.</h2>
             <p className="copy mx-auto mt-3 max-w-[560px]">Your profile is under review. Full access is typically unlocked within 24 hours.</p>
-            <button type="button" className="btn btn-primary mt-6" onClick={() => router.push('/')}>Back to Home</button>
+            <button type="button" className="btn btn-primary mt-6" onClick={() => window.location.replace('/')}>Back to Home</button>
           </div>
         )}
       </section>

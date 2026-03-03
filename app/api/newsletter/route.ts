@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { appendLocalRecord } from '@/utils/localDb';
+import { createAdminClient } from '@/utils/supabase/admin';
 
 // Beehiiv V2 Configuration (Recommended)
 const BEEHIIV_API_KEY_V2 = process.env.BEEHIIV_API_KEY_V2;
@@ -24,6 +26,39 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const normalizedEmail = String(email).trim().toLowerCase();
+    const now = new Date().toISOString();
+    const record = {
+      id: crypto.randomUUID(),
+      email: normalizedEmail,
+      source: 'newsletter',
+      createdAt: now,
+    };
+
+    await appendLocalRecord('newsletter_subscriptions.json', record);
+
+    const supabase = createAdminClient();
+    if (supabase) {
+      void (async () => {
+        try {
+          await supabase
+            .from('newsletter_subscriptions')
+            .upsert(
+              {
+                subscription_id: record.id,
+                email: normalizedEmail,
+                source: 'newsletter',
+                created_at: now,
+                updated_at: now,
+              },
+              { onConflict: 'email' }
+            );
+        } catch (err) {
+          console.error('Supabase newsletter sync failed:', err);
+        }
+      })();
+    }
+
     // Try V2 API first
     if (BEEHIIV_API_KEY_V2 && BEEHIIV_API_URL_V2) {
       try {
@@ -34,7 +69,7 @@ export async function POST(request: NextRequest) {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            email,
+            email: normalizedEmail,
             reactivate_existing: true,
             utm_source: 'mfc-landing-page',
             utm_medium: 'newsletter-signup',
@@ -68,7 +103,7 @@ export async function POST(request: NextRequest) {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            email,
+            email: normalizedEmail,
             reactivate_existing: true,
             utm_source: 'mfc-landing-page',
             utm_medium: 'newsletter-signup',
@@ -104,7 +139,7 @@ export async function POST(request: NextRequest) {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              email,
+              email: normalizedEmail,
               reactivate_existing: true,
               utm_source: 'mfc-landing-page',
               utm_medium: 'newsletter-signup',
