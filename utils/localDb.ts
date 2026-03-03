@@ -34,3 +34,13 @@ export async function readLocalRecords(fileName: string) {
     return []
   }
 }
+
+export async function writeLocalRecords(fileName: string, records: unknown[]) {
+  try {
+    await fs.mkdir(dataDir, { recursive: true })
+    const filePath = path.join(dataDir, fileName)
+    await fs.writeFile(filePath, JSON.stringify(records, null, 2), 'utf8')
+  } catch (err) {
+    console.error('Local DB write error:', err)
+  }
+}

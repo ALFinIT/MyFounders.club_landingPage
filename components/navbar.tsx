@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 export function Navbar() {
   return (
-    <nav className="fixed left-0 right-0 top-0 z-[100] border-b border-[rgba(255,91,35,.1)] bg-[rgba(5,5,5,.92)] px-[5%] py-[18px] backdrop-blur-[20px]">
+    <nav className="nav-shell fixed left-0 right-0 top-0 z-[100] border-b border-[rgba(255,91,35,.1)] bg-[rgba(5,5,5,.92)] px-[5%] py-[18px] backdrop-blur-[20px]">
       <div className="site-shell flex items-center justify-between">
         <Link href="#top" className="flex items-center gap-2.5">
           <Image src="/App Icon Orange.svg" alt="MyFounders.Club" width={22} height={22} priority />
@@ -15,24 +15,27 @@ export function Navbar() {
         </Link>
 
         <div className="nav-links ml-auto mr-8 flex items-center gap-10">
-          <Link href="#story" className="nav-link-item text-[0.82rem] font-normal tracking-[.05em]">
+          <Link href="#story" className="nav-link-item">
             Our Story
           </Link>
-          <Link href="#gulf" className="nav-link-item text-[0.82rem] font-normal tracking-[.05em]">
+          <Link href="#gulf" className="nav-link-item">
             The Gulf
           </Link>
-          <Link href="#for" className="nav-link-item text-[0.82rem] font-normal tracking-[.05em]">
+          <Link href="#for" className="nav-link-item">
             Who It&apos;s For
           </Link>
-          <Link href="/survey" className="nav-link-item text-[0.82rem] font-normal tracking-[.05em]">
+          <Link href="/survey" className="nav-link-item">
             Survey
           </Link>
-          <Link href="/events" className="nav-link-item text-[0.82rem] font-normal tracking-[.05em]">
+          <Link href="/events" className="nav-link-item">
             Events
+          </Link>
+          <Link href="/auth" className="nav-link-item">
+            Sign In
           </Link>
         </div>
 
-        <a href="#waitlist" className="btn btn-primary">
+        <a href="/auth" className="btn btn-primary">
           Get Early Access
         </a>
       </div>

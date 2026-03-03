@@ -1,11 +1,11 @@
 export function HeroSection() {
   return (
-    <section id="top" className="section-block relative min-h-screen overflow-hidden px-[5%] pt-32.5">
+    <section id="top" className="section-block relative min-h-screen overflow-hidden px-[5%] pt-26">
       <div className="pointer-events-none absolute -right-20 -top-37.5 h-175 w-175 bg-[radial-gradient(circle,rgba(255,91,35,.11),transparent_65%)] animate-[breathe_9s_infinite]" />
       <div className="pointer-events-none absolute -bottom-20 -left-15 h-125 w-125 bg-[radial-gradient(circle,rgba(62,92,94,.13),transparent_68%)] animate-[breathe_12s_reverse_infinite]" />
       <div className="site-shell relative z-2">
-        <p className="section-lead animate-[fadeUp_.8s_ease_.15s_both]">
-          <span className="blink mr-2 inline-block">&bull;</span>
+        <p className="section-lead hero-eyebrow animate-[fadeUp_.8s_ease_.15s_both]">
+          <span className="hero-eyebrow-square blink mr-2.5 inline-block" />
           Beta Access Now Open - Join Free
         </p>
 
