@@ -61,6 +61,7 @@ export function WaitlistFormSection() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (success || loading) return;
     setLoading(true);
     setError('');
 
@@ -101,30 +102,19 @@ export function WaitlistFormSection() {
         </p>
 
         <div className="glass-card mt-8 p-[34px] text-left">
-          {success ? (
-            <div className="py-8 text-center animate-[fadeUp_.45s_ease_both]">
-              <div className="mx-auto flex h-[54px] w-[54px] items-center justify-center rounded-full border border-[var(--orange)] text-[1.35rem] font-bold text-(--orange)">
-                {'\u2713'}
-              </div>
-              <h3 className="mt-5 font-(--font-display) text-[1.55rem] font-extrabold text-white">Submitted successfully.</h3>
-              <p className="mx-auto mt-3 max-w-[430px] text-[.9rem] leading-[1.7] text-(--silver)">
-                Thanks for joining. We&apos;ll email next steps and event invites soon. Follow us on LinkedIn for launch updates.
-              </p>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4">
               <div className="form-row grid grid-cols-1 gap-[10px] sm:grid-cols-2">
                 <div>
                   <label htmlFor="firstName" className="field-label text-center sm:text-left">
                     First Name
                   </label>
-                  <input id="firstName" name="firstName" value={formData.firstName} onChange={handleChange} placeholder="Katerina" required className="form-input" />
+                  <input id="firstName" name="firstName" value={formData.firstName} onChange={handleChange} placeholder="Katerina" required className="form-input" disabled={success || loading} />
                 </div>
                 <div>
                   <label htmlFor="lastName" className="field-label text-center sm:text-left">
                     Last Name
                   </label>
-                  <input id="lastName" name="lastName" value={formData.lastName} onChange={handleChange} placeholder="Hayes" required className="form-input" />
+                  <input id="lastName" name="lastName" value={formData.lastName} onChange={handleChange} placeholder="Hayes" required className="form-input" disabled={success || loading} />
                 </div>
               </div>
 
@@ -140,6 +130,7 @@ export function WaitlistFormSection() {
                   onChange={handleChange}
                   placeholder="you@company.com"
                   required
+                  disabled={success || loading}
                   className="form-input"
                 />
               </div>
@@ -155,6 +146,7 @@ export function WaitlistFormSection() {
                     value={formData.country}
                     onChange={handleChange}
                     required
+                    disabled={success || loading}
                     className={`form-input ${formData.country ? 'text-[var(--orange)]' : 'text-white'}`}
                   >
                     <option value="">Select country</option>
@@ -176,6 +168,7 @@ export function WaitlistFormSection() {
                     value={formData.stage}
                     onChange={handleChange}
                     required
+                    disabled={success || loading}
                     className={`form-input ${formData.stage ? 'text-[var(--orange)]' : 'text-white'}`}
                   >
                     <option value="">Select stage</option>
@@ -198,6 +191,7 @@ export function WaitlistFormSection() {
                   value={formData.goal}
                   onChange={handleChange}
                   required
+                  disabled={success || loading}
                   className={`form-input ${formData.goal ? 'text-[var(--orange)]' : 'text-white'}`}
                 >
                   <option value="">What brings you to MFC?</option>
@@ -211,19 +205,25 @@ export function WaitlistFormSection() {
 
               <button
                 type="submit"
-                disabled={loading}
-                className="btn btn-submit mt-2 bg-[#00C896] shadow-[0_10px_32px_rgba(0,200,150,.32)] hover:bg-[#00b786] hover:shadow-[0_14px_40px_rgba(0,200,150,.42)] disabled:opacity-70"
+                disabled={loading || success}
+                className={`btn btn-submit mt-2 disabled:opacity-70 ${
+                  success
+                    ? 'bg-[#00C896] shadow-[0_10px_32px_rgba(0,200,150,.32)]'
+                    : 'bg-[#FF4D00] shadow-[0_10px_32px_rgba(255,77,0,.34)] hover:bg-[#e64500] hover:shadow-[0_14px_40px_rgba(255,77,0,.42)]'
+                }`}
               >
-                {loading ? 'Submitting...' : 'Submitted Successfully'}
+                {success ? 'Submitted Successfully' : loading ? 'Submitting...' : "Join the Beta Waitlist - It's Free ->"}
               </button>
 
               <p className="text-center text-[0.72rem] text-[rgba(204,204,204,.6)]">
                 No payment required. No spam. Early access when the platform opens.
               </p>
 
+              {success && (
+                <p className="text-center text-[.82rem] text-[#00C896]">Thanks for joining. We&apos;ll email next steps soon.</p>
+              )}
               {error && <p className="text-center text-[.82rem] text-red-400">{error}</p>}
             </form>
-          )}
         </div>
       </div>
     </section>

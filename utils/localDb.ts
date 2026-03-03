@@ -25,6 +25,23 @@ export async function appendLocalRecord(fileName: string, record: unknown) {
   }
 }
 
+export async function appendLocalRecordStrict(fileName: string, record: unknown) {
+  await fs.mkdir(dataDir, { recursive: true })
+  const filePath = path.join(dataDir, fileName)
+
+  let arr: unknown[] = []
+  try {
+    const existing = await fs.readFile(filePath, 'utf8')
+    arr = JSON.parse(existing)
+    if (!Array.isArray(arr)) arr = []
+  } catch {
+    arr = []
+  }
+
+  arr.push(record)
+  await fs.writeFile(filePath, JSON.stringify(arr, null, 2), 'utf8')
+}
+
 export async function readLocalRecords(fileName: string) {
   try {
     const filePath = path.join(dataDir, fileName)

@@ -96,7 +96,13 @@ export async function POST(request: NextRequest) {
       })()
     }
 
-    const sessionUser = { id: user.id, firstName, lastName, email, role: user.role as const }
+    const sessionUser: { id: string; firstName: string; lastName: string; email: string; role: 'member' | 'admin' } = {
+      id: user.id,
+      firstName,
+      lastName,
+      email,
+      role: user.role,
+    }
     const response = NextResponse.json(
       {
         success: true,

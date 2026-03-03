@@ -9,6 +9,10 @@ type MemberRecord = {
   email: string
   whatsapp: string
   linkedin: string
+  twitter?: string
+  instagram?: string
+  website?: string
+  avatarDataUrl?: string
   location: string
   nationality: string
   gender?: string
@@ -27,6 +31,10 @@ export async function POST(request: NextRequest) {
     const email = String(body?.email ?? '').trim().toLowerCase()
     const whatsapp = String(body?.whatsapp ?? '').trim()
     const linkedin = String(body?.linkedin ?? '').trim()
+    const twitter = String(body?.twitter ?? '').trim()
+    const instagram = String(body?.instagram ?? '').trim()
+    const website = String(body?.website ?? '').trim()
+    const avatarDataUrl = String(body?.avatarDataUrl ?? '').trim()
     const location = String(body?.location ?? '').trim()
     const nationality = String(body?.nationality ?? '').trim()
     const gender = String(body?.gender ?? '').trim()
@@ -49,6 +57,10 @@ export async function POST(request: NextRequest) {
       email,
       whatsapp,
       linkedin,
+      twitter,
+      instagram,
+      website,
+      avatarDataUrl,
       location,
       nationality,
       gender,

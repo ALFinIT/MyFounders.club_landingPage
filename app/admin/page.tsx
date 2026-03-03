@@ -15,6 +15,39 @@ type Member = {
   joinedAt: string
   whatsapp?: string
   linkedin?: string
+  twitter?: string
+  instagram?: string
+  website?: string
+  avatarDataUrl?: string
+}
+
+type WaitlistApplication = {
+  id?: string
+  firstName?: string
+  lastName?: string
+  fullName?: string
+  companyName?: string
+  email?: string
+  country?: string
+  stage?: string
+  goal?: string
+  onePitchSentence?: string
+  createdAt?: string
+  _savedAt?: string
+}
+
+type SurveySubmission = {
+  id?: string
+  clientSubmissionId?: string
+  submittedAt?: string
+  answers?: {
+    fullName?: string
+    companyName?: string
+    role?: string
+    country?: string
+    industry?: string
+    stage?: string
+  }
 }
 
 const statusColor: Record<Member['status'], string> = {
@@ -25,6 +58,8 @@ const statusColor: Record<Member['status'], string> = {
 
 export default function AdminPage() {
   const [members, setMembers] = useState<Member[]>([])
+  const [waitlistApps, setWaitlistApps] = useState<WaitlistApplication[]>([])
+  const [surveySubmissions, setSurveySubmissions] = useState<SurveySubmission[]>([])
   const [selected, setSelected] = useState<Member | null>(null)
   const [filters, setFilters] = useState({ q: '', role: '', status: '', country: '' })
 
@@ -47,8 +82,15 @@ export default function AdminPage() {
         const membersRes = await fetch('/api/admin/members')
         const membersData = await membersRes.json()
         setMembers(Array.isArray(membersData.members) ? membersData.members : [])
+
+        const formsRes = await fetch('/api/admin/forms')
+        const formsData = await formsRes.json()
+        setWaitlistApps(Array.isArray(formsData.waitlist) ? formsData.waitlist : [])
+        setSurveySubmissions(Array.isArray(formsData.surveySubmissions) ? formsData.surveySubmissions : [])
       } catch {
         setMembers([])
+        setWaitlistApps([])
+        setSurveySubmissions([])
       }
     }
 
@@ -155,6 +197,8 @@ export default function AdminPage() {
             ['Pending Review', String(kpis.pending)],
             ['Profiles Completed', `${kpis.completedPct}%`],
             ['Active This Month', String(kpis.activeThisMonth)],
+            ['Waitlist Applications', String(waitlistApps.length)],
+            ['Survey Submissions', String(surveySubmissions.length)],
           ].map(([label, value]) => (
             <article key={label} className="card-base p-5">
               <p className="font-(--font-display) text-[2rem] font-extrabold text-(--orange)">{value}</p>
@@ -249,6 +293,66 @@ export default function AdminPage() {
             </div>
           </article>
         </div>
+
+        <section className="glass-card mt-6 p-4">
+          <h2 className="font-(--font-display) text-[1.2rem] text-white">Form Details - Waitlist</h2>
+          <div className="mt-3 overflow-x-auto">
+            <table className="min-w-full border-collapse">
+              <thead className="bg-[rgba(255,91,35,.08)]">
+                <tr className="text-left text-[.66rem] uppercase tracking-[.14em] text-(--orange)">
+                  <th className="px-3 py-3">Name</th>
+                  <th className="px-3 py-3">Email</th>
+                  <th className="px-3 py-3">Country</th>
+                  <th className="px-3 py-3">Stage</th>
+                  <th className="px-3 py-3">Goal</th>
+                  <th className="px-3 py-3">Submitted</th>
+                </tr>
+              </thead>
+              <tbody>
+                {waitlistApps.map((app, i) => (
+                  <tr key={`${app.id ?? 'wl'}-${i}`} className="border-t border-[rgba(255,255,255,.06)] text-[.82rem]">
+                    <td className="px-3 py-3 text-white">{`${app.firstName ?? ''} ${app.lastName ?? ''}`.trim() || app.fullName || '-'}</td>
+                    <td className="px-3 py-3 text-(--silver)">{app.email ?? '-'}</td>
+                    <td className="px-3 py-3">{app.country ?? '-'}</td>
+                    <td className="px-3 py-3">{app.stage ?? app.companyName ?? '-'}</td>
+                    <td className="px-3 py-3">{app.goal ?? app.onePitchSentence ?? '-'}</td>
+                    <td className="px-3 py-3 text-(--silver)">{app.createdAt ? new Date(app.createdAt).toLocaleString() : app._savedAt ? new Date(app._savedAt).toLocaleString() : '-'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section className="glass-card mt-6 p-4">
+          <h2 className="font-(--font-display) text-[1.2rem] text-white">Form Details - Survey</h2>
+          <div className="mt-3 overflow-x-auto">
+            <table className="min-w-full border-collapse">
+              <thead className="bg-[rgba(255,91,35,.08)]">
+                <tr className="text-left text-[.66rem] uppercase tracking-[.14em] text-(--orange)">
+                  <th className="px-3 py-3">Name</th>
+                  <th className="px-3 py-3">Company</th>
+                  <th className="px-3 py-3">Role</th>
+                  <th className="px-3 py-3">Country</th>
+                  <th className="px-3 py-3">Industry</th>
+                  <th className="px-3 py-3">Submitted</th>
+                </tr>
+              </thead>
+              <tbody>
+                {surveySubmissions.map((item, i) => (
+                  <tr key={`${item.clientSubmissionId ?? item.id ?? 'sv'}-${i}`} className="border-t border-[rgba(255,255,255,.06)] text-[.82rem]">
+                    <td className="px-3 py-3 text-white">{item.answers?.fullName ?? '-'}</td>
+                    <td className="px-3 py-3 text-(--silver)">{item.answers?.companyName ?? '-'}</td>
+                    <td className="px-3 py-3">{item.answers?.role ?? '-'}</td>
+                    <td className="px-3 py-3">{item.answers?.country ?? '-'}</td>
+                    <td className="px-3 py-3">{item.answers?.industry ?? '-'}</td>
+                    <td className="px-3 py-3 text-(--silver)">{item.submittedAt ? new Date(item.submittedAt).toLocaleString() : '-'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
       </section>
 
       {selected && (
@@ -266,6 +370,9 @@ export default function AdminPage() {
               <p><span className="text-white">Nationality:</span> {selected.nationality}</p>
               <p><span className="text-white">WhatsApp:</span> {selected.whatsapp || '-'}</p>
               <p><span className="text-white">LinkedIn:</span> {selected.linkedin || '-'}</p>
+              <p><span className="text-white">X / Twitter:</span> {selected.twitter || '-'}</p>
+              <p><span className="text-white">Instagram:</span> {selected.instagram || '-'}</p>
+              <p><span className="text-white">Website:</span> {selected.website || '-'}</p>
               <p><span className="text-white">Joined:</span> {new Date(selected.joinedAt).toLocaleString()}</p>
             </div>
           </div>

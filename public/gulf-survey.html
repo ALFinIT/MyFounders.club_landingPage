@@ -146,6 +146,7 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:4px;backgr
 .form-input:focus,.form-textarea:focus,.form-select:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(255,77,0,0.1),0 0 22px rgba(255,77,0,0.07)}
 .form-textarea{min-height:88px;resize:vertical}
 .form-select{appearance:none;cursor:pointer}
+.form-input.invalid,.form-textarea.invalid,.form-select.invalid{border-color:#ff6b6b;box-shadow:0 0 0 3px rgba(255,107,107,0.14)}
 
 /* Range */
 .range-wrap{display:flex;align-items:center;gap:14px}
@@ -159,10 +160,20 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:4px;backgr
 .cta-btn:hover{background:#e04200;box-shadow:0 10px 55px rgba(255,77,0,0.65),0 0 90px rgba(255,77,0,0.18);transform:translateY(-3px)}
 .cta-btn:hover::before{left:200%}
 .cta-btn:active{transform:translateY(0)}
+.cta-btn:disabled{background:#6b2a10;box-shadow:none;cursor:not-allowed;transform:none}
 .cta-note{font-size:11px;color:var(--muted);text-align:center;margin-top:14px;font-family:'Space Mono',monospace}
 .disclaimer{font-size:11px;color:#303030;margin-top:10px;text-align:center}
+.form-status{min-height:18px;margin-top:10px;text-align:center;font-size:12px;color:#ff9d7a}
+.form-status.success{color:var(--green)}
+
+@media (pointer:fine){
+  body{
+    cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M3 2 L3 20 L8 15 L12 22 L15 20 L11 13 L18 13 Z' fill='white' stroke='%23FF4D00' stroke-width='1.5'/%3E%3C/svg%3E") 1 1, auto;
+  }
+}
 
 @media(max-width:640px){.topbar-inner{flex-direction:column;align-items:flex-start}.topbar-meta{width:100%;justify-content:flex-start;flex-wrap:wrap}.stats-bar{grid-template-columns:repeat(3,1fr)}.rewards-grid{grid-template-columns:1fr}.hero h1{font-size:52px}}
+@media(min-width:641px){.rewards-grid{margin:0 24px 26px auto}.countdown-outer{margin:0 24px 20px auto}.stats-bar{margin:0 24px 32px auto}.glow-divider{margin:0 24px 22px auto}.progress-wrap{margin:0 24px 26px auto}}
 </style>
 </head>
 <body>
@@ -270,12 +281,12 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:4px;backgr
 
       <div class="q-group">
         <label class="q-label"><span class="q-num">01</span>Your full name <span class="req">*</span></label>
-        <input class="form-input survey-field" type="text" placeholder="e.g. Layla Al-Rashidi">
+        <input id="full-name" class="form-input survey-field" type="text" placeholder="e.g. Layla Al-Rashidi">
       </div>
 
       <div class="q-group">
         <label class="q-label"><span class="q-num">02</span>Your company name <span class="req">*</span></label>
-        <input class="form-input survey-field" type="text" placeholder="e.g. Noor Ventures">
+        <input id="company-name" class="form-input survey-field" type="text" placeholder="e.g. Noor Ventures">
       </div>
 
       <div class="q-group">
@@ -304,7 +315,7 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:4px;backgr
 
       <div class="q-group">
         <label class="q-label"><span class="q-num">05</span>Industry sector <span class="req">*</span></label>
-        <select class="form-select survey-field">
+        <select id="industry-select" class="form-select survey-field">
           <option value="">— Select industry —</option>
           <option>Fintech / Payments</option>
           <option>E-commerce / Retail</option>
@@ -441,7 +452,7 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:4px;backgr
 
       <div class="q-group">
         <label class="q-label"><span class="q-num">15</span>What has been the most pivotal resource in your GCC journey?</label>
-        <textarea class="form-textarea survey-field" placeholder="e.g. A strategic advisor, a government accelerator, a key investor relationship..."></textarea>
+        <textarea id="pivotal-resource" class="form-textarea survey-field" placeholder="e.g. A strategic advisor, a government accelerator, a key investor relationship..."></textarea>
       </div>
 
     </div>
@@ -516,7 +527,7 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:4px;backgr
 
       <div class="q-group">
         <label class="q-label"><span class="q-num">21</span>One policy change that would most help GCC founders</label>
-        <textarea class="form-textarea survey-field" placeholder="Be specific — your insight directly shapes the MyFounders.club policy recommendations sent to GCC governments..."></textarea>
+        <textarea id="policy-change" class="form-textarea survey-field" placeholder="Be specific — your insight directly shapes the MyFounders.club policy recommendations sent to GCC governments..."></textarea>
       </div>
 
       <div class="q-group">
@@ -530,7 +541,7 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:4px;backgr
 
       <div class="q-group">
         <label class="q-label"><span class="q-num">23</span>Anything else you want investors or policymakers to know?</label>
-        <textarea class="form-textarea survey-field" placeholder="Your words, unfiltered. This is read by the MyFounders.club advisory board..."></textarea>
+        <textarea id="unfiltered-message" class="form-textarea survey-field" placeholder="Your words, unfiltered. This is read by the MyFounders.club advisory board..."></textarea>
       </div>
 
     </div>
@@ -544,12 +555,13 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:4px;backgr
     <span>CLAIM MY REWARDS &amp; SUBMIT</span>
     <span style="font-size:22px">→</span>
   </button>
+  <div id="form-status" class="form-status" aria-live="polite"></div>
   <div class="cta-note">🔒 Responses encrypted &nbsp;·&nbsp; No personal data sold &nbsp;·&nbsp; 100% anonymised in reporting &nbsp;·&nbsp; Withdraw anytime</div>
   <div class="disclaimer">I understand and consent to my anonymised responses being used for MyFounders.club platform development and GCC ecosystem research.</div>
 </div>
 
 <script>
-/* ── COUNTDOWN ── */
+/* Countdown */
 let seconds = 47 * 60;
 function tick(){
   const m = String(Math.floor(seconds/60)).padStart(2,'0');
@@ -559,11 +571,10 @@ function tick(){
 }
 setInterval(tick,1000);
 
-/* ── SPOT COUNT SIMULATE ── */
+/* Spots + Banner */
 const TOTAL_CAPACITY = 500;
 const spotsBanner = document.getElementById('spots-banner');
 const closeBannerBtn = document.querySelector('.topbar .close-btn');
-
 if (closeBannerBtn && spotsBanner) {
   closeBannerBtn.addEventListener('click', () => {
     spotsBanner.classList.add('hidden');
@@ -586,11 +597,10 @@ async function refreshSpots() {
     // Keep current value if endpoint is temporarily unavailable.
   }
 }
-
 void refreshSpots();
 setInterval(refreshSpots, 15000);
 
-/* ── SCROLL REVEAL ── */
+/* Scroll reveal */
 const observer = new IntersectionObserver((entries)=>{
   entries.forEach(e=>{
     if(e.isIntersecting){
@@ -601,7 +611,67 @@ const observer = new IntersectionObserver((entries)=>{
 },{threshold:0.07});
 document.querySelectorAll('.section-block').forEach(el=>observer.observe(el));
 
-/* ── PROGRESS ── */
+/* Validation + Progress + Submit */
+const SUBMITTED_KEY = 'mfc_gulf_survey_submitted';
+const LAST_SUBMISSION_KEY = 'mfc_gulf_survey_last_submission';
+const statusEl = document.getElementById('form-status');
+const submitBtn = document.getElementById('submit-btn');
+const requiredFieldIds = ['full-name', 'company-name', 'industry-select'];
+
+function getCheckedValue(name) {
+  const input = document.querySelector(`input[name="${name}"]:checked`);
+  if (!input) return '';
+  const label = document.querySelector(`label[for="${input.id}"]`);
+  return label ? label.textContent.trim() : input.id;
+}
+
+function getCheckedValuesByPrefix(prefix) {
+  return Array.from(document.querySelectorAll(`input[id^="${prefix}"]:checked`)).map((input) => {
+    const label = document.querySelector(`label[for="${input.id}"]`);
+    return label ? label.textContent.trim() : input.id;
+  });
+}
+
+function clearFieldHighlights() {
+  requiredFieldIds.forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('invalid');
+  });
+}
+
+function validateRequired(showErrors = false) {
+  clearFieldHighlights();
+  const errors = [];
+
+  const fullName = document.getElementById('full-name').value.trim();
+  const companyName = document.getElementById('company-name').value.trim();
+  const industry = document.getElementById('industry-select').value.trim();
+
+  if (fullName.length < 2) {
+    errors.push('Please enter your full name.');
+    document.getElementById('full-name').classList.add('invalid');
+  }
+  if (!companyName) {
+    errors.push('Please enter your company name.');
+    document.getElementById('company-name').classList.add('invalid');
+  }
+  if (!getCheckedValue('role')) errors.push('Please select your role.');
+  if (!getCheckedValue('country')) errors.push('Please select your GCC country.');
+  if (!industry) {
+    errors.push('Please select your industry.');
+    document.getElementById('industry-select').classList.add('invalid');
+  }
+  if (!getCheckedValue('stage')) errors.push('Please select your funding stage.');
+  if (!getCheckedValue('barrier')) errors.push('Please select your biggest barrier.');
+
+  if (showErrors && statusEl) {
+    statusEl.classList.remove('success');
+    statusEl.textContent = errors[0] || '';
+  }
+
+  return { valid: errors.length === 0, errors };
+}
+
 function updateProgress(){
   const fields = document.querySelectorAll('.survey-field');
   const radios = ['role','country','stage','age','team','barrier','expand','vision','goal3','future','feature'];
@@ -616,55 +686,132 @@ function updateProgress(){
   document.getElementById('progress-fill').style.width = pct+'%';
   document.getElementById('pct-label').textContent = pct+'%';
 }
+
+function setSubmittedState() {
+  submitBtn.style.background='var(--green)';
+  submitBtn.style.boxShadow='0 10px 55px var(--green-glow),0 0 80px rgba(0,200,150,0.12)';
+  submitBtn.innerHTML='<span>SUBMITTED - REWARDS UNLOCKED</span><span>&#9733;</span>';
+  submitBtn.style.cursor='default';
+  submitBtn.disabled=true;
+  submitBtn.onclick=null;
+  document.getElementById('progress-fill').style.width='100%';
+  document.getElementById('pct-label').textContent='100%';
+  if (statusEl) {
+    statusEl.classList.add('success');
+    statusEl.textContent = 'Submission completed and saved.';
+  }
+}
+
+let submitting = false;
+
+function updateSubmitState() {
+  if (localStorage.getItem(SUBMITTED_KEY) === '1') {
+    setSubmittedState();
+    return;
+  }
+  const check = validateRequired(false);
+  submitBtn.disabled = !check.valid || submitting;
+  submitBtn.style.cursor = submitBtn.disabled ? 'not-allowed' : 'pointer';
+  if (!check.valid && statusEl && !submitting) {
+    statusEl.classList.remove('success');
+    statusEl.textContent = '';
+  }
+}
+
+function collectAnswers() {
+  return {
+    fullName: document.getElementById('full-name').value.trim(),
+    companyName: document.getElementById('company-name').value.trim(),
+    role: getCheckedValue('role'),
+    country: getCheckedValue('country'),
+    industry: document.getElementById('industry-select').value.trim(),
+    stage: getCheckedValue('stage'),
+    yearsOperating: getCheckedValue('age'),
+    teamSize: getCheckedValue('team'),
+    ecosystemRating: Number(document.getElementById('eco-range').value),
+    valuableAspects: getCheckedValuesByPrefix('v'),
+    barrier: getCheckedValue('barrier'),
+    expansionStatus: getCheckedValue('expand'),
+    communityConnection: Number(document.getElementById('conn-range').value),
+    prioritySupport: getCheckedValuesByPrefix('sup'),
+    pivotalResource: document.getElementById('pivotal-resource').value.trim(),
+    impactAreas: getCheckedValuesByPrefix('im'),
+    visionAlignment: getCheckedValue('vision'),
+    confidence12mo: Number(document.getElementById('conf-range').value),
+    goal3Year: getCheckedValue('goal3'),
+    futureOutlook: getCheckedValue('future'),
+    policyChange: document.getElementById('policy-change').value.trim(),
+    featureConsent: getCheckedValue('feature'),
+    unfilteredMessage: document.getElementById('unfiltered-message').value.trim(),
+  };
+}
+
 document.querySelectorAll('input,textarea,select').forEach(el=>{
-  el.addEventListener('change',updateProgress);
-  el.addEventListener('input',updateProgress);
+  el.addEventListener('change', ()=>{ updateProgress(); updateSubmitState(); });
+  el.addEventListener('input', ()=>{ updateProgress(); updateSubmitState(); });
 });
 
-/* ── SUBMIT ── */
-let submitting = false;
+if (localStorage.getItem(SUBMITTED_KEY) === '1') {
+  setSubmittedState();
+} else {
+  updateProgress();
+  updateSubmitState();
+}
+
 async function handleSubmit(){
-  if (submitting) return;
+  if (submitting || localStorage.getItem(SUBMITTED_KEY) === '1') return;
+
+  const check = validateRequired(true);
+  if (!check.valid) {
+    updateSubmitState();
+    return;
+  }
+
   submitting = true;
-  const btn = document.getElementById('submit-btn');
-  btn.disabled = true;
-  btn.style.cursor = 'wait';
+  submitBtn.disabled = true;
+  submitBtn.style.cursor = 'wait';
+  if (statusEl) {
+    statusEl.classList.remove('success');
+    statusEl.textContent = 'Submitting...';
+  }
 
-  const payload = {
-    user: null,
-    answers: {
-      fullName: document.querySelectorAll('.survey-field')[0]?.value ?? '',
-      companyName: document.querySelectorAll('.survey-field')[1]?.value ?? '',
-    }
-  };
+  const submissionId = (self.crypto && typeof self.crypto.randomUUID === 'function')
+    ? self.crypto.randomUUID()
+    : `mfc-${Date.now()}-${Math.random().toString(16).slice(2)}`;
 
-  let submitOk = false;
   try {
+    const answers = collectAnswers();
     const response = await fetch('/api/survey/submit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
+      body: JSON.stringify({ clientSubmissionId: submissionId, user: null, answers }),
     });
-    submitOk = response.ok;
-  } catch {
-    submitOk = false;
-  }
 
-  if (!submitOk) {
-    btn.disabled = false;
-    btn.style.cursor = 'pointer';
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data?.error || 'Submission failed. Please try again.');
+    }
+
+    localStorage.setItem(SUBMITTED_KEY, '1');
+    localStorage.setItem(
+      LAST_SUBMISSION_KEY,
+      JSON.stringify({ submissionId: data?.submissionId || submissionId, submittedAt: new Date().toISOString(), answers })
+    );
+
+    setSubmittedState();
+    void refreshSpots();
+  } catch (error) {
+    if (statusEl) {
+      statusEl.classList.remove('success');
+      statusEl.textContent = error instanceof Error ? error.message : 'Submission failed. Please try again.';
+    }
     submitting = false;
-    return;
+    updateSubmitState();
   }
-  btn.style.background='var(--green)';
-  btn.style.boxShadow='0 10px 55px var(--green-glow),0 0 80px rgba(0,200,150,0.12)';
-  btn.innerHTML='<span>&#10003; SUBMITTED - REWARDS UNLOCKED</span><span>&#9733;</span>';
-  btn.style.cursor='default';
-  btn.onclick=null;
-  document.getElementById('progress-fill').style.width='100%';
-  document.getElementById('pct-label').textContent='100%';
-  void refreshSpots();
 }
 </script>
 </body>
 </html>
+
+
+

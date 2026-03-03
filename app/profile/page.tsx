@@ -24,6 +24,10 @@ export default function ProfilePage() {
     email: '',
     whatsapp: '',
     linkedin: '',
+    twitter: '',
+    instagram: '',
+    website: '',
+    avatarDataUrl: '',
     location: '',
     nationality: '',
     gender: '',
@@ -54,11 +58,26 @@ export default function ProfilePage() {
         }
         if (!mounted) return
         localStorage.setItem('mfc_user', JSON.stringify(user))
+        const profileRes = await fetch('/api/profile/me', { cache: 'no-store' })
+        const profileData = profileRes.ok ? await profileRes.json() : { member: null }
+        const member = (profileData?.member ?? null) as Record<string, unknown> | null
+
         setForm((prev) => ({
           ...prev,
-          firstName: user.firstName ?? '',
-          lastName: user.lastName ?? '',
+          firstName: String(member?.firstName ?? user.firstName ?? ''),
+          lastName: String(member?.lastName ?? user.lastName ?? ''),
           email: user.email ?? '',
+          whatsapp: String(member?.whatsapp ?? ''),
+          linkedin: String(member?.linkedin ?? ''),
+          twitter: String(member?.twitter ?? ''),
+          instagram: String(member?.instagram ?? ''),
+          website: String(member?.website ?? ''),
+          avatarDataUrl: String(member?.avatarDataUrl ?? ''),
+          location: String(member?.location ?? ''),
+          nationality: String(member?.nationality ?? ''),
+          gender: String(member?.gender ?? ''),
+          role: String(member?.role ?? ''),
+          roleOther: String(member?.roleOther ?? ''),
         }))
         setReady(true)
       } catch {
@@ -81,6 +100,33 @@ export default function ProfilePage() {
 
   const validateStep1 = () => {
     return !!(form.firstName && form.lastName && form.email && form.whatsapp.startsWith('+') && form.linkedin && form.location && form.nationality)
+  }
+
+  const handleAvatarChange = async (file: File | null) => {
+    if (!file) return
+    if (!file.type.startsWith('image/')) {
+      setError('Avatar must be an image file.')
+      return
+    }
+    if (file.size > 2 * 1024 * 1024) {
+      setError('Avatar must be under 2MB.')
+      return
+    }
+
+    const dataUrl = await new Promise<string>((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onload = () => resolve(String(reader.result ?? ''))
+      reader.onerror = () => reject(new Error('Unable to read image'))
+      reader.readAsDataURL(file)
+    }).catch(() => '')
+
+    if (!dataUrl) {
+      setError('Unable to process avatar image.')
+      return
+    }
+
+    setError('')
+    setForm((prev) => ({ ...prev, avatarDataUrl: dataUrl }))
   }
 
   const next = () => {
@@ -155,6 +201,29 @@ export default function ProfilePage() {
 
             {step === 1 && (
               <div className="mt-6 space-y-4">
+                <div className="glass-card-soft p-4">
+                  <p className="field-label">Avatar</p>
+                  <div className="mt-3 flex items-center gap-4">
+                    <div className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border border-[rgba(255,255,255,.2)] bg-[rgba(255,255,255,.05)]">
+                      {form.avatarDataUrl ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={form.avatarDataUrl} alt="Avatar preview" className="h-full w-full object-cover" />
+                      ) : (
+                        <span className="font-(--font-display) text-[.9rem] text-(--silver)">NO</span>
+                      )}
+                    </div>
+                    <label className="btn btn-outline cursor-pointer">
+                      Upload Avatar
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={(e) => void handleAvatarChange(e.target.files?.[0] ?? null)}
+                      />
+                    </label>
+                  </div>
+                </div>
+
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                   <div><label className="field-label">First Name</label><input className="form-input" value={form.firstName} onChange={(e) => setForm({ ...form, firstName: e.target.value })} /></div>
                   <div><label className="field-label">Last Name</label><input className="form-input" value={form.lastName} onChange={(e) => setForm({ ...form, lastName: e.target.value })} /></div>
@@ -166,6 +235,11 @@ export default function ProfilePage() {
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                   <div><label className="field-label">LinkedIn URL</label><input className="form-input" value={form.linkedin} onChange={(e) => setForm({ ...form, linkedin: e.target.value })} /></div>
                   <div><label className="field-label">Current Location</label><input className="form-input" value={form.location} onChange={(e) => setForm({ ...form, location: e.target.value })} /></div>
+                </div>
+                <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
+                  <div><label className="field-label">X / Twitter</label><input className="form-input" placeholder="https://x.com/..." value={form.twitter} onChange={(e) => setForm({ ...form, twitter: e.target.value })} /></div>
+                  <div><label className="field-label">Instagram</label><input className="form-input" placeholder="https://instagram.com/..." value={form.instagram} onChange={(e) => setForm({ ...form, instagram: e.target.value })} /></div>
+                  <div><label className="field-label">Website</label><input className="form-input" placeholder="https://..." value={form.website} onChange={(e) => setForm({ ...form, website: e.target.value })} /></div>
                 </div>
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                   <div><label className="field-label">Nationality</label><input className="form-input" value={form.nationality} onChange={(e) => setForm({ ...form, nationality: e.target.value })} /></div>
