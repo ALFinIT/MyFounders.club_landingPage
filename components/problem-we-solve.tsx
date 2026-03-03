@@ -46,7 +46,8 @@ export function ProblemWeSolveSection() {
           {stats.map(([value, text], i) => (
             <article key={value} className={`reveal d${Math.min(i + 1, 5)} glass-card p-7 text-center`}>
               <p style={{ fontFamily: 'var(--font-display)' }} className="text-[2.8rem] font-extrabold leading-none text-white">
-                {value}
+                {value.replace('%', '')}
+                <span className="text-(--orange)">%</span>
               </p>
               <p className="copy mt-3 text-[.85rem]">{text}</p>
             </article>

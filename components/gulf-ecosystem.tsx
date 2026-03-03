@@ -64,14 +64,29 @@ export function GulfEcosystemSection() {
 
         <div className="stats-strip card-grid reveal d2 mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
           {[
-            ['$2.1B', 'MENA STARTUP FUNDING', 'H1 2025'],
-            ['3,027', 'ACTIVE INVESTORS DEPLOYED', 'ACROSS GCC'],
-            ['80%', 'OF MENA FUNDING SUPPORT', 'FROM GCC REGION'],
-            ['400+', 'PROGRAMS, GRANTS AND', 'ACCELERATORS MAPPED'],
+            ['money', 'MENA STARTUP FUNDING', 'H1 2025'],
+            ['3027', 'ACTIVE INVESTORS DEPLOYED', 'ACROSS GCC'],
+            ['80', 'OF MENA FUNDING SUPPORT', 'FROM GCC REGION'],
+            ['400', 'PROGRAMS, GRANTS AND', 'ACCELERATORS MAPPED'],
           ].map(([v, l1, l2]) => (
             <div key={v} className="border border-[rgba(255,91,35,.15)] bg-[rgba(255,91,35,.055)] p-6 text-center">
               <p style={{ fontFamily: 'var(--font-display)' }} className="text-[2.3rem] font-extrabold leading-none text-white">
-                {v}
+                {v === 'money' ? (
+                  <>
+                    <span className="text-(--orange)">$</span>2.1<span className="text-(--orange)">B</span>
+                  </>
+                ) : null}
+                {v === '3027' ? '3,027' : null}
+                {v === '80' ? (
+                  <>
+                    80<span className="text-(--orange)">%</span>
+                  </>
+                ) : null}
+                {v === '400' ? (
+                  <>
+                    400<span className="text-(--orange)">+</span>
+                  </>
+                ) : null}
               </p>
               <p className="mt-2 text-[.7rem] uppercase tracking-[.13em] text-[var(--silver)]">{l1}</p>
               <p className="text-[.7rem] uppercase tracking-[.13em] text-[var(--silver)]">{l2}</p>

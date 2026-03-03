@@ -92,6 +92,8 @@ export default function EventsPage() {
   const [form, setForm] = useState<FormState>(initialForm);
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
   const [submitted, setSubmitted] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [submitError, setSubmitError] = useState('');
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -124,6 +126,7 @@ export default function EventsPage() {
   const setField = (name: keyof FormState, value: string) => {
     setForm((prev) => ({ ...prev, [name]: value }));
     setErrors((prev) => ({ ...prev, [name]: undefined }));
+    if (submitError) setSubmitError('');
   };
 
   const validate = () => {
@@ -142,13 +145,28 @@ export default function EventsPage() {
     return Object.keys(nextErrors).length === 0;
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!validate()) return;
-
-    setSubmitted(true);
-    setForm(initialForm);
-    setErrors({});
+    setSubmitted(false);
+    setSubmitError('');
+    setSaving(true);
+    try {
+      const response = await fetch('/api/events/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data?.error || 'Unable to submit registration.');
+      setSubmitted(true);
+      setForm(initialForm);
+      setErrors({});
+    } catch (err) {
+      setSubmitError(err instanceof Error ? err.message : 'Unable to submit registration.');
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
@@ -362,14 +380,16 @@ export default function EventsPage() {
             </div>
 
             <div className="mt-2 flex flex-wrap gap-3 md:col-span-2">
-              <button type="submit" className="btn btn-primary btn-primary-lg">
-                Submit Registration
+              <button type="submit" disabled={saving} className="btn btn-primary btn-primary-lg disabled:cursor-not-allowed disabled:opacity-70">
+                {saving ? 'Submitting...' : 'Submit Registration'}
               </button>
               <Link href="/survey" className="btn btn-outline btn-outline-lg">
                 Start Survey
               </Link>
             </div>
           </form>
+
+          {submitError ? <p className="mt-4 text-[.82rem] text-[#ff7a4a]">{submitError}</p> : null}
 
           {submitted ? (
             <p className="mt-4 border border-[rgba(0,200,150,.35)] bg-[rgba(0,200,150,.1)] px-3 py-2 text-[.84rem] text-[#b8ffe9]">

@@ -34,19 +34,19 @@ export function HeroSection() {
         <div className="stats-strip card-grid mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 animate-[fadeUp_.8s_ease_.95s_both]">
           <div className="glass-card-soft hero-stat-card p-5">
             <p style={{ fontFamily: 'var(--font-display)' }} className="text-[2rem] font-extrabold leading-none text-white">
-              $4.5B
+              <span className="text-(--orange)">$</span>4.5<span className="text-(--orange)">B</span>
             </p>
             <p className="mt-2 text-[.64rem] uppercase tracking-[.14em] text-(--silver)">GCC Capital Q3 2025</p>
           </div>
           <div className="glass-card-soft hero-stat-card p-5">
             <p style={{ fontFamily: 'var(--font-display)' }} className="text-[2rem] font-extrabold leading-none text-white">
-              523%
+              523<span className="text-(--orange)">%</span>
             </p>
             <p className="mt-2 text-[.64rem] uppercase tracking-[.14em] text-(--silver)">YoY Funding Growth</p>
           </div>
           <div className="glass-card-soft hero-stat-card p-5">
             <p style={{ fontFamily: 'var(--font-display)' }} className="text-[2rem] font-extrabold leading-none text-white">
-              63K+
+              63<span className="text-(--orange)">K+</span>
             </p>
             <p className="mt-2 text-[.64rem] uppercase tracking-[.14em] text-(--silver)">Active Startups</p>
           </div>

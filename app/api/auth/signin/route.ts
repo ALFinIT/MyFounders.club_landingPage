@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import bcrypt from 'bcryptjs'
-import { readLocalRecords } from '@/utils/localDb'
+import { appendLocalRecord, readLocalRecords } from '@/utils/localDb'
+import { createAdminClient } from '@/utils/supabase/admin'
 
 type LocalUser = {
   id: string
@@ -22,6 +23,13 @@ export async function POST(request: NextRequest) {
     }
 
     if (email === 'admin@mfc.demo' && password === 'admin123') {
+      await appendLocalRecord('auth_signins.json', {
+        id: crypto.randomUUID(),
+        email,
+        role: 'admin',
+        signedInAt: new Date().toISOString(),
+        source: 'demo',
+      })
       return NextResponse.json(
         {
           success: true,
@@ -47,6 +55,27 @@ export async function POST(request: NextRequest) {
     const isValid = await bcrypt.compare(password, found.passwordHash)
     if (!isValid) {
       return NextResponse.json({ error: 'Invalid credentials.' }, { status: 401 })
+    }
+
+    const now = new Date().toISOString()
+    await appendLocalRecord('auth_signins.json', {
+      id: crypto.randomUUID(),
+      userId: found.id,
+      email: found.email,
+      role: found.role,
+      signedInAt: now,
+      source: 'local_auth',
+    })
+
+    const supabase = createAdminClient()
+    if (supabase) {
+      try {
+        await supabase
+          .from('profiles')
+          .upsert({ user_id: found.id, email: found.email, last_login_at: now, updated_at: now }, { onConflict: 'email' })
+      } catch (err) {
+        console.error('Supabase signin sync failed:', err)
+      }
     }
 
     return NextResponse.json(
