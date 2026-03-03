@@ -1,3 +1,7 @@
+'use client';
+
+import type { FormEvent } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
@@ -39,7 +43,114 @@ const agenda = [
   },
 ];
 
+const speakers = [
+  {
+    name: 'Amal Al-Harbi',
+    role: 'General Partner, Red Sand Ventures',
+    topic: 'Cross-border capital strategy for GCC scale-ups',
+  },
+  {
+    name: 'Yousef Al-Mansoori',
+    role: 'Former Growth Lead, Regional Unicorn',
+    topic: 'How to build expansion systems before Series B',
+  },
+  {
+    name: 'Rana Al-Kaabi',
+    role: 'Director, Innovation Policy Council',
+    topic: 'Policy pathways that reduce founder friction',
+  },
+  {
+    name: 'Omar H. Qureshi',
+    role: 'Head of Platform, MENA Infrastructure Fund',
+    topic: 'Operator frameworks for resilient startup execution',
+  },
+];
+
+const sponsors = ['ADGM', 'Hub71', 'DIFC Innovation Hub', 'Monshaat', 'QDB', 'Bahrain EDB', 'Oman Tech Fund', 'Invest Kuwait'];
+
+type FormState = {
+  fullName: string;
+  email: string;
+  company: string;
+  role: string;
+  track: string;
+  notes: string;
+};
+
+const initialForm: FormState = {
+  fullName: '',
+  email: '',
+  company: '',
+  role: '',
+  track: '',
+  notes: '',
+};
+
 export default function EventsPage() {
+  const [seconds, setSeconds] = useState(47 * 60);
+  const [spots, setSpots] = useState(312);
+  const [form, setForm] = useState<FormState>(initialForm);
+  const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
+  const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setSeconds((prev) => (prev > 0 ? prev - 1 : prev));
+    }, 1000);
+
+    const spotTicker = setInterval(() => {
+      setSpots((prev) => {
+        if (prev > 302 && Math.random() < 0.25) {
+          return prev - 1;
+        }
+        return prev;
+      });
+    }, 9000);
+
+    return () => {
+      clearInterval(timer);
+      clearInterval(spotTicker);
+    };
+  }, []);
+
+  const timerLabel = useMemo(() => {
+    const mins = String(Math.floor(seconds / 60)).padStart(2, '0');
+    const secs = String(seconds % 60).padStart(2, '0');
+    return `00 : ${mins} : ${secs}`;
+  }, [seconds]);
+
+  const claimed = 500 - spots;
+
+  const setField = (name: keyof FormState, value: string) => {
+    setForm((prev) => ({ ...prev, [name]: value }));
+    setErrors((prev) => ({ ...prev, [name]: undefined }));
+  };
+
+  const validate = () => {
+    const nextErrors: Partial<Record<keyof FormState, string>> = {};
+    if (!form.fullName.trim()) nextErrors.fullName = 'Full name is required.';
+    if (!form.email.trim()) {
+      nextErrors.email = 'Email is required.';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+      nextErrors.email = 'Enter a valid email address.';
+    }
+    if (!form.company.trim()) nextErrors.company = 'Company name is required.';
+    if (!form.role.trim()) nextErrors.role = 'Role is required.';
+    if (!form.track.trim()) nextErrors.track = 'Please select an event track.';
+
+    setErrors(nextErrors);
+    return Object.keys(nextErrors).length === 0;
+  };
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!validate()) return;
+
+    setSubmitted(true);
+    setForm(initialForm);
+    setErrors({});
+  };
+
   return (
     <main className="graph-grid-dim relative bg-background text-foreground">
       <Navbar />
@@ -53,7 +164,7 @@ export default function EventsPage() {
         </div>
       </section>
 
-      <section className="section-block relative overflow-hidden px-[5%] pb-[60px] pt-[50px]">
+      <section className="section-block relative overflow-hidden px-[5%] pb-[44px] pt-[50px]">
         <div className="pointer-events-none absolute -right-20 top-8 h-70 w-70 bg-[radial-gradient(circle,rgba(255,91,35,.16),transparent_66%)]" />
         <div className="site-shell relative z-[1] grid grid-cols-1 gap-9 lg:grid-cols-[1.15fr_.85fr] lg:items-end">
           <div>
@@ -68,11 +179,11 @@ export default function EventsPage() {
               High-signal briefings, curated investor access, and practical expansion intelligence across all six GCC markets.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link href="/auth" className="btn btn-primary btn-primary-lg">
+              <Link href="#registration" className="btn btn-primary btn-primary-lg">
                 Request Invitation
               </Link>
               <Link href="/survey" className="btn btn-outline btn-outline-lg">
-                Complete Founder Survey
+                Start Survey
               </Link>
             </div>
           </div>
@@ -101,6 +212,22 @@ export default function EventsPage() {
               Ticket Benchmark: 92,500+ Value
             </p>
           </aside>
+        </div>
+      </section>
+
+      <section className="section-block px-[5%] pb-[62px]">
+        <div className="site-shell">
+          <div className="countdown-inner panel-urgency-hover">
+            <div>
+              <div className="timer-label">Offer closes in</div>
+              <div className="timer-digits">{timerLabel}</div>
+            </div>
+            <div className="spots-left ml-auto text-right">
+              <span className="text-(--orange)">{claimed}</span> founders claimed access today
+              <br />
+              <span className="text-[10px] text-[rgba(204,204,204,.6)]">{spots} spots left before waitlist</span>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -134,9 +261,7 @@ export default function EventsPage() {
           <div className="card-grid mt-8 grid grid-cols-1 gap-[2px] lg:grid-cols-3">
             {agenda.map((item) => (
               <article key={item.day} className="glass-card p-7">
-                <p className="font-(--font-mono) text-[.69rem] uppercase tracking-[.14em] text-(--orange)">
-                  {item.day}
-                </p>
+                <p className="font-(--font-mono) text-[.69rem] uppercase tracking-[.14em] text-(--orange)">{item.day}</p>
                 <h3 className="mt-3 text-[1.2rem]">{item.title}</h3>
                 <ul className="mt-4 space-y-2 text-[.86rem] text-[rgba(214,214,214,.95)]">
                   {item.bullets.map((bullet) => (
@@ -154,43 +279,103 @@ export default function EventsPage() {
 
       <section className="section-block border-y border-[rgba(255,91,35,.1)] bg-[rgba(255,91,35,.04)] px-[5%] py-[62px]">
         <div className="site-shell">
-          <p className="section-lead">Access Tiers</p>
-          <h2 className="section-title mt-4">Priority. Premium. Private.</h2>
-          <div className="card-grid mt-8 grid grid-cols-1 gap-[2px] md:grid-cols-3">
-            <article className="glass-card p-7">
-              <p className="font-(--font-mono) text-[.68rem] uppercase tracking-[.12em] text-(--orange)">Founder Priority</p>
-              <h3 className="mt-3 text-[1.2rem]">Beta Member Allocation</h3>
-              <p className="copy mt-3">Reserved for active founders completing survey + profile. Includes summit queue priority and closed-room eligibility.</p>
-            </article>
-            <article className="glass-card p-7">
-              <p className="font-(--font-mono) text-[.68rem] uppercase tracking-[.12em] text-[#00c896]">Investor Access</p>
-              <h3 className="mt-3 text-[1.2rem]">Capital Partner Pass</h3>
-              <p className="copy mt-3">Family offices, SWFs, and VCs can request invitation-only dealflow rooms with stage, sector, and jurisdiction filters.</p>
-            </article>
-            <article className="glass-card p-7">
-              <p className="font-(--font-mono) text-[.68rem] uppercase tracking-[.12em] text-[#00aaff]">Policy Circle</p>
-              <h3 className="mt-3 text-[1.2rem]">Government & Platform Briefing</h3>
-              <p className="copy mt-3">Public and private ecosystem operators align around startup enablement, cross-border execution, and 2030+ policy priorities.</p>
-            </article>
+          <p className="section-lead">Featured Speakers</p>
+          <h2 className="section-title mt-4">Builders, Allocators, Policymakers.</h2>
+          <div className="card-grid mt-8 grid grid-cols-1 gap-[2px] md:grid-cols-2 xl:grid-cols-4">
+            {speakers.map((speaker) => (
+              <article key={speaker.name} className="glass-card p-6">
+                <p className="font-(--font-display) text-[1.05rem] font-bold text-white">{speaker.name}</p>
+                <p className="mt-2 text-[.68rem] uppercase tracking-[.12em] text-(--orange)">{speaker.role}</p>
+                <p className="copy mt-4 text-[.84rem]">{speaker.topic}</p>
+              </article>
+            ))}
+          </div>
+
+          <div className="mt-10">
+            <p className="section-lead">Ecosystem Partners</p>
+            <div className="card-grid mt-4 grid grid-cols-2 gap-[2px] sm:grid-cols-4 lg:grid-cols-8">
+              {sponsors.map((sponsor) => (
+                <div key={sponsor} className="glass-card p-4 text-center font-(--font-mono) text-[.67rem] uppercase tracking-[.1em] text-[rgba(255,255,255,.9)]">
+                  {sponsor}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="section-block px-[5%] py-[72px]">
+      <section id="registration" className="section-block px-[5%] py-[72px]">
         <div className="site-shell glass-card p-7 sm:p-10">
-          <p className="section-lead">Final Step</p>
-          <h2 className="section-title mt-4">Secure Your Event Priority</h2>
+          <p className="section-lead">Registration</p>
+          <h2 className="section-title mt-4">Register for Event Allocation</h2>
           <p className="copy mt-4 max-w-[760px]">
-            Submit your founder profile and we will map your best-fit track, intros, and room allocations. This is a curated access model, not open-ticket registration.
+            Submit your profile to reserve your place. Our team validates fit by stage, geography, and track before issuing invitation confirmation.
           </p>
-          <div className="mt-7 flex flex-wrap gap-3">
-            <Link href="/auth" className="btn btn-primary btn-primary-lg">
-              Get Early Access
-            </Link>
-            <Link href="/#waitlist" className="btn btn-outline btn-outline-lg">
-              Join Waitlist
-            </Link>
-          </div>
+
+          <form className="mt-8 grid gap-4 md:grid-cols-2" onSubmit={handleSubmit} noValidate>
+            <div>
+              <label className="field-label" htmlFor="fullName">Full Name</label>
+              <input id="fullName" className="form-input" value={form.fullName} onChange={(e) => setField('fullName', e.target.value)} />
+              {errors.fullName ? <p className="mt-1 text-[.75rem] text-[#ff7a4a]">{errors.fullName}</p> : null}
+            </div>
+
+            <div>
+              <label className="field-label" htmlFor="email">Email</label>
+              <input id="email" type="email" className="form-input" value={form.email} onChange={(e) => setField('email', e.target.value)} />
+              {errors.email ? <p className="mt-1 text-[.75rem] text-[#ff7a4a]">{errors.email}</p> : null}
+            </div>
+
+            <div>
+              <label className="field-label" htmlFor="company">Company</label>
+              <input id="company" className="form-input" value={form.company} onChange={(e) => setField('company', e.target.value)} />
+              {errors.company ? <p className="mt-1 text-[.75rem] text-[#ff7a4a]">{errors.company}</p> : null}
+            </div>
+
+            <div>
+              <label className="field-label" htmlFor="role">Role</label>
+              <input id="role" className="form-input" value={form.role} onChange={(e) => setField('role', e.target.value)} placeholder="Founder / CEO / Investor" />
+              {errors.role ? <p className="mt-1 text-[.75rem] text-[#ff7a4a]">{errors.role}</p> : null}
+            </div>
+
+            <div className="md:col-span-2">
+              <label className="field-label" htmlFor="track">Primary Track Interest</label>
+              <select id="track" className="form-input" value={form.track} onChange={(e) => setField('track', e.target.value)}>
+                <option value="">Select track</option>
+                {tracks.map((track) => (
+                  <option key={track.title} value={track.title}>
+                    {track.title}
+                  </option>
+                ))}
+              </select>
+              {errors.track ? <p className="mt-1 text-[.75rem] text-[#ff7a4a]">{errors.track}</p> : null}
+            </div>
+
+            <div className="md:col-span-2">
+              <label className="field-label" htmlFor="notes">Notes (Optional)</label>
+              <textarea
+                id="notes"
+                className="form-input min-h-28"
+                value={form.notes}
+                onChange={(e) => setField('notes', e.target.value)}
+                placeholder="Share what outcome you want from this event."
+              />
+            </div>
+
+            <div className="mt-2 flex flex-wrap gap-3 md:col-span-2">
+              <button type="submit" className="btn btn-primary btn-primary-lg">
+                Submit Registration
+              </button>
+              <Link href="/survey" className="btn btn-outline btn-outline-lg">
+                Start Survey
+              </Link>
+            </div>
+          </form>
+
+          {submitted ? (
+            <p className="mt-4 border border-[rgba(0,200,150,.35)] bg-[rgba(0,200,150,.1)] px-3 py-2 text-[.84rem] text-[#b8ffe9]">
+              Registration submitted. Our team will review and send your allocation update.
+            </p>
+          ) : null}
         </div>
       </section>
 

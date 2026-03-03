@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MyFounders.club — Gulf Ecosystem Intelligence Survey 2028</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --orange: #FF4D00;
+  --orange-dim: rgba(255,77,0,0.13);
+  --orange-glow: rgba(255,77,0,0.4);
+  --black: #080808;
+  --card: #111111;
+  --card2: #151515;
+  --border: #222222;
+  --text: #E8E8E8;
+  --muted: #666;
+  --gold: #FFB800;
+  --gold-glow: rgba(255,184,0,0.35);
+  --green: #00C896;
+  --green-glow: rgba(0,200,150,0.3);
+  --blue: #00AAFF;
+  --blue-glow: rgba(0,170,255,0.3);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.6;overflow-x:hidden}
+
+/* ── KEYFRAMES ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes slideRight{from{opacity:0;transform:translateX(-36px)}to{opacity:1;transform:translateX(0)}}
+@keyframes glowPulse{0%,100%{box-shadow:0 0 18px var(--orange-glow)}50%{box-shadow:0 0 40px var(--orange-glow),0 0 70px rgba(255,77,0,0.12)}}
+@keyframes timerPulse{0%,100%{text-shadow:0 0 10px var(--orange-glow)}50%{text-shadow:0 0 28px var(--orange-glow),0 0 55px rgba(255,77,0,0.18)}}
+@keyframes progressGlow{0%,100%{box-shadow:0 0 8px var(--orange-glow)}50%{box-shadow:0 0 22px var(--orange-glow),0 0 45px rgba(255,77,0,0.08)}}
+@keyframes sectionReveal{from{opacity:0;transform:translateY(22px) scale(0.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes logoFlicker{0%,89%,91%,95%,100%{opacity:1}90%{opacity:0.55}94%{opacity:0.8}}
+@keyframes scanline{from{transform:translateY(-4px)}to{transform:translateY(100vh)}}
+@keyframes shimmer{0%{left:-100%}100%{left:200%}}
+@keyframes dotPulse{0%,100%{transform:scale(1);box-shadow:0 0 10px var(--orange-glow)}50%{transform:scale(1.2);box-shadow:0 0 22px var(--orange-glow),0 0 45px rgba(255,77,0,0.2)}}
+
+/* Scanline boot effect */
+body::before{content:'';position:fixed;top:0;left:0;width:100%;height:4px;background:linear-gradient(transparent,rgba(255,77,0,0.18),transparent);z-index:9999;pointer-events:none;animation:scanline 1.1s ease-out 0.1s 1 forwards}
+
+/* ── TOP BAR ── */
+.topbar{background:var(--orange);color:#fff;font-family:'Space Mono',monospace;font-size:11px;padding:9px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;position:relative;z-index:10;animation:fadeIn 0.4s ease both;box-shadow:0 2px 28px rgba(255,77,0,0.55)}
+.close-btn{background:rgba(0,0,0,0.22);border:none;color:#fff;font-family:'Space Mono',monospace;font-size:10px;padding:5px 12px;cursor:pointer;letter-spacing:0.05em;transition:background 0.2s,transform 0.15s}
+.close-btn:hover{background:rgba(0,0,0,0.5);transform:scale(1.06)}
+.badge-spot{background:#fff;color:var(--orange);font-weight:700;padding:3px 9px;font-size:13px;display:inline-block}
+
+/* ── LOGO BAR ── */
+.logo-bar{max-width:900px;margin:0 auto;padding:22px 24px 0;animation:fadeIn 0.7s ease 0.2s both}
+.logo-mark{display:inline-flex;align-items:center;gap:10px;animation:logoFlicker 7s infinite 3s}
+.logo-dot{width:11px;height:11px;border-radius:50%;background:var(--orange);animation:dotPulse 2.5s ease-in-out infinite;flex-shrink:0}
+.logo-name{font-family:'Bebas Neue',sans-serif;font-size:19px;letter-spacing:0.06em;color:var(--text)}
+.logo-name span{color:var(--orange)}
+.logo-tag{font-family:'Space Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:0.15em;text-transform:uppercase;margin-top:2px}
+
+/* ── HERO ── */
+.hero{padding:34px 24px 30px;max-width:900px;margin:0 auto;position:relative;z-index:1}
+.hero-eyebrow{font-family:'Space Mono',monospace;font-size:10px;color:var(--orange);letter-spacing:0.18em;text-transform:uppercase;margin-bottom:16px;animation:slideRight 0.6s ease 0.3s both}
+.hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,9vw,96px);line-height:0.93;letter-spacing:0.01em;animation:fadeUp 0.7s ease 0.4s both}
+.hero h1 .orange{color:var(--orange);text-shadow:0 0 40px rgba(255,77,0,0.35),0 0 80px rgba(255,77,0,0.12)}
+.hero p.sub{margin-top:20px;color:#999;max-width:640px;font-size:14px;line-height:1.75;animation:fadeUp 0.7s ease 0.55s both}
+
+/* ── REWARD CARDS ── */
+.rewards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:2px;background:var(--border);border:1px solid var(--border);max-width:900px;margin:0 24px 26px;animation:fadeUp 0.7s ease 0.65s both}
+.reward-card{background:var(--card);padding:24px 20px;position:relative;overflow:hidden;transition:transform 0.25s,box-shadow 0.25s;cursor:default}
+.reward-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,77,0,0.05) 0%,transparent 55%);opacity:0;transition:opacity 0.3s}
+.reward-card:hover{transform:translateY(-5px);box-shadow:0 14px 44px rgba(255,77,0,0.22),0 0 0 1px rgba(255,77,0,0.35);z-index:2}
+.reward-card:hover::before{opacity:1}
+.reward-card:nth-child(2):hover{box-shadow:0 14px 44px var(--green-glow),0 0 0 1px rgba(0,200,150,0.35)}
+.reward-card:nth-child(3):hover{box-shadow:0 14px 44px var(--blue-glow),0 0 0 1px rgba(0,170,255,0.35)}
+.reward-tag{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:3px 8px;display:inline-block;margin-bottom:14px;font-weight:700}
+.tag-auto{background:var(--orange);color:#fff}
+.tag-comp{background:#0c2018;color:var(--green);border:1px solid var(--green)}
+.tag-prio{background:#0c1820;color:var(--blue);border:1px solid var(--blue)}
+.reward-card h3{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:0.04em;margin-bottom:8px;line-height:1.1}
+.reward-card .org{font-size:10px;color:var(--muted);font-family:'Space Mono',monospace;margin-bottom:10px;letter-spacing:0.05em}
+.reward-card ul{list-style:none;font-size:12px;color:#aaa}
+.reward-card ul li::before{content:"▸ ";color:var(--orange)}
+.reward-card .value-tag{margin-top:14px;font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:var(--gold);text-shadow:0 0 14px var(--gold-glow)}
+
+/* ── COUNTDOWN ── */
+.countdown-outer{max-width:900px;margin:0 24px 20px;animation:fadeUp 0.7s ease 0.75s both}
+.countdown-inner{background:var(--card);border:1px solid var(--border);padding:16px 22px;display:flex;align-items:center;gap:20px;transition:border-color 0.3s,box-shadow 0.3s}
+.countdown-inner:hover{border-color:rgba(255,77,0,0.3);box-shadow:0 0 32px rgba(255,77,0,0.09)}
+.timer-label{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:0.12em;font-family:'Space Mono',monospace;margin-bottom:4px}
+.timer-digits{font-family:'Bebas Neue',sans-serif;font-size:38px;letter-spacing:0.08em;color:var(--orange);animation:timerPulse 2.2s ease-in-out infinite;line-height:1}
+.spots-left{margin-left:auto;font-size:11px;color:var(--gold);font-family:'Space Mono',monospace;text-align:right}
+
+/* ── STATS ── */
+.stats-bar{max-width:900px;margin:0 24px 32px;display:grid;grid-template-columns:repeat(5,1fr);gap:2px;background:var(--border);animation:fadeUp 0.7s ease 0.85s both}
+.stat-cell{background:var(--card);padding:16px 12px;text-align:center;transition:background 0.2s,transform 0.2s;cursor:default;position:relative;overflow:hidden}
+.stat-cell::after{content:'';position:absolute;top:0;left:0;right:0;height:0;background:var(--orange);transition:height 0.2s}
+.stat-cell:hover{background:var(--card2);transform:translateY(-2px)}
+.stat-cell:hover::after{height:2px}
+.stat-cell .num{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--orange);display:block;text-shadow:0 0 18px rgba(255,77,0,0.25)}
+.stat-cell .desc{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;margin-top:3px}
+
+/* ── GLOW DIVIDER ── */
+.glow-divider{max-width:900px;margin:0 24px 22px;height:1px;background:linear-gradient(90deg,transparent,rgba(255,77,0,0.35),transparent)}
+
+/* ── PROGRESS ── */
+.progress-wrap{max-width:900px;margin:0 24px 26px;animation:fadeUp 0.6s ease 0.95s both}
+.progress-label{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);display:flex;justify-content:space-between;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.1em}
+.progress-bar-bg{height:3px;background:var(--border)}
+.progress-bar-fill{height:3px;background:var(--orange);width:0%;transition:width 0.5s cubic-bezier(0.4,0,0.2,1);animation:progressGlow 2.2s ease-in-out infinite;position:relative}
+.progress-bar-fill::after{content:'';position:absolute;right:0;top:50%;width:8px;height:8px;background:var(--orange);border-radius:50%;transform:translate(50%,-50%);box-shadow:0 0 10px var(--orange-glow);transition:opacity 0.3s}
+
+/* ── SURVEY FORM ── */
+.survey-wrap{max-width:900px;margin:0 auto 60px;padding:0 24px}
+.section-block{margin-bottom:26px;border:1px solid var(--border);background:var(--card);opacity:0;transition:border-color 0.3s,box-shadow 0.3s}
+.section-block.visible{animation:sectionReveal 0.55s ease forwards}
+.section-block:hover{border-color:rgba(255,77,0,0.18);box-shadow:0 4px 40px rgba(255,77,0,0.05)}
+.section-header{background:var(--orange);padding:14px 20px;display:flex;align-items:center;gap:14px;position:relative;overflow:hidden}
+.section-header::after{content:'';position:absolute;right:-16px;top:0;bottom:0;width:55px;background:rgba(255,255,255,0.07);transform:skewX(-12deg)}
+.sec-num{font-family:'Bebas Neue',sans-serif;font-size:38px;line-height:1;opacity:0.3}
+.sec-title{font-family:'Bebas Neue',sans-serif;font-size:21px;letter-spacing:0.06em;color:#fff}
+.sec-subtitle{font-size:11px;color:rgba(255,255,255,0.68);margin-top:2px}
+.section-body{padding:26px 22px}
+.q-group{margin-bottom:26px}
+.q-label{font-size:13px;font-weight:600;color:#ddd;margin-bottom:11px;display:block;line-height:1.4}
+.q-label .req{color:var(--orange);margin-left:2px}
+.q-num{color:var(--orange);margin-right:6px;font-family:'Space Mono',monospace;font-size:10px;opacity:0.8}
+
+/* Options */
+.option-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px}
+.opt-item{position:relative}
+.opt-item input{position:absolute;opacity:0;width:0;height:0}
+.opt-item label{display:flex;align-items:center;gap:9px;padding:11px 14px;border:1px solid var(--border);font-size:12px;cursor:pointer;color:#999;background:#0c0c0c;transition:all 0.18s ease;position:relative;overflow:hidden}
+.opt-item label::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--orange);transform:scaleY(0);transition:transform 0.18s ease;transform-origin:bottom}
+.opt-item label:hover{border-color:rgba(255,77,0,0.45);color:#fff;background:#131313;box-shadow:0 0 18px rgba(255,77,0,0.09),inset 0 0 20px rgba(255,77,0,0.03)}
+.opt-item label:hover::before{transform:scaleY(1)}
+.opt-item input:checked+label{border-color:var(--orange);background:var(--orange-dim);color:#fff;box-shadow:0 0 22px rgba(255,77,0,0.14),inset 0 0 22px rgba(255,77,0,0.04)}
+.opt-item input:checked+label::before{transform:scaleY(1)}
+
+/* Inputs */
+.form-input,.form-textarea,.form-select{width:100%;background:#0c0c0c;border:1px solid var(--border);color:var(--text);padding:11px 14px;font-family:'DM Sans',sans-serif;font-size:13px;outline:none;transition:border-color 0.2s,box-shadow 0.2s}
+.form-input:hover,.form-textarea:hover,.form-select:hover{border-color:#3a3a3a}
+.form-input:focus,.form-textarea:focus,.form-select:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(255,77,0,0.1),0 0 22px rgba(255,77,0,0.07)}
+.form-textarea{min-height:88px;resize:vertical}
+.form-select{appearance:none;cursor:pointer}
+
+/* Range */
+.range-wrap{display:flex;align-items:center;gap:14px}
+.range-wrap input[type=range]{flex:1;accent-color:var(--orange);cursor:pointer;height:4px}
+.range-val{font-family:'Bebas Neue',sans-serif;font-size:30px;color:var(--orange);min-width:36px;text-align:right;text-shadow:0 0 16px var(--orange-glow);transition:text-shadow 0.2s}
+
+/* ── CTA ── */
+.cta-wrap{max-width:900px;margin:0 auto 80px;padding:0 24px;animation:fadeUp 0.7s ease 1.1s both}
+.cta-btn{width:100%;background:var(--orange);color:#fff;border:none;padding:22px 32px;font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.1em;cursor:pointer;display:flex;align-items:center;justify-content:space-between;position:relative;overflow:hidden;transition:background 0.25s,box-shadow 0.25s,transform 0.15s;box-shadow:0 4px 32px rgba(255,77,0,0.42)}
+.cta-btn::before{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.12),transparent);transition:left 0.5s ease}
+.cta-btn:hover{background:#e04200;box-shadow:0 10px 55px rgba(255,77,0,0.65),0 0 90px rgba(255,77,0,0.18);transform:translateY(-3px)}
+.cta-btn:hover::before{left:200%}
+.cta-btn:active{transform:translateY(0)}
+.cta-note{font-size:11px;color:var(--muted);text-align:center;margin-top:14px;font-family:'Space Mono',monospace}
+.disclaimer{font-size:11px;color:#303030;margin-top:10px;text-align:center}
+
+@media(max-width:640px){.stats-bar{grid-template-columns:repeat(3,1fr)}.rewards-grid{grid-template-columns:1fr}.hero h1{font-size:52px}}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <span>⚡ Limited to 500 founders. Awards nominations &amp; forum tickets are first-come, first-served. Do not close this page.</span>
+  <div style="display:flex;align-items:center;gap:10px">
+    <span class="badge-spot" id="spot-count">312</span>
+    <span style="font-size:10px;opacity:0.82">SPOTS LEFT</span>
+    <button class="close-btn">✕ CLOSE</button>
+  </div>
+</div>
+
+<!-- LOGO -->
+<div class="logo-bar">
+  <div class="logo-mark">
+    <div class="logo-dot"></div>
+    <span class="logo-name">My<span>Founders</span>.club</span>
+    <span class="logo-tag">GCC Edition 2028</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">▸ Gulf Ecosystem Intelligence Survey 2028 — For Founders, By Founders</div>
+  <h1>15 minutes.<br><span class="orange">Three rewards.</span><br>Your story counts.</h1>
+  <p class="sub">Share your experience as a Gulf founder or company entering the GCC — and walk away with an automatic nomination for the Gulf Founders Awards 2028, a complimentary seat at the Future Innovation &amp; Investment Forum, Abu Dhabi 2028, and early access to the FIF Riyadh 2027 invitation list. No pitch. No application. No fee. Just 15 minutes of honest experience.</p>
+</div>
+
+<!-- REWARDS -->
+<div class="rewards-grid">
+  <div class="reward-card">
+    <span class="reward-tag tag-auto">AUTO NOMINATION</span>
+    <div class="org">MYFOUNDERS.CLUB · GFC AWARDS</div>
+    <h3>Gulf Founders<br>Awards 2028</h3>
+    <ul>
+      <li>Auto-enters all relevant categories</li>
+      <li>Female Founder Rising</li>
+      <li>Best GCC Expansion</li>
+      <li>Early Stage Breakthrough</li>
+      <li>Impact Venture of the Year</li>
+    </ul>
+    <div class="value-tag">PRICELESS</div>
+  </div>
+  <div class="reward-card">
+    <span class="reward-tag tag-comp">COMPLIMENTARY TICKET</span>
+    <div class="org">YOU · AUH · 2026</div>
+    <h3>Future Innovation &amp;<br>Investment Forum</h3>
+    <p style="font-size:12px;color:#888;margin-bottom:8px">A curated seat in one room with sovereign wealth funds, global VCs, government officials &amp; the region's most consequential founders. One day. Decisions that shape a decade.</p>
+    <div class="value-tag">TICKET VALUE: 92,500+</div>
+  </div>
+  <div class="reward-card">
+    <span class="reward-tag tag-prio">PRIORITY INVITATION</span>
+    <div class="org">YOU · RUH · SAUDI ARABIA · 2027</div>
+    <h3>Future Innovation &amp;<br>Investment Forum</h3>
+    <p style="font-size:12px;color:#888;margin-bottom:8px">First access to the inaugural Riyadh edition — the Kingdom's premier convening of Vision 2030 builders, FII-backed investors, and the founders defining Saudi Arabia's next economy.</p>
+    <div class="value-tag">EXCLUSIVE · PRIORITY WAITLIST</div>
+  </div>
+</div>
+
+<!-- COUNTDOWN -->
+<div class="countdown-outer">
+  <div class="countdown-inner">
+    <div>
+      <div class="timer-label">Offer closes in</div>
+      <div class="timer-digits" id="timer">00 : 47 : 00</div>
+    </div>
+    <div class="spots-left">⚡ <span id="spot-claimed">188</span> founders claimed today<br><span style="color:#333;font-size:10px">Rewards close when 500 reached</span></div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat-cell"><span class="num">~15</span><div class="desc">Min to complete</div></div>
+  <div class="stat-cell"><span class="num">3</span><div class="desc">Sections</div></div>
+  <div class="stat-cell"><span class="num">100%</span><div class="desc">Encrypted</div></div>
+  <div class="stat-cell"><span class="num">3</span><div class="desc">Rewards</div></div>
+  <div class="stat-cell"><span class="num" style="color:var(--green);text-shadow:0 0 16px var(--green-glow)">FREE</span><div class="desc">No credit card</div></div>
+</div>
+
+<div class="glow-divider"></div>
+
+<!-- PROGRESS -->
+<div class="progress-wrap">
+  <div class="progress-label"><span>YOUR PROGRESS</span><span id="pct-label">0%</span></div>
+  <div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-fill"></div></div>
+</div>
+
+<!-- SURVEY -->
+<div class="survey-wrap">
+
+  <!-- SECTION 1 -->
+  <div class="section-block">
+    <div class="section-header">
+      <div class="sec-num">01</div>
+      <div>
+        <div class="sec-title">Founder & Company Profile</div>
+        <div class="sec-subtitle">Tell us who you are and where you're building</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <div class="q-group">
+        <label class="q-label"><span class="q-num">01</span>Your full name <span class="req">*</span></label>
+        <input class="form-input survey-field" type="text" placeholder="e.g. Layla Al-Rashidi">
+      </div>
+
+      <div class="q-group">
+        <label class="q-label"><span class="q-num">02</span>Your company name <span class="req">*</span></label>
+        <input class="form-input survey-field" type="text" placeholder="e.g. Noor Ventures">
+      </div>
+
+      <div class="q-group">
+        <label class="q-label"><span class="q-num">03</span>Your role at the company <span class="req">*</span></label>
+        <div class="option-grid">
+          <div class="opt-item"><input type="radio" name="role" id="r1"><label for="r1">Founder / Co-founder</label></div>
+          <div class="opt-item"><input type="radio" name="role" id="r2"><label for="r2">CEO</label></div>
+          <div class="opt-item"><input type="radio" name="role" id="r3"><label for="r3">CTO / CPO</label></div>
+          <div class="opt-item"><input type="radio" name="role" id="r4"><label for="r4">COO / CFO</label></div>
+          <div class="opt-item"><input type="radio" name="role" id="r5"><label for="r5">Managing Partner</label></div>
+          <div class="opt-item"><input type="radio" name="role" id="r6"><label for="r6">Other C-Suite</label></div>
+        </div>
+      </div>
+
+      <div class="q-group">
+        <label class="q-label"><span class="q-num">04</span>Primary GCC country of operations <span class="req">*</span></label>
+        <div class="option-grid">
+          <div class="opt-item"><input type="radio" name="country" id="c1"><label for="c1">🇸🇦 Saudi Arabia</label></div>
+          <div class="opt-item"><input type="radio" name="country" id="c2"><label for="c2">🇦🇪 UAE</label></div>
+          <div class="opt-item"><input type="radio" name="country" id="c3"><label for="c3">🇶🇦 Qatar</label></div>
+          <div class="opt-item"><input type="radio" name="country" id="c4"><label for="c4">🇰🇼 Kuwait</label></div>
+          <div class="opt-item"><input type="radio" name="country" id="c5"><label for="c5">🇧🇭 Bahrain</label></div>
+          <div class="opt-item"><input type="radio" name="country" id="c6"><label for="c6">🇴🇲 Oman</label></div>
+        </div>
+      </div>
+
+      <div class="q-group">
+        <label class="q-label"><span class="q-num">05</span>Industry sector <span class="req">*</span></label>
+        <select class="form-select survey-field">
+          <option value="">— Select industry —</option>
+          <option>Fintech / Payments</option>
+          <option>E-commerce / Retail</option>
+          <option>HealthTech / MedTech</option>
+          <option>EdTech</option>
+          <option>PropTech / Real Estate</option>
+          <option>Logistics / Supply Chain</option>
+          <option>SaaS / Enterprise Software</option>
+          <option>CleanTech / Sustainability</option>
+          <option>Media / Creator Economy</option>
+          <option>Deep Tech / AI</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="q-group">
+        <label class="q-label"><span class="q-num">06</span>Funding stage <span class="req">*</span></label>
+        <div class="option-grid">
+          <div class="opt-item"><input type="radio" name="stage" id="s1"><label for="s1">Idea / Pre-revenue</label></div>
+          <div class="opt-item"><input type="radio" name="stage" id="s2"><label for="s2">MVP / Early Traction</label></div>
+          <div class="opt-item"><input type="radio" name="stage" id="s3"><label for="s3">Seed Funded</label></div>
+          <div class="opt-item"><input type="radio" name="stage" id="s4"><label for="s4">Series A+</label></div>
+          <div class="opt-item"><input type="radio" name="stage" id="s5"><label for="s5">Profitable / Bootstrapped</label></div>
+          <div class="opt-item"><input type="radio" name="stage" id="s6"><label for="s6">Scaling / Growth Stage</label></div>
+        </div>
+      </div>
+
+      <div class="q-group">
+        <label class="q-label"><span class="q-num">07</span>Years operating</label>
+        <div class="option-grid">
+          <div class="opt-item"><input type="radio" name="age" id="a1"><label for="a1">Less than 1 year</label></div>
+          <div class="opt-item"><input type="radio" name="age" id="a2"><label for="a2">1–2 years</label></div>
+          <div class="opt-item"><input type="radio" name="age" id="a3"><label for="a3">3–5 years</label></div>
+          <div class="opt-item"><input type="radio" name="age" id="a4"><label for="a4">5+ years</label></div>
+        </div>
+      </div>
+
+      <div class="q-group">
+        <label class="q-label"><span class="q-num">08</span>Full-time team size</label>
+        <div class="option-grid">
+          <div class="opt-item"><input type="radio" name="team" id="t1"><label for="t1">Solo founder</label></div>
+          <div class="opt-item"><input type="radio" name="team" id="t2"><label for="t2">2–5</label></div>
+          <div class="opt-item"><input type="radio" name="team" id="t3"><label for="t3">6–20</label></div>
+          <div class="opt-item"><input type="radio" name="team" id="t4"><label for="t4">21–50</label></div>
+          <div class="opt-item"><input type="radio" name="team" id="t5"><label for="t5">50+</label></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECTION 2 -->
+  <div class="section-block">
+    <div class="section-header">
+      <div class="sec-num">02</div>
+      <div>
+        <div class="sec-title">GCC Ecosystem Experience</div>
+        <div class="sec-subtitle">Your honest take on building in the Gulf</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <div class="q-group">
+        <label class="q-label"><span class="q-num">09</span>Rate the overall GCC startup ecosystem today</label>
+        <div class="range-wrap">
+          <span style="font-size:11px;color:var(--muted)">Very Weak</span>
+          <input type="range" min="1" max="10" value="5" id="eco-range" oninput="document.getElementById('eco-val').textContent=this.value;updateProgress()">
+          <span style="font-size:11px;color:var(--muted)">Excellent</span>
+          <span class="range-val" id="eco-val">5</span>
+        </div>
+      </div>
+
+      <div class="q-group">
+        <label class="q-label"><span class="q-num">10</span>What aspects do you find most valuable? <em style="font-size:11px;color:var(--muted)">(select all)</em></label>
+        <div class="option-grid">
+          <div class="opt-item"><input type="checkbox" id="v1"><label for="v1">Government support &amp; Vision programs</label></div>
+          <div class="opt-item"><input type="checkbox" id="v2"><label for="v2">Access to sovereign wealth funds</label></div>
+          <div class="opt-item"><input type="checkbox" id="v3"><label for="v3">Tax-free environment</label></div>
+          <div class="opt-item"><input type="checkbox" id="v4"><label for="v4">Free zones &amp; licensing ease</label></div>
+          <div class="opt-item"><input type="checkbox" id="v5"><label for="v5">Strong local consumer spending</label></div>
+          <div class="opt-item"><input type="checkbox" id="v6"><label for="v6">Regional expansion gateway</label></div>
+          <div class="opt-item"><input type="checkbox" id="v7"><label for="v7">Accelerator &amp; incubator programs</label></div>
+          <div class="opt-item"><input type="checkbox" id="v8"><label for="v8">Talent pool &amp; universities</label></div>
+        </div>
+      </div>
+
+      <div class="q-group">
+        <label class="q-label"><span class="q-num">11</span>Biggest barrier to operating or expanding in the GCC <span class="req">*</span></label>
+        <div class="option-grid">
+          <div class="opt-item"><input type="radio" name="barrier" id="b1"><label for="b1">Regulatory complexity</label></div>
+          <div class="opt-item"><input type="radio" name="barrier" id="b2"><label for="b2">Access to early-stage capital</label></div>
+          <div class="opt-item"><input type="radio" name="barrier" id="b3"><label for="b3">Finding the right local partners</label></div>
+          <div class="opt-item"><input type="radio" name="barrier" id="b4"><label for="b4">Talent recruitment &amp; retention</label></div>
+          <div class="opt-item"><input type="radio" name="barrier" id="b5"><label for="b5">Market education / low awareness</label></div>
+          <div class="opt-item"><input type="radio" name="barrier" id="b6"><label for="b6">Cultural &amp; language differences</label></div>
+          <div class="opt-item"><input type="radio" name="barrier" id="b7"><label for="b7">Payment infrastructure</label></div>
+          <div class="opt-item"><input type="radio" name="barrier" id="b8"><label for="b8">Visa / residency for the team</label></div>
+        </div>
+      </div>
+
+      <div class="q-group">
+        <label class="q-label"><span class="q-num">12</span>Have you expanded across multiple GCC countries?</label>
+        <div class="option-grid">
+          <div class="opt-item"><input type="radio" name="expand" id="ex1"><label for="ex1">Yes — actively multi-market</label></div>
+          <div class="opt-item"><input type="radio" name="expand" id="ex2"><label for="ex2">Planning within 12 months</label></div>
+          <div class="opt-item"><input type="radio" name="expand" id="ex3"><label for="ex3">No — one market focus</label></div>
+          <div class="opt-item"><input type="radio" name="expand" id="ex4"><label for="ex4">No — still evaluating</label></div>
+        </div>
+      </div>
+
+      <div class="q-group">
+        <label class="q-label"><span class="q-num">13</span>How connected do you feel to the GCC founder community?</label>
+        <div class="range-wrap">
+          <span style="font-size:11px;color:var(--muted)">Isolated</span>
+          <input type="range" min="1" max="10" value="5" id="conn-range" oninput="document.getElementById('conn-val').textContent=this.value;updateProgress()">
+          <span style="font-size:11px;color:var(--muted)">Deeply Connected</span>
+          <span class="range-val" id="conn-val">5</span>
+        </div>
+      </div>
+
+      <div class="q-group">
+        <label class="q-label"><span class="q-num">14</span>What support should MyFounders.club prioritise? <em style="font-size:11px;color:var(--muted)">(select all)</em></label>
+        <div class="option-grid">
+          <div class="opt-item"><input type="checkbox" id="sup1"><label for="sup1">Investor introductions</label></div>
+          <div class="opt-item"><input type="checkbox" id="sup2"><label for="sup2">Peer founder network</label></div>
+          <div class="opt-item"><input type="checkbox" id="sup3"><label for="sup3">Government relations</label></div>
+          <div class="opt-item"><input type="checkbox" id="sup4"><label for="sup4">Hiring &amp; talent</label></div>
+          <div class="opt-item"><input type="checkbox" id="sup5"><label for="sup5">Legal &amp; regulatory guidance</label></div>
+          <div class="opt-item"><input type="checkbox" id="sup6"><label for="sup6">PR &amp; media visibility</label></div>
+          <div class="opt-item"><input type="checkbox" id="sup7"><label for="sup7">Cross-border expansion</label></div>
+          <div class="opt-item"><input type="checkbox" id="sup8"><label for="sup8">Founder mental health &amp; wellness</label></div>
+        </div>
+      </div>
+
+      <div class="q-group">
+        <label class="q-label"><span class="q-num">15</span>What has been the most pivotal resource in your GCC journey?</label>
+        <textarea class="form-textarea survey-field" placeholder="e.g. A strategic advisor, a government accelerator, a key investor relationship..."></textarea>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECTION 3 -->
+  <div class="section-block">
+    <div class="section-header">
+      <div class="sec-num">03</div>
+      <div>
+        <div class="sec-title">Impact, Vision & The Future</div>
+        <div class="sec-subtitle">Where you're headed and what the GCC needs next</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <div class="q-group">
+        <label class="q-label"><span class="q-num">16</span>Primary impact your company creates <em style="font-size:11px;color:var(--muted)">(select all)</em></label>
+        <div class="option-grid">
+          <div class="opt-item"><input type="checkbox" id="im1"><label for="im1">Job creation</label></div>
+          <div class="opt-item"><input type="checkbox" id="im2"><label for="im2">Financial inclusion</label></div>
+          <div class="opt-item"><input type="checkbox" id="im3"><label for="im3">Environmental sustainability</label></div>
+          <div class="opt-item"><input type="checkbox" id="im4"><label for="im4">Healthcare access</label></div>
+          <div class="opt-item"><input type="checkbox" id="im5"><label for="im5">Education &amp; skills</label></div>
+          <div class="opt-item"><input type="checkbox" id="im6"><label for="im6">Women &amp; youth empowerment</label></div>
+          <div class="opt-item"><input type="checkbox" id="im7"><label for="im7">Digital transformation</label></div>
+          <div class="opt-item"><input type="checkbox" id="im8"><label for="im8">National economic diversification</label></div>
+        </div>
+      </div>
+
+      <div class="q-group">
+        <label class="q-label"><span class="q-num">17</span>Does your company align with Vision 2030 / We the UAE 2031?</label>
+        <div class="option-grid">
+          <div class="opt-item"><input type="radio" name="vision" id="vi1"><label for="vi1">Directly aligned — by design</label></div>
+          <div class="opt-item"><input type="radio" name="vision" id="vi2"><label for="vi2">Somewhat aligned</label></div>
+          <div class="opt-item"><input type="radio" name="vision" id="vi3"><label for="vi3">Contributing, not specifically</label></div>
+          <div class="opt-item"><input type="radio" name="vision" id="vi4"><label for="vi4">Not applicable</label></div>
+        </div>
+      </div>
+
+      <div class="q-group">
+        <label class="q-label"><span class="q-num">18</span>Confidence in achieving your 12-month goals</label>
+        <div class="range-wrap">
+          <span style="font-size:11px;color:var(--muted)">Low</span>
+          <input type="range" min="1" max="10" value="7" id="conf-range" oninput="document.getElementById('conf-val').textContent=this.value;updateProgress()">
+          <span style="font-size:11px;color:var(--muted)">Very High</span>
+          <span class="range-val" id="conf-val">7</span>
+        </div>
+      </div>
+
+      <div class="q-group">
+        <label class="q-label"><span class="q-num">19</span>3-year company goal</label>
+        <div class="option-grid">
+          <div class="opt-item"><input type="radio" name="goal3" id="g1"><label for="g1">Reach Series B / C</label></div>
+          <div class="opt-item"><input type="radio" name="goal3" id="g2"><label for="g2">Achieve profitability</label></div>
+          <div class="opt-item"><input type="radio" name="goal3" id="g3"><label for="g3">Expand beyond GCC / MENA</label></div>
+          <div class="opt-item"><input type="radio" name="goal3" id="g4"><label for="g4">IPO or strategic exit</label></div>
+          <div class="opt-item"><input type="radio" name="goal3" id="g5"><label for="g5">Deepen vertical dominance</label></div>
+          <div class="opt-item"><input type="radio" name="goal3" id="g6"><label for="g6">Build category-defining brand</label></div>
+        </div>
+      </div>
+
+      <div class="q-group">
+        <label class="q-label"><span class="q-num">20</span>Where do you see the GCC startup ecosystem in 5 years?</label>
+        <div class="option-grid">
+          <div class="opt-item"><input type="radio" name="future" id="f1"><label for="f1">Global top-10 startup hub</label></div>
+          <div class="opt-item"><input type="radio" name="future" id="f2"><label for="f2">Strong regional leader</label></div>
+          <div class="opt-item"><input type="radio" name="future" id="f3"><label for="f3">Improving but fragmented</label></div>
+          <div class="opt-item"><input type="radio" name="future" id="f4"><label for="f4">Dependent on oil wealth cycles</label></div>
+        </div>
+      </div>
+
+      <div class="q-group">
+        <label class="q-label"><span class="q-num">21</span>One policy change that would most help GCC founders</label>
+        <textarea class="form-textarea survey-field" placeholder="Be specific — your insight directly shapes the MyFounders.club policy recommendations sent to GCC governments..."></textarea>
+      </div>
+
+      <div class="q-group">
+        <label class="q-label"><span class="q-num">22</span>Feature in the GCC Ecosystem Intelligence Report 2028?</label>
+        <div class="option-grid">
+          <div class="opt-item"><input type="radio" name="feature" id="fe1"><label for="fe1">Yes — use my name &amp; company</label></div>
+          <div class="opt-item"><input type="radio" name="feature" id="fe2"><label for="fe2">Yes — anonymously</label></div>
+          <div class="opt-item"><input type="radio" name="feature" id="fe3"><label for="fe3">No — keep fully private</label></div>
+        </div>
+      </div>
+
+      <div class="q-group">
+        <label class="q-label"><span class="q-num">23</span>Anything else you want investors or policymakers to know?</label>
+        <textarea class="form-textarea survey-field" placeholder="Your words, unfiltered. This is read by the MyFounders.club advisory board..."></textarea>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- CTA -->
+<div class="cta-wrap">
+  <button class="cta-btn" id="submit-btn" onclick="handleSubmit()">
+    <span>CLAIM MY REWARDS &amp; SUBMIT</span>
+    <span style="font-size:22px">→</span>
+  </button>
+  <div class="cta-note">🔒 Responses encrypted &nbsp;·&nbsp; No personal data sold &nbsp;·&nbsp; 100% anonymised in reporting &nbsp;·&nbsp; Withdraw anytime</div>
+  <div class="disclaimer">I understand and consent to my anonymised responses being used for MyFounders.club platform development and GCC ecosystem research.</div>
+</div>
+
+<script>
+/* ── COUNTDOWN ── */
+let seconds = 47 * 60;
+function tick(){
+  const m = String(Math.floor(seconds/60)).padStart(2,'0');
+  const s = String(seconds%60).padStart(2,'0');
+  document.getElementById('timer').textContent = `00 : ${m} : ${s}`;
+  if(seconds>0) seconds--;
+}
+setInterval(tick,1000);
+
+/* ── SPOT COUNT SIMULATE ── */
+let spots = 312;
+setInterval(()=>{
+  if(spots>302 && Math.random()<0.25){
+    spots--;
+    document.getElementById('spot-count').textContent = spots;
+    document.getElementById('spot-claimed').textContent = 500-spots;
+  }
+},9000);
+
+/* ── SCROLL REVEAL ── */
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+},{threshold:0.07});
+document.querySelectorAll('.section-block').forEach(el=>observer.observe(el));
+
+/* ── PROGRESS ── */
+function updateProgress(){
+  const fields = document.querySelectorAll('.survey-field');
+  const radios = ['role','country','stage','age','team','barrier','expand','vision','goal3','future','feature'];
+  let filled=0, total=fields.length+radios.length+3+3;
+  fields.forEach(f=>{ if(f.value&&f.value.trim()) filled++; });
+  radios.forEach(n=>{ if(document.querySelector(`input[name="${n}"]:checked`)) filled++; });
+  filled+=3;
+  if(document.querySelector('input[id^="v"]:checked')) filled++;
+  if(document.querySelector('input[id^="im"]:checked')) filled++;
+  if(document.querySelector('input[id^="sup"]:checked')) filled++;
+  const pct = Math.min(Math.round((filled/total)*100),100);
+  document.getElementById('progress-fill').style.width = pct+'%';
+  document.getElementById('pct-label').textContent = pct+'%';
+}
+document.querySelectorAll('input,textarea,select').forEach(el=>{
+  el.addEventListener('change',updateProgress);
+  el.addEventListener('input',updateProgress);
+});
+
+/* ── SUBMIT ── */
+function handleSubmit(){
+  const btn = document.getElementById('submit-btn');
+  btn.style.background='var(--green)';
+  btn.style.boxShadow='0 10px 55px var(--green-glow),0 0 80px rgba(0,200,150,0.12)';
+  btn.innerHTML='<span>✓ SUBMITTED — REWARDS UNLOCKED</span><span>★</span>';
+  btn.style.cursor='default';
+  btn.onclick=null;
+  document.getElementById('progress-fill').style.width='100%';
+  document.getElementById('pct-label').textContent='100%';
+}
+</script>
+</body>
+</html>
