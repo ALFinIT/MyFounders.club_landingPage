@@ -49,7 +49,7 @@ export function NewsletterSection() {
             placeholder="your@email.com"
             className="form-input newsletter-input w-full flex-1"
           />
-          <button type="submit" disabled={loading} className="btn btn-primary w-full whitespace-nowrap sm:w-auto sm:min-w-[190px] disabled:opacity-70">
+          <button type="submit" disabled={loading} className="btn btn-primary nl-subscribe-btn w-full whitespace-nowrap sm:w-auto sm:min-w-[210px] disabled:opacity-70">
             {loading ? 'Sending...' : 'Subscribe Free'}
           </button>
         </form>

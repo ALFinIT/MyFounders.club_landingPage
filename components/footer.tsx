@@ -7,8 +7,8 @@ export function Footer() {
   return (
     <footer className="section-block border-t border-[rgba(255,255,255,.055)] px-[5%] pb-[34px] pt-[54px]">
       <div className="site-shell">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-[1.3fr_1fr_1fr_1fr]">
-          <div>
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-[1.3fr_1fr_1.2fr_1fr]">
+          <div className="min-w-0">
             <div className="flex items-center gap-3">
               <Image src="/App Icon Orange.svg" alt="MFC logo" width={30} height={30} />
               <p className="font-(--font-display) text-[1.35rem] font-bold text-white">MyFounders.Club</p>
@@ -26,7 +26,7 @@ export function Footer() {
             </div>
           </div>
 
-          <div>
+          <div className="min-w-0">
             <p className="font-(--font-display) text-[.8rem] font-semibold uppercase tracking-[.08em] text-white">Platform</p>
             <ul className="mt-3 space-y-2 text-[.8rem] text-[rgba(204,204,204,.67)]">
               <li className="transition-all duration-200 hover:text-(--orange)">What We Do</li>
@@ -35,16 +35,16 @@ export function Footer() {
               <li className="transition-all duration-200 hover:text-(--orange)">Get Early Access</li>
             </ul>
           </div>
-          <div>
+          <div className="min-w-0">
             <p className="font-(--font-display) text-[.8rem] font-semibold uppercase tracking-[.08em] text-white">Community</p>
             <ul className="mt-3 space-y-2 text-[.8rem] text-[rgba(204,204,204,.67)]">
-              <li className="transition-all duration-200 hover:text-(--orange)">Gulf Founders</li>
-              <li className="transition-all duration-200 hover:text-(--orange)">International Founders</li>
-              <li className="transition-all duration-200 hover:text-(--orange)">Investors</li>
+              <li className="whitespace-nowrap transition-all duration-200 hover:text-(--orange)">Gulf Founders</li>
+              <li className="whitespace-nowrap transition-all duration-200 hover:text-(--orange)">International Founders</li>
+              <li className="whitespace-nowrap transition-all duration-200 hover:text-(--orange)">Investors</li>
               <li className="transition-all duration-200 hover:text-(--orange)">Events &amp; Masterminds</li>
             </ul>
           </div>
-          <div>
+          <div className="min-w-0">
             <p className="font-(--font-display) text-[.8rem] font-semibold uppercase tracking-[.08em] text-white">Resources</p>
             <ul className="mt-3 space-y-2 text-[.8rem] text-[rgba(204,204,204,.67)]">
               <li className="transition-all duration-200 hover:text-(--orange)">The Gulf Pulse</li>

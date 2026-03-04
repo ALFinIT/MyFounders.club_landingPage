@@ -737,6 +737,20 @@
   max-width: 100%;
 }
 
+.nl-subscribe-btn {
+  background: var(--orange);
+  border: 1px solid rgba(255, 125, 84, 0.72);
+}
+
+.nl-subscribe-btn:hover {
+  background: var(--orange);
+  filter: none;
+  box-shadow:
+    0 0 0 1px rgba(255, 123, 88, 0.28) inset,
+    0 0 18px rgba(255, 91, 35, 0.28),
+    0 8px 26px rgba(255, 91, 35, 0.36);
+}
+
 @media (min-width: 641px) and (max-width: 1024px) {
   .newsletter-input {
     max-width: 480px;
@@ -749,7 +763,7 @@
   }
 
   .newsletter-input {
-    max-width: 580px;
+    max-width: 660px;
   }
 }
 
