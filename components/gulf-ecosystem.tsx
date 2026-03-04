@@ -155,9 +155,16 @@ export function GulfEcosystemSection() {
               <span className={`fi fi-${country.code} inline-block h-4 w-6`} aria-hidden="true" />
               <h3
                 style={{ fontFamily: 'var(--font-display)' }}
-                className="mt-2 whitespace-nowrap text-[1.12rem] font-extrabold leading-tight text-white md:text-[1.2rem]"
+                className="mt-2 whitespace-normal text-[1.12rem] font-extrabold leading-tight text-white sm:whitespace-nowrap md:text-[1.2rem]"
               >
-                {country.name}
+                {country.code === 'ae' ? (
+                  <>
+                    <span className="sm:hidden">UAE</span>
+                    <span className="hidden sm:inline">{country.name}</span>
+                  </>
+                ) : (
+                  country.name
+                )}
               </h3>
               <p className="mt-1 text-[.68rem] uppercase tracking-[.14em] text-(--orange)">{country.sub}</p>
               <div className="mt-5 space-y-2 border-t border-white/10 pt-3">

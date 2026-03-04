@@ -194,9 +194,9 @@ export function Navbar() {
           aria-expanded={mobileOpen}
         >
           <span className="relative block h-3.5 w-4">
-            <span className={`absolute left-0 right-0 h-[1.5px] bg-white transition ${mobileOpen ? 'top-[6px] rotate-45' : 'top-0'}`} />
+            <span className={`absolute left-0 right-0 h-[1.5px] transition ${mobileOpen ? 'top-[6px] rotate-45 bg-(--orange)' : 'top-0 bg-white'}`} />
             <span className={`absolute left-0 right-0 top-[6px] h-[1.5px] bg-white transition ${mobileOpen ? 'opacity-0' : 'opacity-100'}`} />
-            <span className={`absolute left-0 right-0 h-[1.5px] bg-white transition ${mobileOpen ? 'top-[6px] -rotate-45' : 'top-[12px]'}`} />
+            <span className={`absolute left-0 right-0 h-[1.5px] transition ${mobileOpen ? 'top-[6px] -rotate-45 bg-(--orange)' : 'top-[12px] bg-white'}`} />
           </span>
         </button>
       </div>

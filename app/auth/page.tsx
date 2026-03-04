@@ -81,17 +81,17 @@ function AuthPageContent() {
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,91,35,.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,91,35,.05)_1px,transparent_1px)] bg-[size:48px_48px] opacity-55" />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_80%_14%,rgba(12,22,26,.7),transparent_48%)]" />
 
-      <section className="site-shell relative z-[2] grid h-full grid-cols-1 items-center gap-2 py-3 lg:grid-cols-[1.12fr_.88fr]">
-        <div className="glass-card-soft hidden p-8 lg:block">
+      <section className="site-shell relative z-[2] grid h-full grid-cols-1 items-center gap-2 py-2 lg:grid-cols-[1.12fr_.88fr]">
+        <div className="glass-card-soft hidden p-6 lg:block">
           <span className="orange-badge">
             <span className="beta-dot" />
             Beta Access - Spots Limited
           </span>
 
-          <div className="mt-7">
+          <div className="mt-5">
             <Image src="/Full_logo_mfc.png" alt="MyFounders.Club" width={244} height={58} priority />
           </div>
-          <h1 className="mt-7 font-(--font-display) text-[clamp(2.1rem,3.8vw,3.9rem)] leading-[.94] tracking-[-.03em] text-white">
+          <h1 className="mt-5 font-(--font-display) text-[clamp(1.9rem,3.5vw,3.2rem)] leading-[.94] tracking-[-.03em] text-white">
             <span className="text-(--orange)">Hello</span>!
             <br />
             It's <span className="text-(--orange)">good</span> to
@@ -99,7 +99,7 @@ function AuthPageContent() {
             see you <span className="text-(--orange)">again</span>
           </h1>
 
-          <div className="card-grid mt-8 grid grid-cols-1">
+          <div className="card-grid mt-6 grid grid-cols-1">
             {[
               ['AI Next-Step Engine', 'Get 3-5 best-fit opportunities instead of 300 irrelevant links.'],
               ['GCC Jurisdiction Navigator', 'Compare six GCC markets with practical setup guidance.'],
@@ -112,7 +112,7 @@ function AuthPageContent() {
             ))}
           </div>
 
-          <div className="stats-strip card-grid mt-6 grid grid-cols-3">
+          <div className="stats-strip card-grid mt-5 grid grid-cols-3">
             {[
               ['4.5B', 'GCC CAPITAL'],
               ['523%', 'YOY GROWTH'],
@@ -133,13 +133,13 @@ function AuthPageContent() {
             })}
           </div>
 
-          <div className="mt-6 border border-[rgba(62,92,94,.4)] bg-[rgba(62,92,94,.12)] p-4">
+          <div className="mt-5 border border-[rgba(62,92,94,.4)] bg-[rgba(62,92,94,.12)] p-3">
             <p className="font-(--font-display) text-[.78rem] uppercase tracking-[.14em] text-[#9fd3d5]">Verified Members Only</p>
             <p className="mt-2 text-[.83rem] text-[rgba(255,255,255,.82)]">Every member is reviewed by our team. Your network is curated, not crowdsourced.</p>
           </div>
         </div>
 
-        <div className="glass-card-strong mx-auto flex h-[92dvh] w-full max-w-[470px] flex-col overflow-hidden p-5 sm:h-[88dvh] sm:min-h-[680px] sm:p-7">
+        <div className="glass-card-strong mx-auto w-full max-w-[470px] p-5 sm:p-6">
           <div className="glass-card-soft grid grid-cols-2 gap-1 p-1">
             <button
               className={`px-4 py-2 text-[.78rem] uppercase tracking-[.12em] transition ${isSignup ? 'bg-(--orange) font-(--font-display) font-bold text-white' : 'text-(--silver)'}`}
@@ -157,7 +157,7 @@ function AuthPageContent() {
             </button>
           </div>
 
-          <h2 className="mt-4 font-(--font-display) text-[clamp(1.3rem,2.2vw,1.8rem)] font-extrabold tracking-[-.02em] text-white">Join MyFounders.Club</h2>
+          <h2 className="mt-3 font-(--font-display) text-[clamp(1.25rem,2.1vw,1.7rem)] font-extrabold tracking-[-.02em] text-white">Join MyFounders.Club</h2>
           <p className="copy mt-2 text-[.8rem]">Free access. No credit card. The Gulf's founder community awaits.</p>
           <p className="mt-2 text-[.72rem] tracking-[.07em] text-[rgba(255,255,255,.66)]">
             {isSignup ? (
@@ -181,7 +181,7 @@ function AuthPageContent() {
             )}
           </p>
 
-          <div className="mt-4 grid grid-cols-1 gap-2">
+          <div className="mt-3 grid grid-cols-1 gap-2">
             <button
               className="border border-[rgba(255,255,255,.1)] bg-transparent px-4 py-2 text-[.8rem] text-(--cloud) hover:border-[rgba(255,91,35,.35)]"
               type="button"
@@ -200,10 +200,10 @@ function AuthPageContent() {
             </button>
           </div>
 
-          <div className="my-5 h-px bg-[rgba(255,255,255,.08)]" />
+          <div className="my-3 h-px bg-[rgba(255,255,255,.08)]" />
 
-          <div className="mt-1 flex-1 overflow-y-auto pr-1">
-            <div className="space-y-4">
+          <div className="mt-1">
+            <div className="space-y-3">
               <div className={`grid grid-cols-1 gap-3 sm:grid-cols-2 ${isSignup ? 'opacity-100' : 'pointer-events-none opacity-0'}`}>
                 <div>
                   <label className="field-label">First Name</label>

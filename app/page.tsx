@@ -25,7 +25,7 @@ export const viewport: Viewport = {
 
 export default function Home() {
   return (
-    <main className="graph-grid-dim relative bg-background text-foreground">
+    <main className="graph-grid-dim premium-motion-root relative bg-background text-foreground">
       <Navbar />
       <HeroSection />
       <OriginStorySection />

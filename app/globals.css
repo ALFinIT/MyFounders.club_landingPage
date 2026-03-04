@@ -80,6 +80,7 @@
   html,
   body {
     @apply bg-background text-foreground;
+    overflow-x: hidden;
   }
 
   body {
@@ -203,6 +204,7 @@
     center -22px;
   mask-image: radial-gradient(circle at 50% 20%, #000 18%, transparent 76%);
   opacity: 0.66;
+  animation: gridDrift 22s linear infinite;
 }
 
 .graph-grid-dim::after {
@@ -212,6 +214,22 @@
 .graph-grid-dim > * {
   position: relative;
   z-index: 1;
+}
+
+.premium-motion-root .section-block {
+  animation: fadeUp 0.8s ease both;
+}
+
+.premium-motion-root .section-block:nth-of-type(2) {
+  animation-delay: 0.05s;
+}
+
+.premium-motion-root .section-block:nth-of-type(3) {
+  animation-delay: 0.1s;
+}
+
+.premium-motion-root .section-block:nth-of-type(4) {
+  animation-delay: 0.15s;
 }
 
 .section-lead {
@@ -811,6 +829,24 @@
   .nl-inner form .form-input,
   .nl-inner form .btn {
     min-height: 46px;
+  }
+}
+
+@keyframes gridDrift {
+  0% {
+    background-position:
+      center -22px,
+      center -22px;
+  }
+  50% {
+    background-position:
+      center -8px,
+      center -8px;
+  }
+  100% {
+    background-position:
+      center -22px,
+      center -22px;
   }
 }
 
