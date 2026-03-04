@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 type SessionUser = {
@@ -12,6 +13,7 @@ type SessionUser = {
 };
 
 export function Navbar() {
+  const router = useRouter();
   const menuRef = useRef<HTMLDivElement | null>(null);
   const [user, setUser] = useState<SessionUser | null>(null);
   const [open, setOpen] = useState(false);
@@ -34,6 +36,28 @@ export function Navbar() {
     readSession();
     window.addEventListener('storage', readSession);
     return () => window.removeEventListener('storage', readSession);
+  }, []);
+
+  useEffect(() => {
+    const syncServerSession = async () => {
+      try {
+        const response = await fetch('/api/auth/session', { cache: 'no-store' });
+        if (!response.ok) {
+          localStorage.removeItem('mfc_user');
+          setUser(null);
+          return;
+        }
+        const data = await response.json();
+        if (data?.user) {
+          localStorage.setItem('mfc_user', JSON.stringify(data.user));
+          setUser(data.user as SessionUser);
+        }
+      } catch {
+        // Keep UI resilient during transient network errors.
+      }
+    };
+
+    void syncServerSession();
   }, []);
 
   useEffect(() => {
@@ -68,14 +92,15 @@ export function Navbar() {
       setUser(null);
       setOpen(false);
       setMobileOpen(false);
-      window.location.replace('/');
+      router.replace('/');
+      router.refresh();
     }
   };
 
   const goTo = (path: string) => {
     setOpen(false);
     setMobileOpen(false);
-    window.location.assign(path);
+    router.push(path);
   };
 
   return (
@@ -108,9 +133,9 @@ export function Navbar() {
 
         {!user ? (
           <div className="hidden items-center gap-4 md:flex">
-            <a href="/auth" className="btn btn-primary">
+            <Link href="/auth" className="btn btn-primary">
               Get Early Access
-            </a>
+            </Link>
             <Link href="/auth?tab=signin" className="nav-link-item">
               Sign In
             </Link>
@@ -120,7 +145,10 @@ export function Navbar() {
             <button
               type="button"
               className="flex items-center gap-2.5 border border-[rgba(255,255,255,.12)] bg-[rgba(255,255,255,.03)] px-2.5 py-1.5 transition hover:border-[rgba(255,91,35,.4)]"
-              onClick={() => setOpen((v) => !v)}
+              onClick={(event) => {
+                event.stopPropagation();
+                setOpen((v) => !v);
+              }}
             >
               <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[rgba(255,91,35,.2)] font-(--font-display) text-[.8rem] font-bold text-(--orange)">
                 {initials}

@@ -1,17 +1,20 @@
-'use client'
+﻿'use client'
 
 import Image from 'next/image'
-import { useEffect, useMemo, useState } from 'react'
+import Link from 'next/link'
+import { Suspense, useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
+import { createClient } from '@/utils/supabase/client'
 
 type Tab = 'signup' | 'signin'
 
-export default function AuthPage() {
+function AuthPageContent() {
   const searchParams = useSearchParams()
   const initialTab = useMemo<Tab>(() => (searchParams.get('tab') === 'signin' ? 'signin' : 'signup'), [searchParams])
   const [tab, setTab] = useState<Tab>('signup')
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [oauthLoading, setOauthLoading] = useState<'google' | 'linkedin_oidc' | null>(null)
   const [error, setError] = useState('')
   const [form, setForm] = useState({
     firstName: '',
@@ -31,18 +34,22 @@ export default function AuthPage() {
     if (error) setError('')
   }
 
-  const fillDemo = (type: 'member' | 'admin') => {
-    if (type === 'admin') {
-      setTab('signin')
-      setForm({ firstName: '', lastName: '', email: 'admin@mfc.demo', password: 'admin123' })
-      return
+  const startOAuth = async (provider: 'google' | 'linkedin_oidc') => {
+    setError('')
+    setOauthLoading(provider)
+    try {
+      const supabase = createClient()
+      const { error: oauthError } = await supabase.auth.signInWithOAuth({
+        provider: provider as 'google' | 'linkedin_oidc',
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`,
+        },
+      })
+      if (oauthError) throw oauthError
+    } catch (e) {
+      setOauthLoading(null)
+      setError(e instanceof Error ? e.message : 'Unable to continue with OAuth.')
     }
-    setForm({
-      firstName: 'Katerina',
-      lastName: 'Hayes',
-      email: 'katerina@mfc.demo',
-      password: 'founder123',
-    })
   }
 
   const submit = async () => {
@@ -69,12 +76,12 @@ export default function AuthPage() {
   }
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-[#050505] text-(--cloud)">
+    <main className="relative h-[100dvh] overflow-hidden bg-[#050505] text-(--cloud)">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_38%_34%,rgba(255,91,35,.12),transparent_52%)]" />
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,91,35,.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,91,35,.05)_1px,transparent_1px)] bg-[size:48px_48px] opacity-55" />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_80%_14%,rgba(12,22,26,.7),transparent_48%)]" />
 
-      <section className="site-shell relative z-[2] grid min-h-screen grid-cols-1 items-center gap-2 py-5 lg:grid-cols-[1.12fr_.88fr]">
+      <section className="site-shell relative z-[2] grid h-full grid-cols-1 items-center gap-2 py-3 lg:grid-cols-[1.12fr_.88fr]">
         <div className="glass-card-soft hidden p-8 lg:block">
           <span className="orange-badge">
             <span className="beta-dot" />
@@ -87,7 +94,7 @@ export default function AuthPage() {
           <h1 className="mt-7 font-(--font-display) text-[clamp(2.1rem,3.8vw,3.9rem)] leading-[.94] tracking-[-.03em] text-white">
             <span className="text-(--orange)">Hello</span>!
             <br />
-            It&apos;s <span className="text-(--orange)">good</span> to
+            It's <span className="text-(--orange)">good</span> to
             <br />
             see you <span className="text-(--orange)">again</span>
           </h1>
@@ -109,13 +116,21 @@ export default function AuthPage() {
             {[
               ['4.5B', 'GCC CAPITAL'],
               ['523%', 'YOY GROWTH'],
-              ['63K+', 'STARTUPS'],
-            ].map(([value, label]) => (
-              <div key={value} className="border border-[rgba(255,91,35,.16)] bg-[rgba(255,91,35,.06)] p-4 text-center">
-                <p className="font-(--font-display) text-[1.6rem] font-extrabold text-(--orange)">{value}</p>
-                <p className="mt-1 text-[.62rem] tracking-[.12em] text-[rgba(255,255,255,.74)]">{label}</p>
-              </div>
-            ))}
+              ['63K', 'STARTUPS'],
+            ].map(([value, label]) => {
+              const match = value.match(/^([\d.]+)(.*)$/)
+              const numeric = match?.[1] ?? value
+              const suffix = match?.[2] ?? ''
+              return (
+                <div key={value} className="border border-[rgba(255,91,35,.16)] bg-[rgba(255,91,35,.06)] p-4 text-center">
+                  <p className="font-(--font-display) text-[1.6rem] font-extrabold">
+                    <span className="text-white">{numeric}</span>
+                    <span className="text-(--orange)">{suffix}</span>
+                  </p>
+                  <p className="mt-1 text-[.62rem] tracking-[.12em] text-[rgba(255,255,255,.74)]">{label}</p>
+                </div>
+              )
+            })}
           </div>
 
           <div className="mt-6 border border-[rgba(62,92,94,.4)] bg-[rgba(62,92,94,.12)] p-4">
@@ -124,7 +139,7 @@ export default function AuthPage() {
           </div>
         </div>
 
-        <div className="glass-card-strong mx-auto w-full max-w-[470px] p-6 sm:p-9">
+        <div className="glass-card-strong mx-auto flex h-[92dvh] w-full max-w-[470px] flex-col overflow-hidden p-5 sm:h-[88dvh] sm:min-h-[680px] sm:p-7">
           <div className="glass-card-soft grid grid-cols-2 gap-1 p-1">
             <button
               className={`px-4 py-2 text-[.78rem] uppercase tracking-[.12em] transition ${isSignup ? 'bg-(--orange) font-(--font-display) font-bold text-white' : 'text-(--silver)'}`}
@@ -142,8 +157,8 @@ export default function AuthPage() {
             </button>
           </div>
 
-          <h2 className="mt-6 font-(--font-display) text-[clamp(1.7rem,3vw,2.2rem)] font-extrabold tracking-[-.02em] text-white">Join MyFounders.Club</h2>
-          <p className="copy mt-2 text-[.8rem]">Free access. No credit card. The Gulf&apos;s founder community awaits.</p>
+          <h2 className="mt-4 font-(--font-display) text-[clamp(1.3rem,2.2vw,1.8rem)] font-extrabold tracking-[-.02em] text-white">Join MyFounders.Club</h2>
+          <p className="copy mt-2 text-[.8rem]">Free access. No credit card. The Gulf's founder community awaits.</p>
           <p className="mt-2 text-[.72rem] tracking-[.07em] text-[rgba(255,255,255,.66)]">
             {isSignup ? (
               <>
@@ -166,32 +181,30 @@ export default function AuthPage() {
             )}
           </p>
 
-          <div className="mt-5 border border-[rgba(62,92,94,.45)] bg-[rgba(62,92,94,.2)] p-4">
-            <p className="text-[.65rem] uppercase tracking-[.14em] text-[#90c4c6]">Quick Test Credentials</p>
-            <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
-              <button type="button" onClick={() => fillDemo('member')} className="glass-card-soft p-2 text-left text-[.78rem] hover:border-[rgba(255,91,35,.4)]">
-                Founder Demo
-              </button>
-              <button type="button" onClick={() => fillDemo('admin')} className="glass-card-soft p-2 text-left text-[.78rem] hover:border-[rgba(255,91,35,.4)]">
-                Admin Demo
-              </button>
-            </div>
-          </div>
-
           <div className="mt-4 grid grid-cols-1 gap-2">
-            <button className="border border-[rgba(255,255,255,.1)] bg-transparent px-4 py-2 text-[.8rem] text-(--cloud) hover:border-[rgba(255,91,35,.35)]" type="button">
-              Continue with Google
+            <button
+              className="border border-[rgba(255,255,255,.1)] bg-transparent px-4 py-2 text-[.8rem] text-(--cloud) hover:border-[rgba(255,91,35,.35)]"
+              type="button"
+              onClick={() => void startOAuth('google')}
+              disabled={Boolean(oauthLoading)}
+            >
+              {oauthLoading === 'google' ? 'Please wait...' : 'Continue with Google'}
             </button>
-            <button className="border border-[rgba(255,255,255,.1)] bg-transparent px-4 py-2 text-[.8rem] text-(--cloud) hover:border-[rgba(255,91,35,.35)]" type="button">
-              Continue with LinkedIn
+            <button
+              className="border border-[rgba(255,255,255,.1)] bg-transparent px-4 py-2 text-[.8rem] text-(--cloud) hover:border-[rgba(255,91,35,.35)]"
+              type="button"
+              onClick={() => void startOAuth('linkedin_oidc')}
+              disabled={Boolean(oauthLoading)}
+            >
+              {oauthLoading === 'linkedin_oidc' ? 'Please wait...' : 'Continue with LinkedIn'}
             </button>
           </div>
 
           <div className="my-5 h-px bg-[rgba(255,255,255,.08)]" />
 
-          <div className="space-y-4">
-            {isSignup && (
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <div className="mt-1 flex-1 overflow-y-auto pr-1">
+            <div className="space-y-4">
+              <div className={`grid grid-cols-1 gap-3 sm:grid-cols-2 ${isSignup ? 'opacity-100' : 'pointer-events-none opacity-0'}`}>
                 <div>
                   <label className="field-label">First Name</label>
                   <input className="form-input" value={form.firstName} onChange={(e) => setField('firstName', e.target.value)} />
@@ -201,35 +214,53 @@ export default function AuthPage() {
                   <input className="form-input" value={form.lastName} onChange={(e) => setField('lastName', e.target.value)} />
                 </div>
               </div>
-            )}
 
-            <div>
-              <label className="field-label">Email Address</label>
-              <input className="form-input" type="email" value={form.email} onChange={(e) => setField('email', e.target.value)} />
-            </div>
+              <div>
+                <label className="field-label">Email Address</label>
+                <input className="form-input" type="email" value={form.email} onChange={(e) => setField('email', e.target.value)} />
+              </div>
 
-            <div className="relative">
-              <label className="field-label">Password</label>
-              <input className="form-input pr-20" type={showPassword ? 'text' : 'password'} value={form.password} onChange={(e) => setField('password', e.target.value)} />
-              <button
-                type="button"
-                onClick={() => setShowPassword((v) => !v)}
-                className="absolute right-3 top-[36px] text-[.68rem] font-semibold tracking-[.1em] text-(--orange)"
-              >
-                {showPassword ? 'HIDE' : 'SHOW'}
+              <div className="relative">
+                <label className="field-label">Password</label>
+                <input className="form-input pr-20" type={showPassword ? 'text' : 'password'} value={form.password} onChange={(e) => setField('password', e.target.value)} />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((v) => !v)}
+                  className="absolute right-3 top-[36px] text-[.68rem] font-semibold tracking-[.1em] text-(--orange)"
+                >
+                  {showPassword ? 'HIDE' : 'SHOW'}
+                </button>
+              </div>
+
+              {error && <p className="text-[.8rem] text-[#ff7a4a]">{error}</p>}
+
+              <button type="button" disabled={loading || Boolean(oauthLoading)} onClick={submit} className="btn btn-submit">
+                {loading ? 'Please wait...' : isSignup ? 'Create Account' : 'Sign In'}
               </button>
+
+              <p className="text-center text-[.7rem] text-[rgba(255,255,255,.52)]">
+                By joining you agree to our{' '}
+                <Link href="/terms-and-conditions" className="text-[rgba(255,255,255,.75)] hover:text-(--orange)">
+                  Terms
+                </Link>{' '}
+                &amp;{' '}
+                <Link href="/privacy-policy" className="text-[rgba(255,255,255,.75)] hover:text-(--orange)">
+                  Privacy Policy
+                </Link>
+                .
+              </p>
             </div>
-
-            {error && <p className="text-[.8rem] text-[#ff7a4a]">{error}</p>}
-
-            <button type="button" disabled={loading} onClick={submit} className="btn btn-submit">
-              {loading ? 'Please wait...' : isSignup ? 'Create Account' : 'Sign In'}
-            </button>
-
-            <p className="text-center text-[.7rem] text-[rgba(255,255,255,.52)]">By joining you agree to our Terms & Privacy Policy.</p>
           </div>
         </div>
       </section>
     </main>
+  )
+}
+
+export default function AuthPage() {
+  return (
+    <Suspense fallback={<main className="min-h-screen bg-[#050505]" />}>
+      <AuthPageContent />
+    </Suspense>
   )
 }

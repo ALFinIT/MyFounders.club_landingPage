@@ -40,14 +40,14 @@ export function NewsletterSection() {
             Weekly ecosystem intelligence: funding rounds, regulatory shifts, and new programs across GCC. Every Tuesday. No noise.
           </p>
         </div>
-        <form onSubmit={handleSubmit} className="flex w-full max-w-[760px] flex-col items-stretch gap-2 sm:flex-row sm:items-center">
+        <form onSubmit={handleSubmit} className="newsletter-form flex w-full flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center">
           <input
             ref={inputRef}
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="your@email.com"
-            className="form-input min-w-0 w-full flex-1 sm:min-w-[280px] md:min-w-[430px]"
+            className="form-input newsletter-input w-full flex-1"
           />
           <button type="submit" disabled={loading} className="btn btn-primary w-full whitespace-nowrap sm:w-auto sm:min-w-[190px] disabled:opacity-70">
             {loading ? 'Sending...' : 'Subscribe Free'}

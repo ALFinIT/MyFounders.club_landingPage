@@ -66,10 +66,10 @@ export function Footer() {
               href="https://alfinit.vercel.app/"
               target="_blank"
               rel="noreferrer"
-              className="group inline-flex items-center gap-2.5 rounded-full border border-[rgba(255,91,35,.3)] bg-[rgba(255,91,35,.08)] px-3 py-1.5 text-[.66rem] uppercase tracking-[.12em] text-[rgba(255,255,255,.9)] transition-all duration-300 hover:border-[rgba(255,91,35,.65)] hover:bg-[rgba(255,91,35,.16)] hover:text-white hover:shadow-[0_0_26px_rgba(255,91,35,.42)]"
+              className="group inline-flex items-center gap-2.5 border border-[rgba(255,91,35,.3)] bg-[rgba(255,91,35,.08)] px-3 py-1.5 text-[.66rem] uppercase tracking-[.12em] text-[rgba(255,255,255,.9)] transition-all duration-300 hover:border-[rgba(255,91,35,.65)] hover:bg-[rgba(255,91,35,.16)] hover:text-white hover:shadow-[0_0_26px_rgba(255,91,35,.42)]"
               aria-label="Made by ALfinit"
             >
-              <span className="relative inline-flex h-5 w-5 items-center justify-center overflow-hidden rounded-[6px] bg-[#0b0b0b]">
+              <span className="relative inline-flex h-5 w-5 items-center justify-center overflow-hidden bg-[#0b0b0b]">
                 <Image src="/alfinit-favicon.ico" alt="ALfinit favicon" width={20} height={20} className="h-5 w-5 object-cover" />
               </span>
               Made by ALfinit
