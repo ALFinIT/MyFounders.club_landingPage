@@ -40,7 +40,13 @@ export default function AuthCallbackPage() {
         }
 
         localStorage.setItem('mfc_user', JSON.stringify(bridgeData.user))
-        window.location.replace(bridgeData.redirectTo ?? '/profile')
+        const redirectTo = String(bridgeData.redirectTo ?? '/profile')
+        if (redirectTo.startsWith('http://') || redirectTo.startsWith('https://')) {
+          window.location.replace(redirectTo)
+          return
+        }
+        router.replace(redirectTo)
+        router.refresh()
       } catch {
         router.replace('/auth?tab=signin')
       }
@@ -51,4 +57,3 @@ export default function AuthCallbackPage() {
 
   return <main className="min-h-screen bg-[#050505]" />
 }
-

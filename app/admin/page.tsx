@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 type Member = {
   id: string
@@ -57,6 +58,7 @@ const statusColor: Record<Member['status'], string> = {
 }
 
 export default function AdminPage() {
+  const router = useRouter()
   const [members, setMembers] = useState<Member[]>([])
   const [waitlistApps, setWaitlistApps] = useState<WaitlistApplication[]>([])
   const [surveySubmissions, setSurveySubmissions] = useState<SurveySubmission[]>([])
@@ -68,13 +70,13 @@ export default function AdminPage() {
       try {
         const sessionRes = await fetch('/api/auth/session', { cache: 'no-store' })
         if (!sessionRes.ok) {
-          window.location.replace('/auth?tab=signin')
+          router.replace('/auth?tab=signin')
           return
         }
         const sessionData = await sessionRes.json()
         const user = sessionData?.user as { role?: string; email?: string } | undefined
         if (!user || (user.role !== 'admin' && user.email !== 'admin@mfc.demo')) {
-          window.location.replace('/auth?tab=signin')
+          router.replace('/auth?tab=signin')
           return
         }
         localStorage.setItem('mfc_user', JSON.stringify(user))
@@ -95,7 +97,7 @@ export default function AdminPage() {
     }
 
     void bootstrap()
-  }, [])
+  }, [router])
 
   const filtered = useMemo(() => {
     const q = filters.q.trim().toLowerCase()

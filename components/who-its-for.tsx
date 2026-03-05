@@ -55,13 +55,13 @@ export function WhoItsForSection() {
           <p className="copy max-w-125 justify-self-end text-[.9rem]">{data.intro}</p>
         </div>
 
-        <div className="mt-10 inline-flex border border-[rgba(255,255,255,.09)] bg-[rgba(255,255,255,.035)] p-1">
+        <div className="mt-10 flex w-full flex-col gap-1 border border-[rgba(255,255,255,.09)] bg-[rgba(255,255,255,.035)] p-1 sm:inline-flex sm:w-auto sm:flex-row sm:gap-0">
           {(Object.keys(tabs) as Tab[]).map((tab) => (
             <button
               key={tab}
               type="button"
               onClick={() => setActive(tab)}
-              className={`px-5 py-2 text-[.79rem] font-medium tracking-[.05em] transition-all duration-200 ${
+              className={`w-full px-4 py-2.5 text-center text-[.79rem] font-medium tracking-[.05em] transition-all duration-200 sm:w-auto sm:px-5 sm:py-2 ${
                 active === tab ? 'bg-(--orange) text-white' : 'text-(--silver) hover:text-white'
               }`}
             >

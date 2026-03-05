@@ -20,6 +20,15 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
+    router.prefetch('/auth');
+    router.prefetch('/auth?tab=signin');
+    router.prefetch('/events');
+    router.prefetch('/survey');
+    router.prefetch('/profile');
+    router.prefetch('/admin');
+  }, [router]);
+
+  useEffect(() => {
     const readSession = () => {
       try {
         const raw = localStorage.getItem('mfc_user');
