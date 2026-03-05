@@ -35,17 +35,23 @@ export function OriginStorySection() {
 
           <div className="copy reveal d3 mt-8 max-w-[640px] space-y-5 text-[.95rem]">
             <p>
-              Katerina Hayes built ventures in the UK. And failed some. She knew what it felt like to search for reliable answers at 11pm with every source contradicting the last.
+              She solved it for herself. Then for everyone. Six countries. Six regulatory frameworks. Hundreds of free zones. No single source of truth.
             </p>
             <p>
-              In 2022, she arrived in Riyadh, Saudi Arabia. A region exploding with capital and ambition - yet no single source of truth for how to navigate it. Laws changing overnight. No community built with diversity at its core.
+             When Katerina Hayes arrived in the Gulf, she faced what every founder and company faces, a fragmented system designed for insiders. 
             </p>
             <p>
-              Companies expanding into the Gulf were drowning too. Six countries. Six regulatory frameworks. Hundreds of free zones. Zero clear guide.
+             She searched for answers. Found contradictions. Wasted time and money that early-stage ventures cannot afford to lose. So she stopped searching and started building.
             </p>
             <p>
-              <span className="font-semibold text-white">So she built MFC.</span> The platform she needed when she started - now with a team of advanced AI engineers and investors who believe the Gulf deserves intelligent infrastructure that actually works.
-            </p>
+              <span className="font-semibold text-white">So she built </span> <span className="font-semibold text-orange-500">" MyFounders.Club " </span> 
+              Platform she needed and couldn't find  every grant, programme, free zone, accelerator, and investor across the GCC, in one place, <br/>
+              AI-powered, free. Built for herself. Now used by thousands. 
+              </p>
+              <p>
+              <span className="font-semibold  text-orange-500">The Gulf is open. Now it's navigable. </span>
+              </p>
+            
           </div>
         </div>
 
